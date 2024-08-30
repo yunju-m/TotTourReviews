@@ -1,5 +1,9 @@
 // JavaScript로 이미지 미리보기 기능 구현
 $(document).ready(() => {
+	// 글쓰기 버튼 클릭 시 이동
+	$('#writeReviewBtn').on('click', function() {
+        window.location.href = '/totreviews/review/write';
+    });
     $('#reviewImage').on('change', handleImagePreview);
 });
 

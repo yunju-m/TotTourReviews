@@ -5,10 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/review/css/global.css" />
-    <link rel="stylesheet" href="/review/css/review.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/global.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/review.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="/review/js/reviewWrite.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/treview.js"></script>
     <title>여행 후기 작성</title>
 </head>
 <body>
