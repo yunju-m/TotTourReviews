@@ -9,11 +9,11 @@
     </settings>  
     
     <typeAliases>
-    
+    	<typeAlias alias="TReviewDTO" type="totreviews.domain.TReviewDTO"/>
     </typeAliases>
     
     <mappers>
-        <mapper resource="conf/mapper/Mapper.xml"/>
+        <mapper resource="conf/mapper/TReviewMapper.xml"/>
     </mappers>
     
 </configuration>

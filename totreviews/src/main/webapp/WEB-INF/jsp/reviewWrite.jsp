@@ -21,16 +21,16 @@
         </div>
         <!-- 여행 후기 작섬 폼 -->
         <div class="reviewForm">
-            <form id="reviewForm" action="" method="post" enctype="multipart/form-data">
+            <form id="reviewForm" action="${pageContext.request.contextPath}/review/write" method="post" enctype="multipart/form-data">
                 <!-- 1. 여행 후기 제목 입력 -->
                 <div class="formGroup">
                     <label for="reviewTitle">제목</label>
-                    <input id="reviewTitle" type="text" class="titleInput" name="title" required>
+                    <input id="reviewTitle" type="text" class="titleInput" name="trevtitle" required>
                 </div>
                 <!-- 2. 여행 코스 선택 -->
                 <div class="formGroup">
                     <label for="travelCourse">여행 코스</label>
-                    <select id="travelCourse" class="courseSelect" name="course" required>
+                    <select id="travelCourse" class="courseSelect" name="trevcourse" required>
                         <option value="" disabled selected>여행 코스를 선택하세요</option>
                         <option value="course1">코스 1</option>
                         <option value="course2">코스 2</option>
@@ -41,7 +41,7 @@
                 <div class="reviewImagePreview">
                     <label for="reviewContent">후기 내용</label>
                     <img id="imagePreview" src="" alt="이미지 미리보기" style="display: none;">
-                    <input id="reviewContent" class="contentInput" name="content" placeholder="여행 후기 내용을 작성하세요."
+                    <input id="reviewContent" class="contentInput" name="trevcontent" placeholder="여행 후기 내용을 작성하세요."
                         required />
                 </div>
                 <!-- 4. 이미지 파일 업로드 -->

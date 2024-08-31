@@ -28,11 +28,6 @@
     <!-- MapperScannerConfigurer -->
    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     	<property name="location" value="classpath:/props/db.properties" />
-	</bean>
-	
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-    	<property name="basePackage" value="totreviews.dao"/>
-	</bean>
-    
+	</bean>    
 
 </beans>
