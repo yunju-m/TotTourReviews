@@ -5,7 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width='device-width', initial-scale=1.0">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
    	<script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=자바스크립트 인증키"></script>
     <script defer src="${pageContext.request.contextPath}/resources/js/trip.js"></script>
