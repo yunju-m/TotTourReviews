@@ -11,120 +11,107 @@ const initializeMap = () => {
     };
     const map = new kakao.maps.Map(container, mapOptions);
 
-    // 마커 이미지 정의
-    const markerImages = {
-        start: createMarkerImage(
-            'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png',
-            new kakao.maps.Size(50, 45),
-            new kakao.maps.Point(15, 43)
-        ),
-        startDrag: createMarkerImage(
-            'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_drag.png',
-            new kakao.maps.Size(50, 64),
-            new kakao.maps.Point(15, 54)
-        ),
-        arrive: createMarkerImage(
-            'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png',
-            new kakao.maps.Size(50, 45),
-            new kakao.maps.Point(15, 43)
-        ),
-        arriveDrag: createMarkerImage(
-            'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_drag.png',
-            new kakao.maps.Size(50, 64),
-            new kakao.maps.Point(15, 54)
-        ),
-        static: createMarkerImage(
-            'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-            new kakao.maps.Size(24, 35)
-        )
-    };
+    // 스프라이트 이미지 및 마커 크기 정의
+    const SPRITE_MARKER_URL = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markers_sprites2.png';
+    const SPRITE_WIDTH = 126, SPRITE_HEIGHT = 146;
+    const MARKER_WIDTH = 33, MARKER_HEIGHT = 36;
+    const OVER_MARKER_WIDTH = 40, OVER_MARKER_HEIGHT = 42;
+    const SPRITE_GAP = 10;
 
-    // 드래그 가능한 마커 위치 정의
-    const markerPositions = [
-        {
-            position: new kakao.maps.LatLng(33.450701, 126.570667),
-            image: markerImages.start,
-            dragImage: markerImages.startDrag
-        },
-        {
-            position: new kakao.maps.LatLng(33.450701, 126.572667),
-            image: markerImages.arrive,
-            dragImage: markerImages.arriveDrag
-        }
+    const markerSize = new kakao.maps.Size(MARKER_WIDTH, MARKER_HEIGHT);
+    const markerOffset = new kakao.maps.Point(12, MARKER_HEIGHT);
+    const overMarkerSize = new kakao.maps.Size(OVER_MARKER_WIDTH, OVER_MARKER_HEIGHT);
+    const overMarkerOffset = new kakao.maps.Point(13, OVER_MARKER_HEIGHT);
+    const spriteImageSize = new kakao.maps.Size(SPRITE_WIDTH, SPRITE_HEIGHT);
+
+    const positions = [
+        new kakao.maps.LatLng(33.44975, 126.56967),
+        new kakao.maps.LatLng(33.450579, 126.56956),
+        new kakao.maps.LatLng(33.4506468, 126.5707)
     ];
 
-    // 마커 생성
-    markerPositions.forEach(({ position, image, dragImage }) => {
-        createMarker(map, position, image, dragImage);
+    let selectedMarker = null;
+
+    // 지도 위에 마커를 표시합니다
+    positions.forEach((position, i) => {
+        const gapX = (MARKER_WIDTH + SPRITE_GAP);
+        const originY = (MARKER_HEIGHT + SPRITE_GAP) * i;
+        const overOriginY = (OVER_MARKER_HEIGHT + SPRITE_GAP) * i;
+        const normalOrigin = new kakao.maps.Point(0, originY);
+        const clickOrigin = new kakao.maps.Point(gapX, originY);
+        const overOrigin = new kakao.maps.Point(gapX * 2, overOriginY);
+
+        addMarker(map, position, normalOrigin, overOrigin, clickOrigin);
     });
 
-    // 정적 마커 위치 및 타이틀 정의
-    const staticMarkers = [
-        {
-            title: '카카오',
-            latlng: new kakao.maps.LatLng(33.450705, 126.570677),
-            content: '<div>카카오</div>'
-        },
-        {
-            title: '생태연못',
-            latlng: new kakao.maps.LatLng(33.450936, 126.569477),
-            content: '<div>생태연못</div>'
-        },
-        {
-            title: '텃밭',
-            latlng: new kakao.maps.LatLng(33.450879, 126.569940),
-            content: '<div>텃밭</div>'
-        },
-        {
-            title: '근린공원',
-            latlng: new kakao.maps.LatLng(33.451393, 126.570738),
-            content: '<div>근린공원</div>'
-        }
-    ];
+    // 마커를 생성하고 지도 위에 표시하고, 마커에 mouseover, mouseout, click 이벤트를 등록하는 함수입니다
+    function addMarker(map, position, normalOrigin, overOrigin, clickOrigin) {
+        const normalImage = createMarkerImage(markerSize, markerOffset, normalOrigin);
+        const overImage = createMarkerImage(overMarkerSize, overMarkerOffset, overOrigin);
+        const clickImage = createMarkerImage(markerSize, markerOffset, clickOrigin);
 
-    // 정적 마커 생성
-    staticMarkers.forEach(({ title, latlng, content }) => {
         const marker = new kakao.maps.Marker({
             map: map,
-            position: latlng,
-            title: title,
-            image: markerImages.static
+            position: position,
+            image: normalImage,
+            clickable: true // 마커를 클릭할 수 있도록 설정
         });
 
+        marker.normalImage = normalImage;
+        marker.clickImage = clickImage;
+        marker.overImage = overImage;
+
+        // 인포윈도우 설정
+        const iwContent = '<div style="padding:5px;">Hello World!</div>';
+        const iwRemoveable = true;
         const infowindow = new kakao.maps.InfoWindow({
-            content: content
+            content: iwContent,
+            removable: false
         });
 
         kakao.maps.event.addListener(marker, 'mouseover', () => {
-            infowindow.open(map, marker);
+            if (!selectedMarker || selectedMarker !== marker) {
+                marker.setImage(marker.overImage);
+            }
         });
 
         kakao.maps.event.addListener(marker, 'mouseout', () => {
-            infowindow.close();
+            if (!selectedMarker || selectedMarker !== marker) {
+                marker.setImage(marker.normalImage);
+            }
         });
-    });
-};
 
-// 마커 이미지 생성 함수
-const createMarkerImage = (src, size, offset = null) =>
-    new kakao.maps.MarkerImage(src, size, { offset });
+        kakao.maps.event.addListener(marker, 'click', () => {
+            if (selectedMarker === marker) {
+                // 이미 클릭된 상태인 마커를 클릭하면 인포윈도우를 닫고 이미지도 기본 이미지로 변경
+                infowindow.close();
+                marker.setImage(marker.normalImage);
+                selectedMarker = null;
+            } else {
+                // 클릭된 상태가 아닌 경우
+                if (selectedMarker) {
+                    // 기존 클릭된 마커의 이미지와 인포윈도우를 기본 상태로 되돌리기
+                    selectedMarker.setImage(selectedMarker.normalImage);
+                    infowindow.close();
+                }
+                // 현재 클릭된 마커의 이미지와 인포윈도우를 설정
+                marker.setImage(marker.clickImage);
+                infowindow.open(map, marker);
+                selectedMarker = marker;
+            }
+        });
+    }
 
-// 마커 생성 및 이벤트 설정 함수
-const createMarker = (map, position, image, dragImage) => {
-    const marker = new kakao.maps.Marker({
-        map: map,
-        position: position,
-        draggable: true,
-        image: image
-    });
-
-    kakao.maps.event.addListener(marker, 'dragstart', () => {
-        marker.setImage(dragImage);
-    });
-
-    kakao.maps.event.addListener(marker, 'dragend', () => {
-        marker.setImage(image);
-    });
-
-    return marker;
+    // MarkerImage 객체를 생성하여 반환하는 함수입니다
+    function createMarkerImage(markerSize, offset, spriteOrigin) {
+        return new kakao.maps.MarkerImage(
+            SPRITE_MARKER_URL,
+            markerSize,
+            {
+                offset: offset,
+                spriteOrigin: spriteOrigin,
+                spriteSize: spriteImageSize
+            }
+        );
+    }
 };
