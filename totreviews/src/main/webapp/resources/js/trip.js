@@ -11,7 +11,7 @@ const initializeMap = () => {
     };
     const map = new kakao.maps.Map(container, mapOptions);
 
-    // 기존 마커 이미지 정의
+    // 마커 이미지 정의
     const markerImages = {
         start: createMarkerImage(
             'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png',
@@ -39,7 +39,7 @@ const initializeMap = () => {
         )
     };
 
-    // 기존 마커 위치 정의
+    // 드래그 가능한 마커 위치 정의
     const markerPositions = [
         {
             position: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -60,25 +60,53 @@ const initializeMap = () => {
 
     // 정적 마커 위치 및 타이틀 정의
     const staticMarkers = [
-        { title: '카카오', latlng: new kakao.maps.LatLng(33.450705, 126.570677) },
-        { title: '생태연못', latlng: new kakao.maps.LatLng(33.450936, 126.569477) },
-        { title: '텃밭', latlng: new kakao.maps.LatLng(33.450879, 126.569940) },
-        { title: '근린공원', latlng: new kakao.maps.LatLng(33.451393, 126.570738) }
+        {
+            title: '카카오',
+            latlng: new kakao.maps.LatLng(33.450705, 126.570677),
+            content: '<div>카카오</div>'
+        },
+        {
+            title: '생태연못',
+            latlng: new kakao.maps.LatLng(33.450936, 126.569477),
+            content: '<div>생태연못</div>'
+        },
+        {
+            title: '텃밭',
+            latlng: new kakao.maps.LatLng(33.450879, 126.569940),
+            content: '<div>텃밭</div>'
+        },
+        {
+            title: '근린공원',
+            latlng: new kakao.maps.LatLng(33.451393, 126.570738),
+            content: '<div>근린공원</div>'
+        }
     ];
 
     // 정적 마커 생성
-    staticMarkers.forEach(({ title, latlng }) => {
-        new kakao.maps.Marker({
+    staticMarkers.forEach(({ title, latlng, content }) => {
+        const marker = new kakao.maps.Marker({
             map: map,
             position: latlng,
             title: title,
             image: markerImages.static
         });
+
+        const infowindow = new kakao.maps.InfoWindow({
+            content: content
+        });
+
+        kakao.maps.event.addListener(marker, 'mouseover', () => {
+            infowindow.open(map, marker);
+        });
+
+        kakao.maps.event.addListener(marker, 'mouseout', () => {
+            infowindow.close();
+        });
     });
 };
 
 // 마커 이미지 생성 함수
-const createMarkerImage = (src, size, offset) =>
+const createMarkerImage = (src, size, offset = null) =>
     new kakao.maps.MarkerImage(src, size, { offset });
 
 // 마커 생성 및 이벤트 설정 함수
