@@ -22,7 +22,6 @@ public class TourDTO {
 	public TourDTO(String toid, String areacode, String tourtype, String toname, String toaddress,
 			String todetailaddress, String totime, String totel, String tohomepage, String tooverview, String toimgpath,
 			String tox, String toy) {
-		super();
 		this.toid = toid;
 		this.areacode = areacode;
 		this.tourtype = tourtype;

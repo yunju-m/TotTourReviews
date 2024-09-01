@@ -22,7 +22,6 @@ public class TReviewDTO {
 	public TReviewDTO(int trevid, int tripid, String memid, String trevstatus, String trevtitle, String trevcourse,
 			String trevcontent, String trevimgpath, String trevrating, Timestamp trevregdate, Timestamp trevupdate,
 			Integer trevcount) {
-		super();
 		this.trevid = trevid;
 		this.tripid = tripid;
 		this.memid = memid;

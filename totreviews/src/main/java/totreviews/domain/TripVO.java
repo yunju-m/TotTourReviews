@@ -19,7 +19,6 @@ public class TripVO {
 
 	public TripVO(int tripid, String memid, String areacode, int tramt, Timestamp trstadate, Timestamp trenddate,
 			String trperiod, int trpeople, String trimgpath) {
-		super();
 		this.tripid = tripid;
 		this.memid = memid;
 		this.areacode = areacode;

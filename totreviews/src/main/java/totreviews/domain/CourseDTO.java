@@ -16,7 +16,6 @@ public class CourseDTO {
 
 	public CourseDTO(String courseid, int tripid, String areacode, String dcourse, Timestamp courregdate,
 			Timestamp courupdate) {
-		super();
 		this.courseid = courseid;
 		this.tripid = tripid;
 		this.areacode = areacode;
