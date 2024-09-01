@@ -11,11 +11,13 @@
     <typeAliases>
     	<typeAlias alias="TReviewDTO" type="totreviews.domain.TReviewDTO"/>
     	<typeAlias alias="CourseDTO" type="totreviews.domain.CourseDTO"/>
+    	<typeAlias alias="TourDTO" type="totreviews.domain.TourDTO"/>
     </typeAliases>
     
     <mappers>
         <mapper resource="conf/mapper/TReviewMapper.xml"/>
         <mapper resource="conf/mapper/CourseMapper.xml"/>
+        <mapper resource="conf/mapper/TourMapper.xml"/>
     </mappers>
     
 </configuration>
