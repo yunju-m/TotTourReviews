@@ -1,7 +1,3 @@
-document.addEventListener('DOMContentLoaded', () => {
-    kakao.maps.load(initializeMap);
-});
-
 const SPRITE_MARKER_URL = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markers_sprites2.png';
 const SPRITE_WIDTH = 126, SPRITE_HEIGHT = 146;
 const MARKER_WIDTH = 33, MARKER_HEIGHT = 36;
@@ -14,8 +10,33 @@ const overMarkerSize = new kakao.maps.Size(OVER_MARKER_WIDTH, OVER_MARKER_HEIGHT
 const overMarkerOffset = new kakao.maps.Point(13, OVER_MARKER_HEIGHT);
 const spriteImageSize = new kakao.maps.Size(SPRITE_WIDTH, SPRITE_HEIGHT);
 
+const buttons = document.querySelectorAll('.courseBtnDiv button');
+
 let selectedMarker = null;
 let clickMarker = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    kakao.maps.load(initializeMap);
+
+    // 코스 버튼을 클릭한 경우
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+            const courseId = this.getAttribute('data-course');
+            fetch(`/totreviews/course/${courseId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // JSON 형태로 변환
+                })
+                .then(data => {
+                    alert('성공!!');
+                    console.log(data);
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    });
+});
 
 const createMarkerImage = (size, offset, origin) => {
     return new kakao.maps.MarkerImage(

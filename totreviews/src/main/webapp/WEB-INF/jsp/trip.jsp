@@ -13,8 +13,18 @@
 <body>
     <div class="container">
         <h1>여행 경로 표시 Map</h1>
-        <div id="map" style="width:500px;height:400px;"></div>
-        <div id="clickLatlng"></div>
+        <div class="courseDiv" style="display: flex; justify-content: space-evenly;">
+	        <div class="courseBtnDiv">
+	        	<!-- 코스 개수만큼 코스 버튼이 생성되도록 수정 -->
+	        	<button data-course="course001">코스 1</button>
+	            <button data-course="course002">코스 2</button>
+	            <button data-course="course003">코스 3</button>
+	        </div>
+	        <div class="courseMapDiv">
+		        <div id="map" style="width:800px;height:600px;"></div>
+		        <div id="clickLatlng"></div>
+	        </div>
+        </div>
     </div>
 </body>
 </html>
