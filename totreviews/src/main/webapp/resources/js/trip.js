@@ -13,46 +13,6 @@ const spriteImageSize = new kakao.maps.Size(SPRITE_WIDTH, SPRITE_HEIGHT);
 let selectedMarker = null;
 let clickMarker = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-    kakao.maps.load(initializeMap);
-
-    // 여행 코스 버튼 클릭 이벤트 설정
-    document.querySelectorAll('.courseBtnDiv button').forEach(button => {
-        button.addEventListener('click', async function () {
-            const courseId = this.getAttribute('data-course');
-            const course = await getCourseById(courseId);
-            if (course) {
-                const tourId = JSON.parse(course.dcourse)[1];
-                await getTourById(tourId);
-            }
-        });
-    });
-});
-
-// 코스ID에 해당하는 코스 정보 반환받는 함수
-const getCourseById = async (courseId) => {
-    try {
-        const response = await fetch(`/totreviews/course/${courseId}`);
-        if (!response.ok) throw new Error('코스 응답이 올바르지 않습니다.');
-        return await response.json();
-    } catch (error) {
-        console.error('Course Error:', error);
-    }
-};
-
-// 상세 코스의 관광지 정보 반환받는 함수
-const getTourById = async (tourId) => {
-    try {
-        const response = await fetch(`/totreviews/tour/${tourId}`);
-        if (!response.ok) throw new Error('관광 정보 반환 응답이 올바르지 않습니다.');
-        const data = await response.json();
-        console.log(data);
-        return data;
-    } catch (error) {
-        console.error('Tour Error:', error);
-    }
-};
-
 // 마커 이미지 생성 함수
 const createMarkerImage = (size, offset, origin) => {
     return new kakao.maps.MarkerImage(
@@ -85,8 +45,9 @@ const handleMarkerClick = (map, marker, infowindow) => {
     };
 };
 
+
 // 마커 추가 함수
-const addMarker = (map, position, normalOrigin, overOrigin, clickOrigin) => {
+const addMarker = (map, position, normalOrigin, overOrigin, clickOrigin, tour) => {
     const normalImage = createMarkerImage(markerSize, markerOffset, normalOrigin);
     const overImage = createMarkerImage(overMarkerSize, overMarkerOffset, overOrigin);
     const clickImage = createMarkerImage(markerSize, markerOffset, clickOrigin);
@@ -102,7 +63,7 @@ const addMarker = (map, position, normalOrigin, overOrigin, clickOrigin) => {
     marker.clickImage = clickImage;
     marker.overImage = overImage;
 
-    const iwContent = '<div style="padding:5px;">Hello World!</div>';
+    const iwContent = `<div style="padding:5px;">${tour.toname}!</div>`;
     const infowindow = new kakao.maps.InfoWindow({
         content: iwContent,
         removable: false
@@ -123,19 +84,18 @@ const addMarker = (map, position, normalOrigin, overOrigin, clickOrigin) => {
     kakao.maps.event.addListener(marker, 'click', handleMarkerClick(map, marker, infowindow));
 };
 
+
 // 지도 초기화 함수
-const initializeMap = () => {
+const initializeMap = (tour) => {
     const container = document.getElementById('map');
     const mapOptions = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667),
+        center: new kakao.maps.LatLng(tour.toy, tour.tox),
         level: 3
     };
     const map = new kakao.maps.Map(container, mapOptions);
 
     const positions = [
-        new kakao.maps.LatLng(33.44975, 126.56967),
-        new kakao.maps.LatLng(33.450579, 126.56956),
-        new kakao.maps.LatLng(33.4506468, 126.5707)
+        new kakao.maps.LatLng(tour.toy, tour.tox),
     ];
 
     positions.forEach((position, i) => {
@@ -146,7 +106,7 @@ const initializeMap = () => {
         const clickOrigin = new kakao.maps.Point(gapX, originY);
         const overOrigin = new kakao.maps.Point(gapX * 2, overOriginY);
 
-        addMarker(map, position, normalOrigin, overOrigin, clickOrigin);
+        addMarker(map, position, normalOrigin, overOrigin, clickOrigin, tour);
     });
 
     kakao.maps.event.addListener(map, 'click', (mouseEvent) => {
@@ -165,3 +125,42 @@ const initializeMap = () => {
         document.getElementById('clickLatlng').innerHTML = message;
     });
 };
+
+// 코스ID에 해당하는 코스 정보 반환받는 함수
+const getCourseById = async (courseId) => {
+    try {
+        const response = await fetch(`/totreviews/course/${courseId}`);
+        if (!response.ok) throw new Error('코스 응답이 올바르지 않습니다.');
+        return await response.json();
+    } catch (error) {
+        console.error('Course Error:', error);
+    }
+};
+
+// 상세 코스의 관광지 정보 반환받는 함수
+const getTourById = async (tourId) => {
+    try {
+        const response = await fetch(`/totreviews/tour/${tourId}`);
+        if (!response.ok) throw new Error('관광 정보 반환 응답이 올바르지 않습니다.');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Tour Error:', error);
+    }
+};
+
+// DOMContentLoaded 이벤트 핸들러
+document.addEventListener('DOMContentLoaded', () => {
+    // 여행 코스 버튼 클릭 이벤트 설정
+    document.querySelectorAll('.courseBtnDiv button').forEach(button => {
+        button.addEventListener('click', async function () {
+            const courseId = this.getAttribute('data-course');
+            const course = await getCourseById(courseId);
+            if (course) {
+                const tourId = JSON.parse(course.dcourse)[1];
+                let tour = await getTourById(tourId);
+                kakao.maps.load(initializeMap(tour));
+            }
+        });
+    });
+});
