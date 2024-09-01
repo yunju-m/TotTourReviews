@@ -1,9 +1,21 @@
 package totreviews.dao;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import totreviews.domain.CourseDTO;
 
-public interface CourseDAO {
+@Repository
+public class CourseDAO {
 
-	CourseDTO getCourseById(String courseId);
+	@Autowired
+	private SqlSession sqlSession;
+
+	private static final String NAMESPACE = "totreviews.mapper.CourseMapper";
+
+	public CourseDTO getCourseById(String courseId) {
+		return sqlSession.selectOne(NAMESPACE + ".getCourseById", courseId);
+	}
 
 }
