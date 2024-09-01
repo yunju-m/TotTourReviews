@@ -10,7 +10,7 @@ import totreviews.domain.TReviewDTO;
 @Repository
 public class TReviewDAOImpl implements TReviewDAO {
 
-	private static final String NAMESPACE = "totreviews.dao.TReviewDAO";
+	private static final String NAMESPACE = "totreviews.mapper.TReviewMapper";
 	
 	@Autowired
 	private SqlSession sqlSession;

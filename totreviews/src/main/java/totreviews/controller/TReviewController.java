@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import totreviews.domain.TReviewDTO;
-import totreviews.service.TReviewService;
+import totreviews.service.TReviewServiceImpl;
 import totreviews.util.FileUtils;
 
 @Controller
@@ -18,7 +18,7 @@ import totreviews.util.FileUtils;
 public class TReviewController {
 
 	@Autowired
-	private TReviewService treviewService;
+	private TReviewServiceImpl treviewService;
 
 	// 여행 후기 화면 이동
 	@GetMapping
