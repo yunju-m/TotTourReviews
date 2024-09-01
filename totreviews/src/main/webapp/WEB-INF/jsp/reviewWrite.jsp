@@ -1,4 +1,4 @@
-<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -21,7 +21,8 @@
         </div>
         <!-- 여행 후기 작섬 폼 -->
         <div class="reviewForm">
-            <form id="reviewForm" action="${pageContext.request.contextPath}/review/write" method="post" enctype="multipart/form-data">
+            <form id="reviewForm" action="${pageContext.request.contextPath}/review/write" method="post"
+                enctype="multipart/form-data">
                 <!-- 1. 여행 후기 제목 입력 -->
                 <div class="formGroup">
                     <label for="reviewTitle">제목</label>
@@ -38,11 +39,12 @@
                     </select>
                 </div>
                 <!-- 3. 여행 후기 내용 입력 -->
-                <div class="reviewImagePreview">
+                <div class="reviewContentDiv">
                     <label for="reviewContent">후기 내용</label>
-                    <img id="imagePreview" src="" alt="이미지 미리보기" style="display: none;">
-                    <input id="reviewContent" class="contentInput" name="trevcontent" placeholder="여행 후기 내용을 작성하세요."
-                        required />
+                    <div id="reviewContentAndImgDiv" class="reviewContentAndImgDiv">
+                        <img id="imagePreview" src="" alt="이미지 미리보기">
+                        <input class="reviewContent" name="trevcontent" />
+                    </div>
                 </div>
                 <!-- 4. 이미지 파일 업로드 -->
                 <div class="formGroup">

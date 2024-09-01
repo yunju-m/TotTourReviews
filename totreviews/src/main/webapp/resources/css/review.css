@@ -127,7 +127,7 @@
 }
 
 .formGroup label,
-.reviewImagePreview label {
+.reviewContentDiv label {
     width: 10%;
     padding: 10px;
     font-weight: bold;
@@ -146,12 +146,34 @@
 }
 
 .reviewContent {
-    width: 90%;
+    width: 100%;
+    border: 0;
+    padding: 0;
+    font-size: x-large;
+    resize: none;
+    cursor: text;
 }
 
-.contentInput {
-    width: 90%;
-    height: 400px;
+.reviewContentAndImgDiv {
+    height: auto;
+    margin-left: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    min-height: 600px;
+}
+
+.reviewContentDiv img {
+    max-width: 300px;
+    max-height: 200px;
+    margin-right: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 10px;
+    display: none;
+}
+
+.reviewContentTextareaDiv {
+    height: 100%;
 }
 
 .reviewImageDiv {
@@ -163,30 +185,6 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-
-/* 이미지 미리 보기 */
-.reviewImagePreview {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.reviewImagePreview img {
-    max-width: 300px;
-    max-height: 200px;
-    margin-right: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
-.reviewImagePreview textarea {
-    flex: 1;
-    height: 200px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
 }
 
 .termsFieldset {
