@@ -17,7 +17,7 @@ public class TourController {
 	@Autowired
 	private TourService tourService;
 
-	@GetMapping("{tourId}")
+	@GetMapping("/{tourId}")
 	@ResponseBody
 	public TourDTO getTourById(@PathVariable("tourId") String tourId) {
 		return tourService.getTourById(tourId);
