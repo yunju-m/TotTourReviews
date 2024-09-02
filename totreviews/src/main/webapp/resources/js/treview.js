@@ -17,15 +17,15 @@ $(document).ready(() => {
         }
     });
 
-    // 이용약관 동의 여부 체크
+    // 유효성 검사 메소드
     $('#submitButton').on('click', function (event) {
-        const agreeRadio = $('#agreeRadio')[0]
-        if (!agreeRadio.checked) {
-            event.preventDefault();
-            alert("개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.");
-            return false;
+        event.preventDefault();
+        const validationResult = validate();
+        if (validationResult.isValid) {
+            $('#reviewForm').submit();
+        } else {
+            alert(validationResult.errorMessage);
         }
-        $('#reviewForm').submit();
     });
 });
 
@@ -66,4 +66,34 @@ const handleBackspace = event => {
             lastInput.focus();
         }
     }
+}
+
+// 공백 여부 유효성 검사
+const checkField = (selector, errorMessage) => {
+    const value = $(selector)[0].value;
+    return value === '' ? errorMessage : '';
+};
+
+const validate = () => {
+    const validations = [
+    	{ selector: '#agreeRadio', errorMessage: "개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다." },
+        { selector: '#reviewTitle', errorMessage: '제목을 입력해주세요.' },
+        { selector: '#travelCourse', errorMessage: '여행 코스를 선택해주세요.' },
+        { selector: '#reviewContentAndImgDiv .reviewContent', errorMessage: '후기 내용을 입력해주세요.' }
+    ];
+
+    for (let i = 1; i < validations.length; i++) {
+        const { selector, errorMessage } = validations[i];
+        const message = checkField(selector, errorMessage);
+        if (message) {
+            return { isValid: false, errorMessage: message };
+        }
+    }
+    
+    // 개인정보 수집 체크 유효성 검사
+    if (!$(validations[0].selector)[0].checked) {
+        return { isValid: false, errorMessage: validations[0].errorMessage };
+    }
+
+    return { isValid: true, errorMessage: '' };
 }

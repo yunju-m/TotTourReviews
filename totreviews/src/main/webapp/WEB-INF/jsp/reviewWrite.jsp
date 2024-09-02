@@ -26,12 +26,12 @@
                 <!-- 1. 여행 후기 제목 입력 -->
                 <div class="formGroup">
                     <label for="reviewTitle">제목</label>
-                    <input id="reviewTitle" type="text" class="titleInput" name="trevtitle" required>
+                    <input id="reviewTitle" type="text" class="titleInput" name="trevtitle">
                 </div>
                 <!-- 2. 여행 코스 선택 -->
                 <div class="formGroup">
                     <label for="travelCourse">여행 코스</label>
-                    <select id="travelCourse" class="courseSelect" name="trevcourse" required>
+                    <select id="travelCourse" class="courseSelect" name="trevcourse">
                         <option value="" disabled selected>여행 코스를 선택하세요</option>
                         <option value="course1">코스 1</option>
                         <option value="course2">코스 2</option>
@@ -69,9 +69,6 @@
                 </div>
                 <!-- 버튼 -->
                 <div class="formGroup">
-                    <div class="gotoReviewBtnDiv">
-                        <button type="button" class="initButton2">목록가기</button>
-                    </div>
                     <div class="submitAndCancleBtnDiv">
                         <button id="submitButton" type="button" class="initButton active">글 작성하기</button>
                         <button type="button" class="initButton">취소하기</button>
