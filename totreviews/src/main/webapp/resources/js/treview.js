@@ -16,6 +16,17 @@ $(document).ready(() => {
             handleBackspace(event);
         }
     });
+
+    // 이용약관 동의 여부 체크
+    $('#submitButton').on('click', function (event) {
+        const agreeRadio = $('#agreeRadio')[0]
+        if (!agreeRadio.checked) {
+            event.preventDefault();
+            alert("개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.");
+            return false;
+        }
+        $('#reviewForm').submit();
+    });
 });
 
 const handleImagePreview = event => {
