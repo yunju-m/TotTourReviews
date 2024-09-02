@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import totreviews.domain.TReviewDTO;
+import totreviews.domain.TReviewReqDTO;
 import totreviews.service.TReviewServiceImpl;
 import totreviews.util.FileUtils;
 
@@ -34,15 +34,15 @@ public class TReviewController {
 
 	// 여행 후기 작성 처리
 	@PostMapping("/write")
-	public String submitTourReviewWrite(@ModelAttribute TReviewDTO tReviewDTO,
+	public String submitTourReviewWrite(@ModelAttribute TReviewReqDTO tReviewReqDTO,
 			@RequestParam("image") MultipartFile imageFile) {
 		if (!imageFile.isEmpty()) {
 			String imagePath = FileUtils.saveImage(imageFile);
-			tReviewDTO.setTrevimgpath(imagePath);
+			tReviewReqDTO.setTrevimgpath(imagePath);
 		} else {
-			tReviewDTO.setTrevimgpath("");
+			tReviewReqDTO.setTrevimgpath("");
 		}
-		treviewService.insertTReview(tReviewDTO);
+		treviewService.insertTReview(tReviewReqDTO);
 		return "redirect:/review";
 	}
 

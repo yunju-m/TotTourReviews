@@ -1,6 +1,6 @@
 package totreviews.domain;
 
-public class TourDTO {
+public class TourReqDTO {
 
 	private String toid; // 관광지 아이디
 	private String areacode; // 지역코드
@@ -16,10 +16,10 @@ public class TourDTO {
 	private String tox; // x좌표
 	private String toy; // y좌표
 
-	public TourDTO() {
+	public TourReqDTO() {
 	}
 
-	public TourDTO(String toid, String areacode, String tourtype, String toname, String toaddress,
+	public TourReqDTO(String toid, String areacode, String tourtype, String toname, String toaddress,
 			String todetailaddress, String totime, String totel, String tohomepage, String tooverview, String toimgpath,
 			String tox, String toy) {
 		this.toid = toid;

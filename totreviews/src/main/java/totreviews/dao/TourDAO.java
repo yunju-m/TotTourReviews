@@ -4,7 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import totreviews.domain.TourDTO;
+import totreviews.domain.TourResDTO;
 
 @Repository
 public class TourDAO {
@@ -14,7 +14,7 @@ public class TourDAO {
 
 	private static final String NAMESPACE = "totreviews.mapper.TourMapper";
 
-	public TourDTO getTourById(String tourId) {
+	public TourResDTO getTourById(String tourId) {
 		return sqlSession.selectOne(NAMESPACE + ".getTourById", tourId);
 	}
 

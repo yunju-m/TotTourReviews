@@ -2,7 +2,7 @@ package totreviews.domain;
 
 import java.sql.Timestamp;
 
-public class CourseDTO {
+public class CourseReqDTO {
 
 	private String courseid; // 코스 아이디
 	private int tripid; // 여행 아이디
@@ -11,10 +11,10 @@ public class CourseDTO {
 	private Timestamp courregdate; // 등록일시
 	private Timestamp courupdate; // 수정일시
 
-	public CourseDTO() {
+	public CourseReqDTO() {
 	}
 
-	public CourseDTO(String courseid, int tripid, String areacode, String dcourse, Timestamp courregdate,
+	public CourseReqDTO(String courseid, int tripid, String areacode, String dcourse, Timestamp courregdate,
 			Timestamp courupdate) {
 		this.courseid = courseid;
 		this.tripid = tripid;

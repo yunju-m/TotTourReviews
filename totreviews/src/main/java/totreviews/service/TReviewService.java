@@ -1,9 +1,9 @@
 package totreviews.service;
 
-import totreviews.domain.TReviewDTO;
+import totreviews.domain.TReviewReqDTO;
 
 public interface TReviewService {
 
-	public void insertTReview(TReviewDTO treviewDTO);
+	public void insertTReview(TReviewReqDTO treviewReqDTO);
 
 }

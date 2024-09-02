@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="totreviews.mapper.TReviewMapper">
 
-    <insert id="insertTReview" parameterType="TReviewDTO">
+    <insert id="insertTReview" parameterType="TReviewReqDTO">
         INSERT INTO TREVIEW (TREVID, TRIPID, MEMID, TREVSTATUS, TREVTITLE, TREVCOURSE, TREVCONTENT, TREVIMGPATH, TREVRATING, TREVREGDATE, TREVUPDATE, TREVCOUNT)
         VALUES (seq_trevid.nextval, #{tripid}, #{memid}, #{trevstatus}, #{trevtitle}, #{trevcourse}, #{trevcontent}, #{trevimgpath}, #{trevrating}, #{trevregdate}, #{trevupdate}, #{trevcount})
     </insert>

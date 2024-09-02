@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import totreviews.domain.CourseDTO;
+import totreviews.domain.CourseResDTO;
 import totreviews.service.CourseService;
 
 @RestController
@@ -17,7 +17,7 @@ public class CourseRestController {
 	private CourseService courseService;
 
 	@GetMapping("/{courseId}")
-	public CourseDTO getCourseById(@PathVariable("courseId") String courseId) {
+	public CourseResDTO getCourseById(@PathVariable("courseId") String courseId) {
 		return courseService.getCourseById(courseId);
 	}
 

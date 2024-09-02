@@ -4,7 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import totreviews.domain.CourseDTO;
+import totreviews.domain.CourseResDTO;
 
 @Repository
 public class CourseDAO {
@@ -14,7 +14,7 @@ public class CourseDAO {
 
 	private static final String NAMESPACE = "totreviews.mapper.CourseMapper";
 
-	public CourseDTO getCourseById(String courseId) {
+	public CourseResDTO getCourseById(String courseId) {
 		return sqlSession.selectOne(NAMESPACE + ".getCourseById", courseId);
 	}
 

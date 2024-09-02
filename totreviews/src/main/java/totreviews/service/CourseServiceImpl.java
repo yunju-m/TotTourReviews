@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import totreviews.dao.CourseDAO;
-import totreviews.domain.CourseDTO;
+import totreviews.domain.CourseResDTO;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -13,7 +13,7 @@ public class CourseServiceImpl implements CourseService {
 	private CourseDAO courseDAO;
 
 	@Override
-	public CourseDTO getCourseById(String courseId) {
+	public CourseResDTO getCourseById(String courseId) {
 		return courseDAO.getCourseById(courseId);
 	}
 
