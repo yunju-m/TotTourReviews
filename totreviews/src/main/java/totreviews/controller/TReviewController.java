@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import totreviews.domain.TReviewReqDTO;
 import totreviews.service.TReviewServiceImpl;
-import totreviews.util.FileUtils;
 
 @Controller
 @RequestMapping("/review")
@@ -35,14 +34,10 @@ public class TReviewController {
 	// 여행 후기 작성 처리
 	@PostMapping("/write")
 	public String submitTourReviewWrite(@ModelAttribute TReviewReqDTO tReviewReqDTO,
-			@RequestParam("image") MultipartFile imageFile) {
+			@RequestParam("reviewImage") MultipartFile imageFile) {
 		tReviewReqDTO.validate();
-		if (!imageFile.isEmpty()) {
-			String imagePath = FileUtils.saveImage(imageFile);
-			tReviewReqDTO.setTrevimgpath(imagePath);
-		} else {
-			tReviewReqDTO.setTrevimgpath("");
-		}
+		tReviewReqDTO.processImageFile(imageFile);
+
 		treviewService.insertTReview(tReviewReqDTO);
 		return "redirect:/review";
 	}

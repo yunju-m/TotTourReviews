@@ -1,6 +1,9 @@
 package totreviews.domain;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import totreviews.exception.ErrorCode;
+import totreviews.util.FileUtils;
 import totreviews.util.ValidationUtils;
 
 public class TReviewReqDTO {
@@ -16,6 +19,18 @@ public class TReviewReqDTO {
 	public TReviewReqDTO() {
 	}
 
+	public TReviewReqDTO(int tripid, String memid, String trevtitle, String trevcourse, String trevcontent,
+			String trevimgpath, String trevAgree) {
+		super();
+		this.tripid = tripid;
+		this.memid = memid;
+		this.trevtitle = trevtitle;
+		this.trevcourse = trevcourse;
+		this.trevcontent = trevcontent;
+		this.trevimgpath = trevimgpath;
+		this.trevAgree = trevAgree;
+	}
+
 	// DTO 검증 메소드
 	public void validate() {
 		ValidationUtils.validateNotEmpty(trevtitle, ErrorCode.NOT_FOUND_TREVTITLE);
@@ -27,16 +42,14 @@ public class TReviewReqDTO {
 		ValidationUtils.validateCheck(trevAgree, ErrorCode.NOT_CHECK_TREVAGREE);
 	}
 
-	public TReviewReqDTO(int tripid, String memid, String trevtitle, String trevcourse, String trevcontent,
-			String trevimgpath, String trevAgree) {
-		super();
-		this.tripid = tripid;
-		this.memid = memid;
-		this.trevtitle = trevtitle;
-		this.trevcourse = trevcourse;
-		this.trevcontent = trevcontent;
-		this.trevimgpath = trevimgpath;
-		this.trevAgree = trevAgree;
+	// 이미지 경로 설정 메소드
+	public void processImageFile(MultipartFile imageFile) {
+		if (imageFile != null && !imageFile.isEmpty()) {
+			String imagePath = FileUtils.saveImage(imageFile);
+			this.trevimgpath = imagePath;
+		} else {
+			this.trevimgpath = "";
+		}
 	}
 
 	public int getTripid() {

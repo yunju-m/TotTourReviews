@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtils {
 
-	private static final String UPLOAD_DIR = "uploads/";
+	private static final String UPLOAD_DIR = "D:/upload/";
 
 	static {
 		File uploadDir = new File(UPLOAD_DIR);
