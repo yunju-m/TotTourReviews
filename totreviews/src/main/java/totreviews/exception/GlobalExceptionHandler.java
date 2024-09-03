@@ -7,17 +7,31 @@ import org.springframework.web.servlet.ModelAndView;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	// ValidationException 처리
+	// 값 유효성 검사 예외 처리
     @ExceptionHandler(ValidationException.class)
     public ModelAndView handleValidationException(ValidationException e) {
         String errorMessage = e.getErrorCode().getMessage();
 
-        return getModelAndView(errorMessage);
+        return getModelAndView(errorMessage, "common");
     }
 
-	// 경고창으로 보내기 위한 에러메시지 전달
-	private ModelAndView getModelAndView(String message) {
-		ModelAndView mav = new ModelAndView("common");
+    // 서버 오류 예외 처리
+    @ExceptionHandler(ServerException.class)
+    public ModelAndView handleServerException(ServerException e) {
+        String errorMessage = e.getMessage();
+        return getModelAndView(errorMessage, "errorPage");
+    }
+    
+    // 일반 예외 처리
+    @ExceptionHandler(Exception.class)
+    public ModelAndView handleGeneralException(Exception e) {
+        String errorMessage = "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
+        return getModelAndView(errorMessage, "serverErrorPage");
+    }
+    
+	// 경고창으로 보내기 위한 에러메시지와 뷰 전달
+	private ModelAndView getModelAndView(String message, String viewName) {
+		ModelAndView mav = new ModelAndView(viewName);
 		mav.addObject("message", message);
 		return mav;
 	}
