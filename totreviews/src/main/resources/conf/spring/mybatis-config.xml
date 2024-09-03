@@ -9,6 +9,9 @@
     </settings>  
     
     <typeAliases>
+    	<typeAlias alias="TripVO" type="totreviews.domain.TripVO"/>
+    	<typeAlias alias="TReviewVO" type="totreviews.domain.TReviewVO"/>
+    	<typeAlias alias="TReviewImageVO" type="totreviews.domain.TReviewImageVO"/>
     	<typeAlias alias="TReviewReqDTO" type="totreviews.domain.TReviewReqDTO"/>
     	<typeAlias alias="TReviewResDTO" type="totreviews.domain.TReviewResDTO"/>
     	<typeAlias alias="CourseReqDTO" type="totreviews.domain.CourseReqDTO"/>

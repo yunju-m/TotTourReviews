@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtils {
 
-	private static final String UPLOAD_DIR = "D:/upload/";
+	private static final String UPLOAD_DIR = "C:/upload/";
 
 	static {
 		File uploadDir = new File(UPLOAD_DIR);
@@ -25,7 +25,7 @@ public class FileUtils {
 		try {
 			File targetFile = new File(UPLOAD_DIR + filename);
 			Files.copy(file.getInputStream(), targetFile.toPath());
-			return filename;
+			return targetFile.getAbsolutePath();
 		} catch (IOException e) {
 			throw new RuntimeException("파일 저장 중 오류 발생", e);
 		}

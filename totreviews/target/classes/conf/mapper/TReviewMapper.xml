@@ -2,9 +2,18 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="totreviews.mapper.TReviewMapper">
 
-    <insert id="insertTReview" parameterType="TReviewReqDTO">
-        INSERT INTO TREVIEW (TREVID, TRIPID, MEMID, TREVSTATUS, TREVTITLE, TREVCOURSE, TREVCONTENT, TREVIMGPATH, TREVRATING, TREVREGDATE, TREVUPDATE, TREVCOUNT)
-        VALUES (seq_trevid.nextval, #{tripid}, #{memid}, #{trevstatus}, #{trevtitle}, #{trevcourse}, #{trevcontent}, #{trevimgpath}, #{trevrating}, #{trevregdate}, #{trevupdate}, #{trevcount})
+  	<insert id="insertTReview" parameterType="TReviewVO" useGeneratedKeys="true" keyProperty="trevid">
+        <selectKey keyProperty="trevid" resultType="int" order="BEFORE">
+            SELECT seq_trevid.nextval FROM dual
+        </selectKey>
+        INSERT INTO TREVIEW (TREVID, TRIPID, MEMID, TREVSTATUS, TREVTITLE, TREVCOURSE, TREVCONTENT, TREVRATING, TREVREGDATE, TREVUPDATE, TREVCOUNT)
+        VALUES (#{trevid}, #{tripid}, #{memid}, #{trevstatus}, #{trevtitle}, #{trevcourse}, #{trevcontent}, 
+        #{trevrating}, #{trevregdate}, #{trevupdate}, #{trevcount})
+    </insert>
+    
+    <insert id="insertTReviewImage" parameterType="TReviewImageVO">
+        INSERT INTO TREVIEWIMAGE (TREVIMGID, TREVID, MEMID, TREVIMGPATH, TREVIMGREGDATE, TREVIMGUPDATE)
+        VALUES (seq_trevimgid.nextval, #{trevid}, #{memid}, #{trevimgpath}, #{trevimgregdate}, #{trevimgupdate})
     </insert>
 
 </mapper>

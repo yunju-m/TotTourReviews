@@ -11,7 +11,6 @@ public class TReviewVO {
 	private String trevtitle; // 후기 제목
 	private String trevcourse; // 코스
 	private String trevcontent; // 내용
-	private String trevimgpath; // 이미지 경로
 	private String trevrating; // 평점
 	private Timestamp trevregdate; // 작성일시
 	private Timestamp trevupdate; // 수정일시
@@ -21,8 +20,8 @@ public class TReviewVO {
 	}
 
 	public TReviewVO(int trevid, int tripid, String memid, String trevstatus, String trevtitle, String trevcourse,
-			String trevcontent, String trevimgpath, String trevrating, Timestamp trevregdate, Timestamp trevupdate,
-			Integer trevcount) {
+			String trevcontent, String trevrating, Timestamp trevregdate, Timestamp trevupdate, Integer trevcount) {
+		super();
 		this.trevid = trevid;
 		this.tripid = tripid;
 		this.memid = memid;
@@ -30,7 +29,6 @@ public class TReviewVO {
 		this.trevtitle = trevtitle;
 		this.trevcourse = trevcourse;
 		this.trevcontent = trevcontent;
-		this.trevimgpath = trevimgpath;
 		this.trevrating = trevrating;
 		this.trevregdate = trevregdate;
 		this.trevupdate = trevupdate;
@@ -39,8 +37,8 @@ public class TReviewVO {
 
 	public static TReviewVO fromDTO(TReviewReqDTO dto) {
 		// TODO 현재 임의의 사용자와 여행 번호 선언
-		return new TReviewVO(0, 1, "user001", "CMT001", dto.getTrevtitle(), dto.getTrevcourse(),
-				dto.getTrevcontent(), dto.getTrevimgpath(), "0", new Timestamp(System.currentTimeMillis()), null, 0);
+		return new TReviewVO(0, 1, "user001", "CMT001", dto.getTrevtitle(), dto.getTrevcourse(), dto.getTrevcontent(),
+				"0", new Timestamp(System.currentTimeMillis()), null, 0);
 	}
 
 	public int getTrevid() {
@@ -71,10 +69,6 @@ public class TReviewVO {
 		return trevcontent;
 	}
 
-	public String getTrevimgpath() {
-		return trevimgpath;
-	}
-
 	public String getTrevrating() {
 		return trevrating;
 	}
@@ -93,10 +87,10 @@ public class TReviewVO {
 
 	@Override
 	public String toString() {
-		return "TReviewDTO [trevid=" + trevid + ", tripid=" + tripid + ", memid=" + memid + ", trevstatus=" + trevstatus
+		return "TReviewVO [trevid=" + trevid + ", tripid=" + tripid + ", memid=" + memid + ", trevstatus=" + trevstatus
 				+ ", trevtitle=" + trevtitle + ", trevcourse=" + trevcourse + ", trevcontent=" + trevcontent
-				+ ", trevimgpath=" + trevimgpath + ", trevrating=" + trevrating + ", trevregdate=" + trevregdate
-				+ ", trevupdate=" + trevupdate + ", trevcount=" + trevcount + "]";
+				+ ", trevrating=" + trevrating + ", trevregdate=" + trevregdate + ", trevupdate=" + trevupdate
+				+ ", trevcount=" + trevcount + "]";
 	}
 
 }

@@ -51,7 +51,7 @@
                 <div class="formGroup">
                     <label for="reviewImage">이미지 업로드</label>
                     <div class="reviewImageDiv">
-                        <input id="reviewImage" type="file" name="reviewImage" />
+                        <input id="reviewImage" type="file" name="images" multiple />
                     </div>
                 </div>
                 <!-- 5. 이용 약관 동의 -->

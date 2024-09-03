@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import totreviews.domain.TReviewImageVO;
 import totreviews.domain.TReviewVO;
 
 @Repository
@@ -16,6 +17,10 @@ public class TReviewDAO {
 
 	public void insertTReview(TReviewVO treviewVO) {
 		sqlSession.insert(NAMESPACE + ".insertTReview", treviewVO);
+	}
+
+	public void insertTReviewImage(TReviewImageVO treviewImageVO) {
+		sqlSession.insert(NAMESPACE + ".insertTReviewImage", treviewImageVO);
 	}
 
 }

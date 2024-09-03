@@ -1,13 +1,11 @@
 package totreviews.domain;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import totreviews.exception.ErrorCode;
-import totreviews.util.FileUtils;
 import totreviews.util.ValidationUtils;
 
 public class TReviewReqDTO {
 
+	private int trevid; // 여행후기 게시글 아이디
 	private int tripid; // 여행 아이디
 	private String memid; // 회원 아이디
 	private String trevtitle; // 후기 제목
@@ -19,9 +17,10 @@ public class TReviewReqDTO {
 	public TReviewReqDTO() {
 	}
 
-	public TReviewReqDTO(int tripid, String memid, String trevtitle, String trevcourse, String trevcontent,
+	public TReviewReqDTO(int trevid, int tripid, String memid, String trevtitle, String trevcourse, String trevcontent,
 			String trevimgpath, String trevAgree) {
 		super();
+		this.trevid = trevid;
 		this.tripid = tripid;
 		this.memid = memid;
 		this.trevtitle = trevtitle;
@@ -42,14 +41,12 @@ public class TReviewReqDTO {
 		ValidationUtils.validateCheck(trevAgree, ErrorCode.NOT_CHECK_TREVAGREE);
 	}
 
-	// 이미지 경로 설정 메소드
-	public void processImageFile(MultipartFile imageFile) {
-		if (imageFile != null && !imageFile.isEmpty()) {
-			String imagePath = FileUtils.saveImage(imageFile);
-			this.trevimgpath = imagePath;
-		} else {
-			this.trevimgpath = "";
-		}
+	public int getTrevid() {
+		return trevid;
+	}
+
+	public void setTrevid(int trevid) {
+		this.trevid = trevid;
 	}
 
 	public int getTripid() {
@@ -110,9 +107,9 @@ public class TReviewReqDTO {
 
 	@Override
 	public String toString() {
-		return "TReviewReqDTO [tripid=" + tripid + ", memid=" + memid + ", trevtitle=" + trevtitle + ", trevcourse="
-				+ trevcourse + ", trevcontent=" + trevcontent + ", trevimgpath=" + trevimgpath + ", trevAgree="
-				+ trevAgree + "]";
+		return "TReviewReqDTO [trevid=" + trevid + ", tripid=" + tripid + ", memid=" + memid + ", trevtitle="
+				+ trevtitle + ", trevcourse=" + trevcourse + ", trevcontent=" + trevcontent + ", trevimgpath="
+				+ trevimgpath + ", trevAgree=" + trevAgree + "]";
 	}
 
 }
