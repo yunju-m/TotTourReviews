@@ -36,6 +36,7 @@ public class TReviewController {
 	@PostMapping("/write")
 	public String submitTourReviewWrite(@ModelAttribute TReviewReqDTO tReviewReqDTO,
 			@RequestParam("image") MultipartFile imageFile) {
+		tReviewReqDTO.validate();
 		if (!imageFile.isEmpty()) {
 			String imagePath = FileUtils.saveImage(imageFile);
 			tReviewReqDTO.setTrevimgpath(imagePath);

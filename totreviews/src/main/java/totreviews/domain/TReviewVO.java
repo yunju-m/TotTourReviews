@@ -2,7 +2,7 @@ package totreviews.domain;
 
 import java.sql.Timestamp;
 
-public class TReviewResDTO {
+public class TReviewVO {
 
 	private int trevid; // 여행후기 게시글 아이디
 	private int tripid; // 여행 아이디
@@ -17,10 +17,10 @@ public class TReviewResDTO {
 	private Timestamp trevupdate; // 수정일시
 	private Integer trevcount; // 조회수
 
-	public TReviewResDTO() {
+	public TReviewVO() {
 	}
 
-	public TReviewResDTO(int trevid, int tripid, String memid, String trevstatus, String trevtitle, String trevcourse,
+	public TReviewVO(int trevid, int tripid, String memid, String trevstatus, String trevtitle, String trevcourse,
 			String trevcontent, String trevimgpath, String trevrating, Timestamp trevregdate, Timestamp trevupdate,
 			Integer trevcount) {
 		this.trevid = trevid;

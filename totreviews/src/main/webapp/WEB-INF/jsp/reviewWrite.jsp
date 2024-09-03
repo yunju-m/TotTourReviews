@@ -1,4 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -58,11 +59,11 @@
                     <fieldset class="termsFieldset">
                         <legend>개인정보 수집 및 이용 동의</legend>
                         <label>
-                            <input type="radio" name="terms" value="agree" class="termsRadio" id="agreeRadio">
+                            <input type="radio" name="trevAgree" value="agree" class="termsRadio" id="agreeRadio">
                             동의함
                         </label>
                         <label>
-                            <input type="radio" name="terms" value="disagree" class="termsRadio" id="disagreeRadio">
+                            <input type="radio" name="trevAgree" value="disagree" class="termsRadio" id="disagreeRadio">
                             동의하지 않음
                         </label>
                     </fieldset>
@@ -70,7 +71,7 @@
                 <!-- 버튼 -->
                 <div class="formGroup">
                     <div class="submitAndCancleBtnDiv">
-                        <button id="submitButton" type="button" class="initButton active">글 작성하기</button>
+                        <button type="submit" class="initButton active">글 작성하기</button>
                         <button type="button" class="initButton">취소하기</button>
                     </div>
                 </div>
