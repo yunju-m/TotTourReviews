@@ -5,7 +5,7 @@ $(document).ready(() => {
     });
 
     // 이미지 업로드시 미리보기 생성
-   	$('#reviewImage').on('change', handleFileSelect);
+    $('#reviewImage').on('change', handleFileSelect);
 
     // 입력 필드에서 엔터키 입력 시 새로운 입력 필드 생성 없으면 삭제
     $('#reviewContentAndImgDiv').on('keydown', '.reviewContent', function (event) {
@@ -17,7 +17,7 @@ $(document).ready(() => {
         }
     });
 
-    // 유효성 검사 메소드
+    // 여행 후기 항목 유효성 검사 및 등록
     $('#submitButton').on('click', function (event) {
         event.preventDefault();
         const validationResult = validate();
@@ -27,12 +27,20 @@ $(document).ready(() => {
             alert(validationResult.errorMessage);
         }
     });
+    
+     // 취소하기 버튼 클릭 시 목록 페이지로 이동
+	$('#cancleButton').on('click', function (event) {
+		window.location.href = "/totreviews/review";
+	});
 });
+
+let fileList = [];
 
 const handleFileSelect = event => {
     const input = event.target;
-    const files = input.files;
-        
+    const files = Array.from(input.files);
+    fileList = [...fileList, ...files]; // Update fileList
+
     if (files) {
         $.each(files, (index, file) => {
             let reader = new FileReader();
@@ -55,12 +63,12 @@ const addNewFileInput = (file, img) => {
     const inputWrapper = $('<div>', {
         class: 'file-input-wrapper'
     });
-
-    const fileInput = $('<input>', {
+    
+    const fileNameInput = $('<input>', {
         type: 'text',
         name: 'reviewImage',
         value: `${file.name}`,
-        readonly: true
+        multiple: 'multiple'
     });
 
     const deleteButton = $('<button>', {
@@ -71,9 +79,10 @@ const addNewFileInput = (file, img) => {
         // 삭제 버튼 클릭 시 해당 요소 삭제
         img.remove();
         inputWrapper.remove();
+        fileList = fileList.filter(f => f !== file);
     });
 
-    inputWrapper.append(fileInput).append(deleteButton);
+    inputWrapper.append(fileNameInput).append(deleteButton);
     $('.reviewImageDiv').append(inputWrapper);
 }
 
@@ -122,7 +131,7 @@ const validate = () => {
             return { isValid: false, errorMessage: message };
         }
     }
-    
+
     // 체크박스 유효성 검사
     if (!$('#agreeRadio').is(':checked')) {
         return { isValid: false, errorMessage: '개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.' };

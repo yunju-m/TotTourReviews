@@ -70,7 +70,7 @@
                 <div class="formGroup">
                     <div class="submitAndCancleBtnDiv">
                         <button id="submitButton" type="button" class="initButton active">글 작성하기</button>
-                        <button type="button" class="initButton">취소하기</button>
+                        <button id="cancleButton" type="button" class="initButton">취소하기</button>
                     </div>
                 </div>
             </form>
