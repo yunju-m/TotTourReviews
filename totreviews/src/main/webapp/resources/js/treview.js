@@ -32,11 +32,9 @@ $(document).ready(() => {
 const handleFileSelect = event => {
     const input = event.target;
     const files = input.files;
-    const fileList = new FormData();
         
     if (files) {
         $.each(files, (index, file) => {
-        	fileList.append('images', file);
             let reader = new FileReader();
             reader.onload = function (e) {
                 const img = $('<img>', {
@@ -46,21 +44,37 @@ const handleFileSelect = event => {
                     class: 'reviewImage'
                 });
                 $('#reviewContentAndImgDiv').append(img);
-                addNewFileInput(file);
+                addNewFileInput(file, img);
             };
             reader.readAsDataURL(file);
         });
     }
 }
 
-const addNewFileInput = file => {
-    const newInput = $('<input>', {
+const addNewFileInput = (file, img) => {
+    const inputWrapper = $('<div>', {
+        class: 'file-input-wrapper'
+    });
+
+    const fileInput = $('<input>', {
         type: 'text',
         name: 'reviewImage',
-        value: `${file.name}`
+        value: `${file.name}`,
+        readonly: true
     });
-    newInput.on('change', handleFileSelect);
-    $('.reviewImageDiv').append(newInput);
+
+    const deleteButton = $('<button>', {
+        type: 'button',
+        text: '삭제',
+        class: 'initButton'
+    }).on('click', function () {
+        // 삭제 버튼 클릭 시 해당 요소 삭제
+        img.remove();
+        inputWrapper.remove();
+    });
+
+    inputWrapper.append(fileInput).append(deleteButton);
+    $('.reviewImageDiv').append(inputWrapper);
 }
 
 const createNewInputField = () => {
