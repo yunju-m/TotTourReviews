@@ -5,7 +5,7 @@ $(document).ready(() => {
     });
 
     // 이미지 업로드시 미리보기 생성
-    $('#reviewImage').on('change', handleImagePreview);
+   	$('#reviewImage').on('change', handleFileSelect);
 
     // 입력 필드에서 엔터키 입력 시 새로운 입력 필드 생성 없으면 삭제
     $('#reviewContentAndImgDiv').on('keydown', '.reviewContent', function (event) {
@@ -29,18 +29,38 @@ $(document).ready(() => {
     });
 });
 
-const handleImagePreview = event => {
+const handleFileSelect = event => {
     const input = event.target;
-    const file = input.files[0];
-    if (file) {
-        let reader = new FileReader();
-        reader.onload = function (e) {
-            $('#imagePreview').attr('src', e.target.result).show();
-        };
-        reader.readAsDataURL(file);
-    } else {
-        $('#imagePreview').hide().attr('src', '');
+    const files = input.files;
+    const fileList = new FormData();
+        
+    if (files) {
+        $.each(files, (index, file) => {
+        	fileList.append('images', file);
+            let reader = new FileReader();
+            reader.onload = function (e) {
+                const img = $('<img>', {
+                    src: e.target.result,
+                    alt: `여행후기업로드사진미리보기${index + 1}`,
+                    name: 'reviewImage',
+                    class: 'reviewImage'
+                });
+                $('#reviewContentAndImgDiv').append(img);
+                addNewFileInput(file);
+            };
+            reader.readAsDataURL(file);
+        });
     }
+}
+
+const addNewFileInput = file => {
+    const newInput = $('<input>', {
+        type: 'text',
+        name: 'reviewImage',
+        value: `${file.name}`
+    });
+    newInput.on('change', handleFileSelect);
+    $('.reviewImageDiv').append(newInput);
 }
 
 const createNewInputField = () => {
@@ -76,23 +96,22 @@ const checkField = (selector, errorMessage) => {
 
 const validate = () => {
     const validations = [
-    	{ selector: '#agreeRadio', errorMessage: "개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다." },
         { selector: '#reviewTitle', errorMessage: '제목을 입력해주세요.' },
         { selector: '#travelCourse', errorMessage: '여행 코스를 선택해주세요.' },
         { selector: '#reviewContentAndImgDiv .reviewContent', errorMessage: '후기 내용을 입력해주세요.' }
     ];
 
-    for (let i = 1; i < validations.length; i++) {
-        const { selector, errorMessage } = validations[i];
+    // 나머지 필드 유효성 검사
+    for (const { selector, errorMessage } of validations) {
         const message = checkField(selector, errorMessage);
         if (message) {
             return { isValid: false, errorMessage: message };
         }
     }
     
-    // 개인정보 수집 체크 유효성 검사
-    if (!$(validations[0].selector)[0].checked) {
-        return { isValid: false, errorMessage: validations[0].errorMessage };
+    // 체크박스 유효성 검사
+    if (!$('#agreeRadio').is(':checked')) {
+        return { isValid: false, errorMessage: '개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.' };
     }
 
     return { isValid: true, errorMessage: '' };

@@ -34,7 +34,7 @@ public class TReviewController {
 	// 여행 후기 작성 처리
 	@PostMapping("/write")
 	public String submitTourReviewWrite(@ModelAttribute TReviewReqDTO tReviewReqDTO,
-			@RequestParam("images") MultipartFile[] imageFiles) {
+			@RequestParam("reviewImage") MultipartFile[] imageFiles) {
 
 		treviewService.insertTReview(tReviewReqDTO, imageFiles);
 		return "redirect:/review";

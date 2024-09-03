@@ -147,11 +147,24 @@
 
 .reviewContent {
     width: 100%;
-    border: 0;
-    padding: 0;
+    border: 0px;
+    border-bottom: 1px solid #ccc; /* 테두리 추가 */
+    padding: 0px;
     font-size: x-large;
     resize: none;
     cursor: text;
+    background-color: #fff; /* 배경색 흰색으로 설정 */
+    color: #000;            /* 텍스트 색상 검정색으로 설정 */
+    outline: none;          /* 포커스 시 기본 외곽선 제거 */
+}
+
+.reviewContent:focus {
+    border-color: #007BFF; /* 포커스 시 테두리 색상 변경 */
+    outline: 1px solid #007BFF; /* 포커스 시 외곽선 색상 추가 */
+}
+
+.reviewContent::placeholder {
+    color: #aaa; /* 플레이스홀더 색상 */
 }
 
 .reviewContentAndImgDiv {
@@ -169,7 +182,6 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     margin: 10px;
-    display: none;
 }
 
 .reviewContentTextareaDiv {
@@ -179,12 +191,20 @@
 .reviewImageDiv {
     width: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     margin: 10px;
     margin-right: 0;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+input[type="file"] {
+	padding-bottom: 5px;
+}
+
+input[name="reviewImage"] {
+	border: 0px;
 }
 
 .termsFieldset {

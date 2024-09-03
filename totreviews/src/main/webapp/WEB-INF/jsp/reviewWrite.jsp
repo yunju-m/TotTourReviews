@@ -1,5 +1,4 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -43,7 +42,6 @@
                 <div class="reviewContentDiv">
                     <label for="reviewContent">후기 내용</label>
                     <div id="reviewContentAndImgDiv" class="reviewContentAndImgDiv">
-                        <img id="imagePreview" src="" alt="이미지 미리보기">
                         <input class="reviewContent" name="trevcontent" />
                     </div>
                 </div>
@@ -51,7 +49,7 @@
                 <div class="formGroup">
                     <label for="reviewImage">이미지 업로드</label>
                     <div class="reviewImageDiv">
-                        <input id="reviewImage" type="file" name="images" multiple />
+                        <input id="reviewImage" type="file" name="reviewImage" multiple />
                     </div>
                 </div>
                 <!-- 5. 이용 약관 동의 -->
