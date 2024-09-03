@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import totreviews.dao.TReviewDAO;
 import totreviews.domain.TReviewReqDTO;
+import totreviews.domain.TReviewVO;
 
 @Service
 public class TReviewServiceImpl implements TReviewService {
@@ -18,10 +19,8 @@ public class TReviewServiceImpl implements TReviewService {
 			throw new IllegalArgumentException("여행 후기 데이터가 null입니다.");
 		}
 		try {
-			// TODO 임시 회원 정보 입력
-			treviewReqDTO.setMemid("user001");
-			treviewReqDTO.setTripid(1);
-			treviewDAO.insertTReview(treviewReqDTO);
+			TReviewVO tReviewVO = TReviewVO.fromDTO(treviewReqDTO);
+			treviewDAO.insertTReview(tReviewVO);
 		} catch (Exception e) {
 			throw new RuntimeException("여행 후기 데이터 삽입 중 오류 발생", e);
 		}

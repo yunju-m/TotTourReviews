@@ -37,6 +37,12 @@ public class TReviewVO {
 		this.trevcount = trevcount;
 	}
 
+	public static TReviewVO fromDTO(TReviewReqDTO dto) {
+		// TODO 현재 임의의 사용자와 여행 번호 선언
+		return new TReviewVO(0, 1, "user001", "CMT001", dto.getTrevtitle(), dto.getTrevcourse(),
+				dto.getTrevcontent(), dto.getTrevimgpath(), "0", new Timestamp(System.currentTimeMillis()), null, 0);
+	}
+
 	public int getTrevid() {
 		return trevid;
 	}
@@ -83,54 +89,6 @@ public class TReviewVO {
 
 	public Integer getTrevcount() {
 		return trevcount;
-	}
-
-	public void setTrevid(int trevid) {
-		this.trevid = trevid;
-	}
-
-	public void setTripid(int tripid) {
-		this.tripid = tripid;
-	}
-
-	public void setMemid(String memid) {
-		this.memid = memid;
-	}
-
-	public void setTrevstatus(String trevstatus) {
-		this.trevstatus = trevstatus;
-	}
-
-	public void setTrevtitle(String trevtitle) {
-		this.trevtitle = trevtitle;
-	}
-
-	public void setTrevcourse(String trevcourse) {
-		this.trevcourse = trevcourse;
-	}
-
-	public void setTrevcontent(String trevcontent) {
-		this.trevcontent = trevcontent;
-	}
-
-	public void setTrevimgpath(String trevimgpath) {
-		this.trevimgpath = trevimgpath;
-	}
-
-	public void setTrevrating(String trevrating) {
-		this.trevrating = trevrating;
-	}
-
-	public void setTrevregdate(Timestamp trevregdate) {
-		this.trevregdate = trevregdate;
-	}
-
-	public void setTrevupdate(Timestamp trevupdate) {
-		this.trevupdate = trevupdate;
-	}
-
-	public void setTrevcount(Integer trevcount) {
-		this.trevcount = trevcount;
 	}
 
 	@Override
