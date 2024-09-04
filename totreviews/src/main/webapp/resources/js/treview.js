@@ -1,3 +1,5 @@
+let fileList = [];
+
 $(document).ready(() => {
     // 글쓰기 버튼 클릭 시 이동
     $('#writeReviewBtn').on('click', function () {
@@ -22,25 +24,46 @@ $(document).ready(() => {
         event.preventDefault();
         const validationResult = validate();
         if (validationResult.isValid) {
-            $('#reviewForm').submit();
+            submitReview();
         } else {
             alert(validationResult.errorMessage);
         }
     });
-    
-     // 취소하기 버튼 클릭 시 목록 페이지로 이동
-	$('#cancleButton').on('click', function (event) {
-		window.location.href = "/totreviews/review";
-	});
+
+    // 취소하기 버튼 클릭 시 목록 페이지로 이동
+    $('#cancleButton').on('click', function (event) {
+        window.location.href = "/totreviews/review";
+    });
 });
 
-let fileList = [];
+// 업로드 파일 정보와 함께 글쓰기 등록 처리
+const submitReview = () => {
+    const formData = new FormData($('#reviewForm')[0]);
+    fileList.forEach(file => {
+        formData.append('reviewImage', file);
+    });
+
+    $.ajax({
+        url: $('#reviewForm').attr('action'), // form action 경로
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function () {
+            window.location.href = '/totreviews/review';
+        },
+        error: function (error) {
+            alert('파일 업로드 중 오류가 발생했습니다.');
+        }
+    });
+
+}
 
 const handleFileSelect = event => {
     const input = event.target;
     const files = Array.from(input.files);
     fileList = [...fileList, ...files]; // Update fileList
-
+    console.log(fileList);
     if (files) {
         $.each(files, (index, file) => {
             let reader = new FileReader();
@@ -63,7 +86,7 @@ const addNewFileInput = (file, img) => {
     const inputWrapper = $('<div>', {
         class: 'file-input-wrapper'
     });
-    
+
     const fileNameInput = $('<input>', {
         type: 'text',
         name: 'reviewImage',
