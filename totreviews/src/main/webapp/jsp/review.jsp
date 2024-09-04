@@ -52,7 +52,7 @@
                             <img src="${pageContext.request.contextPath}${fn:trim(imgPaths[0])}" alt="Review Title Image">
                         </c:when>
                         <c:otherwise>
-                            <img src="https://via.placeholder.com/300x200" alt="Review Image">
+                            <img src="${pageContext.request.contextPath}/static/image/treviewDefaultImg.png" alt="Review Default Image">
                         </c:otherwise>
                     </c:choose>
                     <div class="info">

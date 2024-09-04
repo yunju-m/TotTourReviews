@@ -42,9 +42,7 @@ const submitReview = () => {
     fileList.forEach(file => {
         formData.append('reviewImage', file);
     });
-	for (let [key, value] of formData.entries()) {
-    	console.log(key, value);
-	}
+    
     $.ajax({
         url: $('#reviewForm').attr('action'), // form action 경로
         type: 'POST',
