@@ -1,0 +1,42 @@
+package totreviews.common.page;
+
+import totreviews.common.Constants;
+
+public class PageDTO {
+
+	private int offset; // 데이터베이스 쿼리의 시작 위치
+	private int pageRowCount; // 페이지당 데이터 수
+	private PageReqDTO dto; // PageReqDTO 인스턴스를 가진 페이지 요청 파라미터
+	private String userId;
+
+	public PageDTO(PageReqDTO dto) {
+		this.pageRowCount = Constants.PAGE_ROW_COUNT;
+		this.dto = dto;
+		offset = (dto.getPage() - 1) * pageRowCount;
+	}
+
+	public PageDTO(int offset, int pageRowCount, PageReqDTO dto, String userId) {
+		super();
+		this.offset = offset;
+		this.pageRowCount = pageRowCount;
+		this.dto = dto;
+		this.userId = userId;
+	}
+
+	public int getOffset() {
+		return offset;
+	}
+
+	public int getPageRowCount() {
+		return pageRowCount;
+	}
+
+	public PageReqDTO getDto() {
+		return dto;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+}

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,11 +25,12 @@ public class TReviewController {
 	private TReviewServiceImpl treviewService;
 
 	// 여행 후기 화면 이동
-	@GetMapping
-	public String showTourReview(Model model) {
-		List<TReviewResDTO> reviews = treviewService.getAllTReviews();
-		model.addAttribute("reviews", reviews);
-		
+	@GetMapping("/{page}")
+	public String showTourReview(@PathVariable("page") int currentPage, Model model) {
+		if (currentPage < 1) {
+            currentPage = 1;
+        }
+
 		return "review";
 	}
 
@@ -44,7 +46,7 @@ public class TReviewController {
 			@RequestParam(value = "reviewImage", required = false) MultipartFile[] imageFiles) {
 		
 		treviewService.insertTReview(tReviewReqDTO, imageFiles);
-		return "redirect:/review";
+		return "redirect:/review/1";
 	}
 
 }
