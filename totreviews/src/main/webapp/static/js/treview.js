@@ -42,7 +42,9 @@ const submitReview = () => {
     fileList.forEach(file => {
         formData.append('reviewImage', file);
     });
-
+	for (let [key, value] of formData.entries()) {
+    	console.log(key, value);
+	}
     $.ajax({
         url: $('#reviewForm').attr('action'), // form action 경로
         type: 'POST',
@@ -56,14 +58,13 @@ const submitReview = () => {
             alert('파일 업로드 중 오류가 발생했습니다.');
         }
     });
-
 }
 
 const handleFileSelect = event => {
     const input = event.target;
     const files = Array.from(input.files);
-    fileList = [...fileList, ...files]; // Update fileList
-    console.log(fileList);
+    fileList = [...fileList, ...files]; 
+
     if (files) {
         $.each(files, (index, file) => {
             let reader = new FileReader();
@@ -79,6 +80,7 @@ const handleFileSelect = event => {
             };
             reader.readAsDataURL(file);
         });
+        $('#reviewImage').val('');
     }
 }
 

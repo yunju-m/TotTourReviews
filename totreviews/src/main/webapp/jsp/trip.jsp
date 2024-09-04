@@ -7,7 +7,7 @@
     <meta name="viewport" content="width='device-width', initial-scale=1.0">
    	<script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=자바스크립트 인증키"></script>
-    <script defer src="${pageContext.request.contextPath}/resources/js/trip.js"></script>
+    <script defer src="${pageContext.request.contextPath}/static/js/trip.js"></script>
     <title>여행코스경로</title>
 </head>
 <body>

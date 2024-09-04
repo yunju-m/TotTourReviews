@@ -15,5 +15,28 @@
         INSERT INTO TREVIEWIMAGE (TREVIMGID, TREVID, MEMID, TREVIMGPATH, TREVIMGREGDATE, TREVIMGUPDATE)
         VALUES (seq_trevimgid.nextval, #{trevid}, #{memid}, #{trevimgpath}, #{trevimgregdate}, #{trevimgupdate})
     </insert>
+    
+    <select id="getAllTReviews" resultMap="TReviewResDTOResultMap">
+    	SELECT r.TREVID, r.TRIPID, r.MEMID, r.TREVSTATUS, r.TREVTITLE, r.TREVCOURSE, r.TREVCONTENT, LISTAGG(i.TREVIMGPATH, ',') WITHIN GROUP (ORDER BY i.TREVIMGID) AS TREVIMGPATH, r.TREVRATING, r.TREVREGDATE, r.TREVUPDATE, r.TREVCOUNT 
+		FROM TREVIEW r 
+		LEFT JOIN TReviewImage i 
+		ON r.TREVID = i.TREVID 
+		GROUP BY r.TREVID, r.TRIPID, r.MEMID, r.TREVSTATUS, r.TREVTITLE, r.TREVCOURSE, r.TREVCONTENT, r.TREVRATING, r.TREVREGDATE, r.TREVUPDATE, r.TREVCOUNT
+    </select>
 
+	<resultMap id="TReviewResDTOResultMap" type="TReviewResDTO">
+        <id property="trevid" column="TREVID" />
+        <result property="tripid" column="TRIPID" />
+        <result property="memid" column="MEMID" />
+        <result property="trevstatus" column="TREVSTATUS" />
+        <result property="trevtitle" column="TREVTITLE" />
+        <result property="trevcourse" column="TREVCOURSE" />
+        <result property="trevcontent" column="TREVCONTENT" />
+        <result property="trevimgpath" column="TREVIMGPATH" />
+        <result property="trevrating" column="TREVRATING" />
+        <result property="trevregdate" column="TREVREGDATE" />
+        <result property="trevupdate" column="TREVUPDATE" />
+        <result property="trevcount" column="TREVCOUNT" />
+    </resultMap>
+	
 </mapper>

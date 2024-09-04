@@ -1,5 +1,7 @@
 package totreviews.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import totreviews.dao.TReviewDAO;
 import totreviews.domain.TReviewImageVO;
 import totreviews.domain.TReviewReqDTO;
+import totreviews.domain.TReviewResDTO;
 import totreviews.domain.TReviewVO;
 import totreviews.exception.ServerException;
 import totreviews.util.FileUtils;
@@ -17,6 +20,9 @@ public class TReviewServiceImpl implements TReviewService {
 
 	@Autowired
 	private TReviewDAO treviewDAO;
+
+	@Autowired
+	private FileUtils fileUtils;
 
 	@Override
 	public void insertTReview(TReviewReqDTO treviewReqDTO, MultipartFile[] imageFiles) {
@@ -33,7 +39,7 @@ public class TReviewServiceImpl implements TReviewService {
 			if (imageFiles != null && imageFiles.length > 0) {
 				for (MultipartFile imageFile : imageFiles) {
 					if (!imageFile.isEmpty()) {
-						String imagePath = FileUtils.saveImage(imageFile);
+						String imagePath = fileUtils.saveImage(imageFile);
 						treviewReqDTO.setTrevimgpath(imagePath);
 						tReviewImageVO = TReviewImageVO.fromDTO(treviewReqDTO);
 
@@ -43,6 +49,15 @@ public class TReviewServiceImpl implements TReviewService {
 			}
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 데이터 삽입 중 데이터베이스 오류 발생", e);
+		}
+	}
+
+	@Override
+	public List<TReviewResDTO> getAllTReviews() {
+		try {
+			return treviewDAO.getAllTReviews();
+		} catch (DataAccessException e) {
+			throw new ServerException("여행 후기 목록 데이터 가져오던 중 데이터베이스 오류 발생", e);
 		}
 	}
 

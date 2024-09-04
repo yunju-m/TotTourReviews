@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/global.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/review.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/global.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/review.css" />
     <title>여행 후기 상세</title>
 </head>
 <body>

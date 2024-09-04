@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/errorPage.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/errorPage.css" />
 <title>에러 발생 페이지</title>
 </head>
 <body>

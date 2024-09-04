@@ -5,10 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/planer.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/planer.css">
     <script type="text/javascript"
         src="//dapi.kakao.com/v2/maps/sdk.js?appkey=380ae83d33ff0006270a1f7b2d257ebf"></script>
-    <script defer src="${pageContext.request.contextPath}/resources/js/trip.js"></script>
+    <script defer src="${pageContext.request.contextPath}/static/js/trip.js"></script>
     <title>추천여행코스</title>
 </head>
 <body>
