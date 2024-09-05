@@ -25,9 +25,8 @@ public class TReviewController {
 
 	// 여행 후기 화면 이동
 	@GetMapping("/{page}")
-	public String showTourReview(@ModelAttribute PageReqDTO dto, Model model) {
-		
-		PageResDTO<TReviewResDTO> pagination = treviewService.findTReviewListWithPaging(dto);
+	public String showTourReview(@ModelAttribute PageReqDTO pageReqDTO, Model model) {
+		PageResDTO<TReviewResDTO> pagination = treviewService.findTReviewListWithPaging(pageReqDTO);
 		model.addAttribute("pagination", pagination);
 		return "treview";
 	}

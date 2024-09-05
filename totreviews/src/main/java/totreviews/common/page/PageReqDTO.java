@@ -2,7 +2,7 @@ package totreviews.common.page;
 
 import totreviews.common.enums.Flag;
 import totreviews.common.enums.SearchType;
-import totreviews.enums.SortType;
+import totreviews.common.enums.SortType;
 
 public class PageReqDTO {
 

@@ -54,7 +54,15 @@
 		        r.TREVREGDATE,
 		        r.TREVUPDATE,
 		        r.TREVCOUNT,
-		        ROW_NUMBER() OVER (ORDER BY r.TREVREGDATE DESC) AS rn
+		        ROW_NUMBER() OVER (
+                <choose>
+                    <when test="dto.sortType.name() == 'LATEST'">ORDER BY r.TREVREGDATE DESC</when>
+                    <when test="dto.sortType.name() == 'OLDEST'">ORDER BY r.TREVREGDATE ASC</when>
+                    <when test="dto.sortType.name() == 'VIEWS'">ORDER BY r.TREVCOUNT DESC</when>
+                    <when test="dto.sortType.name() == 'RATING'">ORDER BY r.TREVRATING DESC</when>
+                    <otherwise>ORDER BY r.TREVREGDATE DESC</otherwise>
+                </choose>
+            ) AS rn
 		    FROM TREVIEW r
 		    LEFT JOIN TReviewImage i ON r.TREVID = i.TREVID
 		    WHERE r.TREVSTATUS = 'CMT001'

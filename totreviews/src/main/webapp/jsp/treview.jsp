@@ -27,19 +27,29 @@
             <div class="initButton" id="myReviewsBtn">나의 여행 후기</div>
         </div>
         <div class="searchAndWriteDiv">
-        	<!-- 여행 후기 검색 폼 -->
+        	<!-- 여행 후기 검색 및 정렬 폼 -->
         	<form id="searchForm" action="${pageContext.request.contextPath}/review/1" method="get">
 	            <div class="searchDiv">
+	            	<!-- 여행 후기 정렬  -->
+	            	<select name="sortType" aria-label="sortType select" class="select">
+			            <option value="LATEST" ${page.sortType == 'LATEST' ? 'selected' : ''}>최신순</option>
+			            <option value="OLDEST" ${page.sortType == 'OLDEST' ? 'selected' : ''}>오래된순</option>
+			            <option value="VIEWS" ${page.sortType == 'VIEWS' ? 'selected' : ''}>조회순</option>
+			            <option value="RATING" ${page.sortType == 'RATING' ? 'selected' : ''}>평점순</option>
+			        </select>
+	            	<!-- 여행 후기 정렬 끝 -->
+	            	<!-- 여행 후기 검색 -->
 	                <select name="searchType" aria-label="searchType select" class="select">
 	                    <option value="ALL" ${page.searchType == 'ALL' ? 'selected' : ''}>전체</option>
 	                    <option value="TITLE" ${page.searchType == 'TITLE' ? 'selected' : ''}>제목</option>
 	                    <option value="CONTENT" ${page.searchType == 'CONTENT' ? 'selected' : ''}>내용</option>
                 	</select>
 	                <input name="search" class="searchInput" value="${page.search}" type="text" placeholder="검색어를 입력하세요.">
+	                <!-- 여행 후기 검색 끝 -->
 	                <button type="submit" class="initButton2">검색</button>
 	            </div>
 	        </form>
-	        <!-- 여행 후기 검색 폼 끝 -->
+	        <!-- 여행 후기 검색 및 정렬 폼 끝 -->
 	        
 	        <!-- 여행 후기 글쓰기 컨테이너 -->
             <div class="writeReviewDiv">
@@ -48,6 +58,7 @@
             <!-- 여행 후기 글쓰기 컨테이너 끝 -->
         </div>
         <hr />
+        
         <!-- 여행 후기 목록 리스트 -->
         <div class="reviewList">
             <c:forEach var="review" items="${pagination.postList}">
