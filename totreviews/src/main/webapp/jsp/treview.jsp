@@ -1,3 +1,4 @@
+<%@page import="totreviews.domain.MemberVO"%>
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -23,12 +24,13 @@
             <div>아래 목록에서 다양한 여행 후기를 확인하고, 자신이 작성한 후기 목록을 선택할 수 있습니다.</div>
         </div>
         <div class="menu">
-            <div class="initButton active" id="TotalReviewsBtn">전체 여행 후기</div>
+            <div class="initButton" id="TotalReviewsBtn">전체 여행 후기</div>
             <div class="initButton" id="myReviewsBtn">나의 여행 후기</div>
         </div>
+        
         <div class="searchAndWriteDiv">
         	<!-- 여행 후기 검색 및 정렬 폼 -->
-        	<form id="searchForm" action="${pageContext.request.contextPath}/review/1" method="get">
+        	<form id="searchForm" action="${pageContext.request.contextPath}/1/review/1" method="get">
 	            <div class="searchDiv">
 	            	<!-- 여행 후기 정렬  -->
 	            	<select name="sortType" aria-label="sortType select" class="select">
@@ -88,13 +90,13 @@
 		    <ul class="paginationList">
 		        <!-- 처음 페이지로 이동하는 버튼 -->
 	            <li class="paginationItem">
-	                <a href="${pageContext.request.contextPath}/review/${pagination.startBlockPage}" class="paginationLink">&laquo;</a>
+	                <a href="${pageContext.request.contextPath}/1/review/${pagination.startBlockPage}" class="paginationLink">&laquo;</a>
 	            </li>
 		
 		        <!-- 이전 페이지 버튼 -->
 		        <c:if test="${pagination.isPrev}">
 		            <li class="paginationItem">
-		                <a href="${pageContext.request.contextPath}/review/${pagination.currentPage - 1}" class="paginationLink">이전</a>
+		                <a href="${pageContext.request.contextPath}/1/review/${pagination.currentPage - 1}" class="paginationLink">이전</a>
 		            </li>
 		        </c:if>
 		
@@ -108,7 +110,7 @@
 		                </c:when>
 		                <c:otherwise>
 		                    <li class="paginationItem">
-		                        <a href="${pageContext.request.contextPath}/review/${pageNum}" class="paginationLink">${pageNum}</a>
+		                        <a href="${pageContext.request.contextPath}/1/review/${pageNum}" class="paginationLink">${pageNum}</a>
 		                    </li>
 		                </c:otherwise>
 		            </c:choose>
@@ -117,13 +119,13 @@
 		        <!-- 다음 페이지 버튼 -->
 		        <c:if test="${pagination.isNext}">
 		            <li class="paginationItem">
-		                <a href="${pageContext.request.contextPath}/review/${pagination.currentPage + 1}" class="paginationLink">다음</a>
+		                <a href="${pageContext.request.contextPath}/1/review/${pagination.currentPage + 1}" class="paginationLink">다음</a>
 		            </li>
 		        </c:if>
 		
 		        <!-- 맨 끝으로 버튼 -->
 	            <li class="paginationItem">
-	                <a href="${pageContext.request.contextPath}/review/${pagination.endBlockPage}" class="paginationLink">&raquo;</a>
+	                <a href="${pageContext.request.contextPath}/1/review/${pagination.endBlockPage}" class="paginationLink">&raquo;</a>
 	            </li>
 		    </ul>
 		</nav>

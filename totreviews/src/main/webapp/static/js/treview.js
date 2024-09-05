@@ -1,9 +1,21 @@
 let fileList = [];
 
 $(document).ready(() => {
+
+	// 여행 후기 종류별 활성화 기능
+	let path = window.location.pathname;
+
+    if (path.includes('/totreviews/1/review/1')) {
+        $('#TotalReviewsBtn').addClass('active');
+        $('#myReviewsBtn').removeClass('active');
+    } else if (path.includes('/totreviews/2/review/1')) {
+        $('#myReviewsBtn').addClass('active');
+        $('#TotalReviewsBtn').removeClass('active');
+    }
+	
     // 글쓰기 버튼 클릭 시 이동
     $('#writeReviewBtn').on('click', function () {
-        window.location.href = '/totreviews/review/write';
+        window.location.href = '/totreviews/1/review/write';
     });
 
     // 이미지 업로드시 미리보기 생성
@@ -30,9 +42,19 @@ $(document).ready(() => {
         }
     });
 
+    // 전체 여행 후기 버튼 클릭 시 전체 여행 후기 리스트 출력
+    $('#TotalReviewsBtn').on('click', () => {
+        window.location.href = "/totreviews/1/review/1";
+    });
+
+    // 나의 여행 후기 버튼 클릭 시 내가 작성한 여행 후기 리스트 출력
+    $('#myReviewsBtn').on('click', () => {
+        window.location.href = "/totreviews/2/review/1";
+    });
+
     // 취소하기 버튼 클릭 시 목록 페이지로 이동
-    $('#cancleButton').on('click', function (event) {
-        window.location.href = "/totreviews/review/1";
+    $('#cancleButton').on('click', () => {
+        window.history.back();
     });
 });
 
@@ -42,7 +64,7 @@ const submitReview = () => {
     fileList.forEach(file => {
         formData.append('reviewImage', file);
     });
-    
+
     $.ajax({
         url: $('#reviewForm').attr('action'), // form action 경로
         type: 'POST',
@@ -50,7 +72,7 @@ const submitReview = () => {
         contentType: false,
         processData: false,
         success: function () {
-            window.location.href = '/totreviews/review/1';
+            window.location.href = '/totreviews/1/review/1';
         },
         error: function (error) {
             alert('파일 업로드 중 오류가 발생했습니다.');
@@ -61,7 +83,7 @@ const submitReview = () => {
 const handleFileSelect = event => {
     const input = event.target;
     const files = Array.from(input.files);
-    fileList = [...fileList, ...files]; 
+    fileList = [...fileList, ...files];
 
     if (files) {
         $.each(files, (index, file) => {

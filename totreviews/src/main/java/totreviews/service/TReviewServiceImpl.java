@@ -56,11 +56,11 @@ public class TReviewServiceImpl implements TReviewService {
 	}
 
 	@Override
-	public PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO pageReqDTO) {
+	public PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO pageReqDTO, int boardId) {
 		try {
 			int totalTReviewCount = treviewDAO.selectTotalTReviewCount(pageReqDTO);
-			
-			PageDTO pageDTO = new PageDTO(pageReqDTO);
+
+			PageDTO pageDTO = new PageDTO(pageReqDTO, boardId);
 			List<TReviewResDTO> postList = treviewDAO.selectTReviewListWithPaging(pageDTO);
 			return new PageResDTO<>(totalTReviewCount, pageReqDTO.getPage(), postList);
 		} catch (DataAccessException e) {
