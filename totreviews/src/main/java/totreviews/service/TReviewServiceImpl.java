@@ -56,14 +56,13 @@ public class TReviewServiceImpl implements TReviewService {
 	}
 
 	@Override
-	public PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO dto) {
+	public PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO pageReqDTO) {
 		try {
-			int totalTReviewCount = treviewDAO.selectTotalTReviewCount();
-
-			PageDTO pageDTO = new PageDTO(dto);
+			int totalTReviewCount = treviewDAO.selectTotalTReviewCount(pageReqDTO);
+			
+			PageDTO pageDTO = new PageDTO(pageReqDTO);
 			List<TReviewResDTO> postList = treviewDAO.selectTReviewListWithPaging(pageDTO);
-
-			return new PageResDTO<>(totalTReviewCount, dto.getPage(), postList);
+			return new PageResDTO<>(totalTReviewCount, pageReqDTO.getPage(), postList);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 목록 데이터 가져오던 중 데이터베이스 오류 발생", e);
 		}

@@ -68,4 +68,10 @@ public class PageDTO {
 		return userId;
 	}
 
+	@Override
+	public String toString() {
+		return "PageDTO [offset=" + offset + ", pageRowCount=" + pageRowCount + ", dto=" + dto + ", boardId=" + boardId
+				+ ", postId=" + postId + ", userId=" + userId + "]";
+	}
+	
 }

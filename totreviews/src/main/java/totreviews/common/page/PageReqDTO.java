@@ -59,4 +59,10 @@ public class PageReqDTO {
 		this.activateFlag = activateFlag;
 	}
 
+	@Override
+	public String toString() {
+		return "PageReqDTO [page=" + page + ", search=" + search + ", searchType=" + searchType + ", sortType="
+				+ sortType + ", activateFlag=" + activateFlag + "]";
+	}
+
 }

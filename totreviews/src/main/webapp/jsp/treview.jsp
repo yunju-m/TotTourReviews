@@ -27,18 +27,25 @@
             <div class="initButton" id="myReviewsBtn">나의 여행 후기</div>
         </div>
         <div class="searchAndWriteDiv">
-            <div class="searchDiv">
-                <select id="searchCategory" class="select">
-                    <option value="all">전체</option>
-                    <option value="title">제목</option>
-                    <option value="content">내용</option>
-                </select>
-                <input id="searchInput" class="searchInput" type="text" placeholder="검색어를 입력하세요.">
-                <button id="searchReviewBtn" class="initButton2">검색</button>
-            </div>
+        	<!-- 여행 후기 검색 폼 -->
+        	<form id="searchForm" action="${pageContext.request.contextPath}/review/1" method="get">
+	            <div class="searchDiv">
+	                <select name="searchType" aria-label="searchType select" class="select">
+	                    <option value="ALL" ${page.searchType == 'ALL' ? 'selected' : ''}>전체</option>
+	                    <option value="TITLE" ${page.searchType == 'TITLE' ? 'selected' : ''}>제목</option>
+	                    <option value="CONTENT" ${page.searchType == 'CONTENT' ? 'selected' : ''}>내용</option>
+                	</select>
+	                <input name="search" class="searchInput" value="${page.search}" type="text" placeholder="검색어를 입력하세요.">
+	                <button type="submit" class="initButton2">검색</button>
+	            </div>
+	        </form>
+	        <!-- 여행 후기 검색 폼 끝 -->
+	        
+	        <!-- 여행 후기 글쓰기 컨테이너 -->
             <div class="writeReviewDiv">
                 <button id="writeReviewBtn" class="initButton2">글쓰기</button>
             </div>
+            <!-- 여행 후기 글쓰기 컨테이너 끝 -->
         </div>
         <hr />
         <!-- 여행 후기 목록 리스트 -->

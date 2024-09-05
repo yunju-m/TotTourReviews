@@ -16,12 +16,27 @@
         VALUES (seq_trevimgid.nextval, #{trevid}, #{memid}, #{trevimgpath}, #{trevimgregdate}, #{trevimgupdate})
     </insert>
     
-    <select id="selectTotalTReviewCount" resultType="int">
+    <select id="selectTotalTReviewCount" parameterType="PageReqDTO" resultType="int">
     	SELECT COUNT(DISTINCT r.TREVID) AS total_count
 		FROM TREVIEW r
 		LEFT JOIN TReviewImage i 
 		ON r.TREVID = i.TREVID
 		WHERE r.TREVSTATUS = 'CMT001'
+		
+		<if test="search != null and search != ''">
+	        <choose>
+	            <when test="searchType.name() == 'TITLE'">
+	                AND r.TREVTITLE LIKE '%' || #{search} || '%'
+	            </when>
+	            <when test="searchType.name() == 'CONTENT'">
+	                AND r.TREVCONTENT LIKE '%' || #{search} || '%'
+	            </when>
+	            <when test="searchType.name() == 'ALL'">
+	                AND (r.TREVTITLE LIKE '%' || #{search} || '%' 
+	                     OR r.TREVCONTENT LIKE '%' || #{search} || '%')
+	            </when>
+	        </choose>
+    	</if>
     </select>
     
     <select id="selectTReviewListWithPaging" parameterType="PageDTO" resultMap="TReviewResDTOResultMap">
@@ -43,6 +58,21 @@
 		    FROM TREVIEW r
 		    LEFT JOIN TReviewImage i ON r.TREVID = i.TREVID
 		    WHERE r.TREVSTATUS = 'CMT001'
+		    
+		    <if test="dto.search != null and dto.search != ''">
+	            <choose>
+	                <when test="dto.searchType.name() == 'TITLE'">
+	                    AND r.TREVTITLE LIKE '%' || #{dto.search} || '%'
+	                </when>
+	                <when test="dto.searchType.name() == 'CONTENT'">
+	                    AND r.TREVCONTENT LIKE '%' || #{dto.search} || '%'
+	                </when>
+	                <when test="dto.searchType.name() == 'ALL'">
+	                    AND (r.TREVTITLE LIKE '%' || #{dto.search} || '%' 
+	                         OR r.TREVCONTENT LIKE '%' || #{dto.search} || '%')
+	                </when>
+	            </choose>
+        	</if>
 		) 
 		WHERE rn BETWEEN #{offset} + 1 AND #{offset} + #{pageRowCount}
 		ORDER BY rn
