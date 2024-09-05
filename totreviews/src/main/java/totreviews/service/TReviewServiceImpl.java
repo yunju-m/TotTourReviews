@@ -7,6 +7,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import totreviews.common.page.PageDTO;
+import totreviews.common.page.PageReqDTO;
+import totreviews.common.page.PageResDTO;
 import totreviews.dao.TReviewDAO;
 import totreviews.domain.TReviewImageVO;
 import totreviews.domain.TReviewReqDTO;
@@ -53,9 +56,14 @@ public class TReviewServiceImpl implements TReviewService {
 	}
 
 	@Override
-	public List<TReviewResDTO> getAllTReviews() {
+	public PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO dto) {
 		try {
-			return treviewDAO.getAllTReviews();
+			int totalTReviewCount = treviewDAO.selectTotalTReviewCount();
+
+			PageDTO pageDTO = new PageDTO(dto);
+			List<TReviewResDTO> postList = treviewDAO.selectTReviewListWithPaging(pageDTO);
+
+			return new PageResDTO<>(totalTReviewCount, dto.getPage(), postList);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 목록 데이터 가져오던 중 데이터베이스 오류 발생", e);
 		}

@@ -43,7 +43,7 @@
         <hr />
         <!-- 여행 후기 목록 리스트 -->
         <div class="reviewList">
-            <c:forEach var="review" items="${reviews}">
+            <c:forEach var="review" items="${pagination.postList}">
                 <div class="reviewItem">
                     <!-- 리뷰 이미지 표시, 첫 번째 이미지 사용 -->
                     <c:choose>
@@ -59,11 +59,57 @@
                         <div class="title">${review.trevtitle}</div>
                         <div class="author">${review.memid}</div>
                         <div class="rating">평점: ${review.trevrating}</div>
+                        <div class="count">조회수: ${review.trevcount}</div>
                     </div>
                 </div>
             </c:forEach>
         </div>
         <!-- 여행 후기 목록 리스트 END-->
+        <!-- 페이징 버튼 -->
+		<nav class="paginationNav">
+		    <ul class="paginationList">
+		        <!-- 처음 페이지로 이동하는 버튼 -->
+	            <li class="paginationItem">
+	                <a href="${pageContext.request.contextPath}/review/${pagination.startBlockPage}" class="paginationLink">&laquo;</a>
+	            </li>
+		
+		        <!-- 이전 페이지 버튼 -->
+		        <c:if test="${pagination.isPrev}">
+		            <li class="paginationItem">
+		                <a href="${pageContext.request.contextPath}/review/${pagination.currentPage - 1}" class="paginationLink">이전</a>
+		            </li>
+		        </c:if>
+		
+		        <!-- 페이지 번호 출력 -->
+		        <c:forEach begin="${pagination.startBlockPage}" end="${pagination.endBlockPage}" var="pageNum">
+		            <c:choose>
+		                <c:when test="${pagination.currentPage == pageNum}">
+		                    <li class="paginationItem active">
+		                        <span class="paginationLink">${pageNum}</span>
+		                    </li>
+		                </c:when>
+		                <c:otherwise>
+		                    <li class="paginationItem">
+		                        <a href="${pageContext.request.contextPath}/review/${pageNum}" class="paginationLink">${pageNum}</a>
+		                    </li>
+		                </c:otherwise>
+		            </c:choose>
+		        </c:forEach>
+		
+		        <!-- 다음 페이지 버튼 -->
+		        <c:if test="${pagination.isNext}">
+		            <li class="paginationItem">
+		                <a href="${pageContext.request.contextPath}/review/${pagination.currentPage + 1}" class="paginationLink">다음</a>
+		            </li>
+		        </c:if>
+		
+		        <!-- 맨 끝으로 버튼 -->
+	            <li class="paginationItem">
+	                <a href="${pageContext.request.contextPath}/review/${pagination.endBlockPage}" class="paginationLink">&raquo;</a>
+	            </li>
+		    </ul>
+		</nav>
+		<!-- 페이징 버튼 끝 -->
     </div>
 </body>
 </html>

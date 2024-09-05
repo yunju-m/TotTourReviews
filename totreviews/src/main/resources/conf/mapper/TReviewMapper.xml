@@ -16,12 +16,36 @@
         VALUES (seq_trevimgid.nextval, #{trevid}, #{memid}, #{trevimgpath}, #{trevimgregdate}, #{trevimgupdate})
     </insert>
     
-    <select id="getAllTReviews" resultMap="TReviewResDTOResultMap">
-    	SELECT r.TREVID, r.TRIPID, r.MEMID, r.TREVSTATUS, r.TREVTITLE, r.TREVCOURSE, r.TREVCONTENT, LISTAGG(i.TREVIMGPATH, ',') WITHIN GROUP (ORDER BY i.TREVIMGID) AS TREVIMGPATH, r.TREVRATING, r.TREVREGDATE, r.TREVUPDATE, r.TREVCOUNT 
-		FROM TREVIEW r 
+    <select id="selectTotalTReviewCount" resultType="int">
+    	SELECT COUNT(DISTINCT r.TREVID) AS total_count
+		FROM TREVIEW r
 		LEFT JOIN TReviewImage i 
-		ON r.TREVID = i.TREVID 
-		GROUP BY r.TREVID, r.TRIPID, r.MEMID, r.TREVSTATUS, r.TREVTITLE, r.TREVCOURSE, r.TREVCONTENT, r.TREVRATING, r.TREVREGDATE, r.TREVUPDATE, r.TREVCOUNT
+		ON r.TREVID = i.TREVID
+		WHERE r.TREVSTATUS = 'CMT001'
+    </select>
+    
+    <select id="selectTReviewListWithPaging" parameterType="PageDTO" resultMap="TReviewResDTOResultMap">
+		SELECT * FROM (
+		    SELECT 
+		        r.TREVID,
+		        r.TRIPID,
+		        r.MEMID,
+		        r.TREVSTATUS,
+		        r.TREVTITLE,
+		        r.TREVCOURSE,
+		        r.TREVCONTENT,
+		        i.TREVIMGPATH,
+		        r.TREVRATING,
+		        r.TREVREGDATE,
+		        r.TREVUPDATE,
+		        r.TREVCOUNT,
+		        ROW_NUMBER() OVER (ORDER BY r.TREVREGDATE DESC) AS rn
+		    FROM TREVIEW r
+		    LEFT JOIN TReviewImage i ON r.TREVID = i.TREVID
+		    WHERE r.TREVSTATUS = 'CMT001'
+		) 
+		WHERE rn BETWEEN #{offset} + 1 AND #{offset} + #{pageRowCount}
+		ORDER BY rn
     </select>
 
 	<resultMap id="TReviewResDTOResultMap" type="TReviewResDTO">

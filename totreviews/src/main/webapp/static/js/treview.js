@@ -32,7 +32,7 @@ $(document).ready(() => {
 
     // 취소하기 버튼 클릭 시 목록 페이지로 이동
     $('#cancleButton').on('click', function (event) {
-        window.location.href = "/totreviews/review";
+        window.location.href = "/totreviews/review/1";
     });
 });
 
@@ -50,7 +50,7 @@ const submitReview = () => {
         contentType: false,
         processData: false,
         success: function () {
-            window.location.href = '/totreviews/review';
+            window.location.href = '/totreviews/review/1';
         },
         error: function (error) {
             alert('파일 업로드 중 오류가 발생했습니다.');

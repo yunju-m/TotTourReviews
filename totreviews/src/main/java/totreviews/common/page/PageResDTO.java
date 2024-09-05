@@ -67,12 +67,19 @@ public class PageResDTO<T> {
 		return totalPageCount;
 	}
 
-	public boolean isPrev() {
+	public boolean getIsPrev() {
 		return isPrev;
 	}
 
-	public boolean isNext() {
+	public boolean getIsNext() {
 		return isNext;
+	}
+
+	@Override
+	public String toString() {
+		return "PageResDTO [totalPostCount=" + totalPostCount + ", currentPage=" + currentPage + ", postList="
+				+ postList + ", startBlockPage=" + startBlockPage + ", endBlockPage=" + endBlockPage
+				+ ", totalPageCount=" + totalPageCount + ", isPrev=" + isPrev + ", isNext=" + isNext + "]";
 	}
 
 }

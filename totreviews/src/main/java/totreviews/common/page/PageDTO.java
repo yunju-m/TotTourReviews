@@ -7,6 +7,8 @@ public class PageDTO {
 	private int offset; // 데이터베이스 쿼리의 시작 위치
 	private int pageRowCount; // 페이지당 데이터 수
 	private PageReqDTO dto; // PageReqDTO 인스턴스를 가진 페이지 요청 파라미터
+	private int boardId; // 게시판 아이디
+	private int postId;
 	private String userId;
 
 	public PageDTO(PageReqDTO dto) {
@@ -15,11 +17,30 @@ public class PageDTO {
 		offset = (dto.getPage() - 1) * pageRowCount;
 	}
 
-	public PageDTO(int offset, int pageRowCount, PageReqDTO dto, String userId) {
+	public PageDTO(PageReqDTO dto, int boardId) {
+		this.pageRowCount = Constants.PAGE_ROW_COUNT;
+		this.boardId = boardId;
+		this.dto = dto;
+		// TODO 유저 정보 확인
+		offset = (dto.getPage() - 1) * pageRowCount;
+	}
+
+	public PageDTO(PageReqDTO dto, int boardId, int postId) {
+		this.pageRowCount = Constants.PAGE_ROW_COUNT;
+		this.boardId = boardId;
+		this.postId = postId;
+		this.dto = dto;
+		// TODO 유저 정보 확인
+		offset = (dto.getPage() - 1) * pageRowCount;
+	}
+
+	public PageDTO(int offset, int pageRowCount, PageReqDTO dto, int boardId, int postId, String userId) {
 		super();
 		this.offset = offset;
 		this.pageRowCount = pageRowCount;
 		this.dto = dto;
+		this.boardId = boardId;
+		this.postId = postId;
 		this.userId = userId;
 	}
 
@@ -33,6 +54,14 @@ public class PageDTO {
 
 	public PageReqDTO getDto() {
 		return dto;
+	}
+
+	public long getBoardId() {
+		return boardId;
+	}
+
+	public long getPostId() {
+		return postId;
 	}
 
 	public String getUserId() {

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import totreviews.common.page.PageDTO;
 import totreviews.domain.TReviewImageVO;
 import totreviews.domain.TReviewResDTO;
 import totreviews.domain.TReviewVO;
@@ -26,8 +27,12 @@ public class TReviewDAO {
 		sqlSession.insert(NAMESPACE + ".insertTReviewImage", treviewImageVO);
 	}
 
-	public List<TReviewResDTO> getAllTReviews() {
-		return sqlSession.selectList(NAMESPACE + ".getAllTReviews");
+	public int selectTotalTReviewCount() {
+		return sqlSession.selectOne(NAMESPACE + ".selectTotalTReviewCount");
+	}
+
+	public List<TReviewResDTO> selectTReviewListWithPaging(PageDTO pageDTO) {
+		return sqlSession.selectList(NAMESPACE + ".selectTReviewListWithPaging", pageDTO);
 	}
 
 }
