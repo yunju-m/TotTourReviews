@@ -1,21 +1,36 @@
+//  URL 선언
+const BASE_TREVIEW_URL = '/totreviews';
+const GET_ALL_TREVIEW = `${BASE_TREVIEW_URL}/all/review/1`;
+const GET_MY_TREVIEW = `${BASE_TREVIEW_URL}/my/review/1`;
+const GET_WRITE_TREVIEW = `${BASE_TREVIEW_URL}/all/review/write`;
+
+// 에러 메시지 선언
+const ERROR_MESSAGES = {
+    TITLE_REQUIRED: '제목을 입력해주세요.',
+    COURSE_REQUIRED: '여행 코스를 선택해주세요.',
+    CONTENT_REQUIRED: '후기 내용을 입력해주세요.',
+    AGREE_REQUIRED: '개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.',
+    FILE_UPLOAD: '파일 업로드 중 오류가 발생했습니다.'
+};
+
 let fileList = [];
 
 $(document).ready(() => {
 
-	// 여행 후기 종류별 활성화 기능
-	let path = window.location.pathname;
+    // 여행 후기 종류별 활성화 기능
+    let path = window.location.pathname;
 
-    if (path.includes('/totreviews/all/review/1')) {
+    if (path.includes(GET_ALL_TREVIEW)) {
         $('#TotalReviewsBtn').addClass('active');
         $('#myReviewsBtn').removeClass('active');
-    } else if (path.includes('/totreviews/my/review/1')) {
+    } else if (path.includes(GET_MY_TREVIEW)) {
         $('#myReviewsBtn').addClass('active');
         $('#TotalReviewsBtn').removeClass('active');
     }
-	
+
     // 글쓰기 버튼 클릭 시 이동
     $('#writeReviewBtn').on('click', function () {
-        window.location.href = '/totreviews/all/review/write';
+        window.location.href = GET_WRITE_TREVIEW;
     });
 
     // 이미지 업로드시 미리보기 생성
@@ -44,12 +59,12 @@ $(document).ready(() => {
 
     // 전체 여행 후기 버튼 클릭 시 전체 여행 후기 리스트 출력
     $('#TotalReviewsBtn').on('click', () => {
-        window.location.href = "/totreviews/all/review/1";
+        window.location.href = GET_ALL_TREVIEW;
     });
 
     // 나의 여행 후기 버튼 클릭 시 내가 작성한 여행 후기 리스트 출력
     $('#myReviewsBtn').on('click', () => {
-        window.location.href = "/totreviews/my/review/1";
+        window.location.href = GET_MY_TREVIEW;
     });
 
     // 취소하기 버튼 클릭 시 목록 페이지로 이동
@@ -72,10 +87,10 @@ const submitReview = () => {
         contentType: false,
         processData: false,
         success: function () {
-            window.location.href = '/totreviews/all/review/1';
+            window.location.href = GET_ALL_TREVIEW;
         },
         error: function (error) {
-            alert('파일 업로드 중 오류가 발생했습니다.');
+            alert(ERROR_MESSAGES.FILE_UPLOAD + " " + error);
         }
     });
 }
@@ -164,9 +179,9 @@ const checkField = (selector, errorMessage) => {
 
 const validate = () => {
     const validations = [
-        { selector: '#reviewTitle', errorMessage: '제목을 입력해주세요.' },
-        { selector: '#travelCourse', errorMessage: '여행 코스를 선택해주세요.' },
-        { selector: '#reviewContentAndImgDiv .reviewContent', errorMessage: '후기 내용을 입력해주세요.' }
+        { selector: '#reviewTitle', errorMessage: ERROR_MESSAGES.TITLE_REQUIRED },
+        { selector: '#travelCourse', errorMessage: ERROR_MESSAGES.COURSE_REQUIRED },
+        { selector: '#reviewContentAndImgDiv .reviewContent', errorMessage: ERROR_MESSAGES.CONTENT_REQUIRED }
     ];
 
     // 나머지 필드 유효성 검사
@@ -179,7 +194,7 @@ const validate = () => {
 
     // 체크박스 유효성 검사
     if (!$('#agreeRadio').is(':checked')) {
-        return { isValid: false, errorMessage: '개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.' };
+        return { isValid: false, errorMessage: ERROR_MESSAGES.AGREE_REQUIRED };
     }
 
     return { isValid: true, errorMessage: '' };

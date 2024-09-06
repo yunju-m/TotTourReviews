@@ -43,14 +43,14 @@
 		<if test="dto.search != null and dto.search != ''">
 			<choose>
 				<when test="dto.searchType.name() == 'TITLE'">
-					AND r.TREVTITLE LIKE '%' || #{search} || '%'
+					AND r.TREVTITLE LIKE '%' || #{dto.search} || '%'
 				</when>
 				<when test="dto.searchType.name() == 'CONTENT'">
-					AND r.TREVCONTENT LIKE '%' || #{search} || '%'
+					AND r.TREVCONTENT LIKE '%' || #{dto.search} || '%'
 				</when>
 				<when test="dto.searchType.name() == 'ALL'">
-					AND (r.TREVTITLE LIKE '%' || #{search} || '%'
-					OR r.TREVCONTENT LIKE '%' || #{search} || '%')
+					AND (r.TREVTITLE LIKE '%' || #{dto.search} || '%'
+					OR r.TREVCONTENT LIKE '%' || #{dto.search} || '%')
 				</when>
 			</choose>
 		</if>
