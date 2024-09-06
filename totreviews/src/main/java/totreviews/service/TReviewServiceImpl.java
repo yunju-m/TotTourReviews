@@ -56,7 +56,7 @@ public class TReviewServiceImpl implements TReviewService {
 	}
 
 	@Override
-	public PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO pageReqDTO, int boardId) {
+	public PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO pageReqDTO, String boardId) {
 		try {
 			PageDTO pageDTO = new PageDTO(pageReqDTO, boardId);
 

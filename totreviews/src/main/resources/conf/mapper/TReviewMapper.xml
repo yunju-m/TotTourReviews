@@ -33,9 +33,9 @@
 		WHERE r.TREVSTATUS = 'CMT001'
 
 		<choose>
-			<when test="boardId == 1">
+			<when test="boardId == 'all'">
 			</when>
-			<when test="boardId == 2">
+			<when test="boardId == 'my'">
 				AND r.MEMID = #{memId}
 			</when>
 		</choose>
@@ -86,9 +86,9 @@
 		WHERE r.TREVSTATUS = 'CMT001'
 
 		<choose>
-			<when test="boardId == 1">
+			<when test="boardId == 'all'">
 			</when>
-			<when test="boardId == 2">
+			<when test="boardId == 'my'">
 				AND r.MEMID = #{memId}
 			</when>
 		</choose>

@@ -11,6 +11,6 @@ public interface TReviewService {
 
 	public void insertTReview(TReviewReqDTO treviewReqDTO, MultipartFile[] imageFiles);
 
-	public PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO dto, int boardId);
+	public PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO dto, String boardId);
 
 }

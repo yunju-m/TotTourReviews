@@ -26,7 +26,7 @@ public class TReviewController {
 
 	// 여행 후기 화면 이동
 	@GetMapping("/{page}")
-	public String showTourReview(@PathVariable int boardId, @ModelAttribute PageReqDTO pageReqDTO, Model model) {
+	public String showTourReview(@PathVariable String boardId, @ModelAttribute PageReqDTO pageReqDTO, Model model) {
 
 		PageResDTO<TReviewResDTO> pagination = treviewService.findTReviewListWithPaging(pageReqDTO, boardId);
 		model.addAttribute("pagination", pagination);

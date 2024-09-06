@@ -24,7 +24,7 @@
             <div>아래 목록에서 다양한 여행 후기를 확인하고, 자신이 작성한 후기 목록을 선택할 수 있습니다.</div>
         </div>
         <div class="menu">
-            <div class="initButton" id="TotalReviewsBtn">전체 여행 후기</div>
+            <div class="initButton active" id="TotalReviewsBtn">전체 여행 후기</div>
             <div class="initButton" id="myReviewsBtn">나의 여행 후기</div>
         </div>
         
