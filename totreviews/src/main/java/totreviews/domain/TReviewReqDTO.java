@@ -19,7 +19,6 @@ public class TReviewReqDTO {
 
 	public TReviewReqDTO(int trevid, int tripid, String memid, String trevtitle, String trevcourse, String trevcontent,
 			String trevimgpath, String trevAgree) {
-		super();
 		this.trevid = trevid;
 		this.tripid = tripid;
 		this.memid = memid;

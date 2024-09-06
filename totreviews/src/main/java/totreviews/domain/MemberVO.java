@@ -12,11 +12,6 @@ public class MemberVO {
 
 	public MemberVO() {
 	}
-	
-	// TODO Member 임시 유저 설정
-	public MemberVO(String memid) {
-		this.memid = memid;
-	}
 
 	public MemberVO(String memid, String member_001, String member_002, String memnick, Timestamp memregdate,
 			String ttimg) {

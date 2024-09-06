@@ -23,6 +23,9 @@
         <div class="reviewForm">
             <form id="reviewForm" action="${pageContext.request.contextPath}/review/all/write" method="post"
                 enctype="multipart/form-data">
+                
+                <input type="hidden" name="memid" value="${sessionScope.member.memid}" />
+                
                 <!-- 1. 여행 후기 제목 입력 -->
                 <div class="formGroup">
                     <label for="reviewTitle">제목</label>

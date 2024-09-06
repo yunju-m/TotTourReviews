@@ -9,10 +9,8 @@
 			SELECT seq_trevid.nextval FROM dual
 		</selectKey>
 		INSERT INTO TREVIEW (TREVID, TRIPID, MEMID, TREVSTATUS, TREVTITLE,
-		TREVCOURSE, TREVCONTENT, TREVRATING, TREVREGDATE, TREVUPDATE,
-		TREVCOUNT)
-		VALUES (#{trevid}, #{tripid}, #{memid}, #{trevstatus}, #{trevtitle},
-		#{trevcourse}, #{trevcontent},
+		TREVCONTENT, TREVRATING, TREVREGDATE, TREVUPDATE, TREVCOUNT)
+		VALUES (#{trevid}, #{tripid}, #{memid}, #{trevstatus}, #{trevtitle}, #{trevcontent},
 		#{trevrating}, #{trevregdate}, #{trevupdate}, #{trevcount})
 	</insert>
 
@@ -65,7 +63,6 @@
 		r.MEMID,
 		r.TREVSTATUS,
 		r.TREVTITLE,
-		r.TREVCOURSE,
 		r.TREVCONTENT,
 		i.TREVIMGPATH,
 		r.TREVRATING,

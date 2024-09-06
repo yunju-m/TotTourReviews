@@ -25,8 +25,7 @@ public class TReviewImageVO {
 	}
 
 	public static TReviewImageVO fromDTO(TReviewReqDTO dto) {
-		// TODO 현재 임의의 사용자와 여행 번호 선언
-		return new TReviewImageVO(0, dto.getTrevid(), "user001", dto.getTrevimgpath(),
+		return new TReviewImageVO(0, dto.getTrevid(), dto.getMemid(), dto.getTrevimgpath(),
 				new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()));
 	}
 
