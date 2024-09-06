@@ -1,8 +1,8 @@
 //  URL 선언
-const BASE_TREVIEW_URL = '/totreviews';
-const GET_ALL_TREVIEW = `${BASE_TREVIEW_URL}/all/review/1`;
-const GET_MY_TREVIEW = `${BASE_TREVIEW_URL}/my/review/1`;
-const GET_WRITE_TREVIEW = `${BASE_TREVIEW_URL}/all/review/write`;
+const BASE_TREVIEW_URL = '/totreviews/review';
+const GET_ALL_TREVIEW = `${BASE_TREVIEW_URL}/all/1`;
+const GET_MY_TREVIEW = `${BASE_TREVIEW_URL}/my/1`;
+const GET_WRITE_TREVIEW = `${BASE_TREVIEW_URL}/all/write`;
 
 // 에러 메시지 선언
 const ERROR_MESSAGES = {
@@ -90,7 +90,7 @@ const submitReview = () => {
             window.location.href = GET_ALL_TREVIEW;
         },
         error: function (error) {
-            alert(ERROR_MESSAGES.FILE_UPLOAD + " " + error);
+            alert(ERROR_MESSAGES.FILE_UPLOAD + " ");
         }
     });
 }

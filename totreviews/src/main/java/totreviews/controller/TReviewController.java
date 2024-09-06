@@ -1,5 +1,7 @@
 package totreviews.controller;
 
+import static totreviews.common.Constants.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +20,7 @@ import totreviews.domain.TReviewResDTO;
 import totreviews.service.TReviewServiceImpl;
 
 @Controller
-@RequestMapping("/{boardId}/review")
+@RequestMapping("/review/{boardId}")
 public class TReviewController {
 
 	@Autowired
@@ -29,14 +31,15 @@ public class TReviewController {
 	public String showTourReview(@PathVariable String boardId, @ModelAttribute PageReqDTO pageReqDTO, Model model) {
 
 		PageResDTO<TReviewResDTO> pagination = treviewService.findTReviewListWithPaging(pageReqDTO, boardId);
+		model.addAttribute("boardId", boardId);
 		model.addAttribute("pagination", pagination);
-		return "treview";
+		return PAGE_TREVIEW;
 	}
 
 	// 여행 후기 작성 화면 이동
 	@GetMapping("/write")
 	public String showTourReviewWrite() {
-		return "treviewWrite";
+		return PAGE_WRITE_TREVIEW;
 	}
 
 	// 여행 후기 작성 처리
@@ -45,7 +48,7 @@ public class TReviewController {
 			@RequestParam(value = "reviewImage", required = false) MultipartFile[] imageFiles) {
 
 		treviewService.insertTReview(tReviewReqDTO, imageFiles);
-		return "redirect:/1/review/1";
+		return "redirect:" + URL_ALL_TREVIEW;
 	}
 
 }
