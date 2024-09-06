@@ -132,19 +132,20 @@
 	    <artifactId>jackson-databind</artifactId>
 	    <version>2.17.2</version>
 	</dependency>
+   	
+   	<!-- javax.servlet-api -->
+   	<dependency>
+       <groupId>javax.servlet</groupId>
+       <artifactId>javax.servlet-api</artifactId>
+       <version>4.0.1</version>
+       <scope>provided</scope>
+   	</dependency>
    
-   <!-- jakarta-servlet -->
-   <dependency>
-       <groupId>jakarta.servlet</groupId>
-       <artifactId>jakarta.servlet-api</artifactId>
-       <version>6.0.0</version>
-   </dependency>
-   
-   <!-- jakarta.servlet.jsp-api -->
+   <!-- javax.servlet.jsp-api -->
 	<dependency>
-	    <groupId>jakarta.servlet.jsp</groupId>
-	    <artifactId>jakarta.servlet.jsp-api</artifactId>
-	    <version>3.1.1</version>
+	    <groupId>javax.servlet.jsp</groupId>
+	    <artifactId>javax.servlet.jsp-api</artifactId>
+	    <version>2.3.3</version>
 	    <scope>provided</scope>
 	</dependency>
 
@@ -181,7 +182,7 @@
 	    <groupId>org.hibernate.validator</groupId>
 	    <artifactId>hibernate-validator</artifactId>
 	    <version>8.0.1.Final</version>
-	</dependency>	
+	</dependency>
    
   </dependencies>
 </project>
