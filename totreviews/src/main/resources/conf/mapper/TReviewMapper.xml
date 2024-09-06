@@ -23,7 +23,7 @@
 		#{trevimgregdate}, #{trevimgupdate})
 	</insert>
 
-	<select id="selectTotalTReviewCount" parameterType="PageReqDTO"
+	<select id="selectTotalTReviewCount" parameterType="PageDTO"
 		resultType="int">
 		SELECT COUNT(DISTINCT r.TREVID) AS total_count
 		FROM TREVIEW r
@@ -32,15 +32,23 @@
 		ON r.TREVID = i.TREVID
 		WHERE r.TREVSTATUS = 'CMT001'
 
-		<if test="search != null and search != ''">
+		<choose>
+			<when test="boardId == 1">
+			</when>
+			<when test="boardId == 2">
+				AND r.MEMID = #{memId}
+			</when>
+		</choose>
+
+		<if test="dto.search != null and dto.search != ''">
 			<choose>
-				<when test="searchType.name() == 'TITLE'">
+				<when test="dto.searchType.name() == 'TITLE'">
 					AND r.TREVTITLE LIKE '%' || #{search} || '%'
 				</when>
-				<when test="searchType.name() == 'CONTENT'">
+				<when test="dto.searchType.name() == 'CONTENT'">
 					AND r.TREVCONTENT LIKE '%' || #{search} || '%'
 				</when>
-				<when test="searchType.name() == 'ALL'">
+				<when test="dto.searchType.name() == 'ALL'">
 					AND (r.TREVTITLE LIKE '%' || #{search} || '%'
 					OR r.TREVCONTENT LIKE '%' || #{search} || '%')
 				</when>
