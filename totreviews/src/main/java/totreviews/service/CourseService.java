@@ -1,9 +1,13 @@
 package totreviews.service;
 
-import totreviews.domain.CourseResDTO;
+import java.util.List;
+
+import totreviews.domain.CourseDTO;
 
 public interface CourseService {
 
-	CourseResDTO getCourseById(String courseId);
+	CourseDTO getCourseById(String courseId);
+
+	List<CourseDTO> getCourseDetailsByMemId(String memId);
 
 }

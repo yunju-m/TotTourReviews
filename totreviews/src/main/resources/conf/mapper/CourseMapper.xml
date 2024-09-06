@@ -2,8 +2,52 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="totreviews.mapper.CourseMapper">
 
-    <select id="getCourseById" parameterType="String" resultType="CourseResDTO">
+    <select id="getCourseById" parameterType="String" resultType="CourseDTO">
         SELECT * FROM COURSE WHERE COURID = #{courseId}
     </select>
+
+	<select id="getCourseByMemId" parameterType="String" resultMap="CourseDTOMap">
+		SELECT 
+	    C.COURID, 
+	    C.TRIPID, 
+	    C.AREACODE, 
+	    C.DCOURSE, 
+	    C.COURREGDATE, 
+	    C.COURUPDATE
+	FROM 
+	    COURSE C
+	JOIN 
+	    TRIP T ON C.TRIPID = T.TRIPID
+	WHERE 
+	    T.MEMID = #{memId}
+	</select>
+	
+	<select id="getCourseDetailsById" parameterType="map" resultType="CourseResDTO">
+		SELECT 
+		    CASE 
+		        WHEN #{dcourseType} = 'TOID' THEN t.TONAME 
+		        WHEN #{dcourseType} = 'RESTID' THEN r.RESTNAME 
+		        WHEN #{dcourseType} = 'LODID' THEN l.LODNAME
+		    END AS dname,
+		    CASE 
+		        WHEN #{dcourseType} = 'TOID' THEN t.TOADDRESS 
+		        WHEN #{dcourseType} = 'RESTID' THEN r.RESTADDRESS 
+		        WHEN #{dcourseType} = 'LODID' THEN l.LODADDRESS
+		    END AS daddress
+		FROM DUAL
+		LEFT JOIN TOUR t ON t.toid = #{dcourseId}
+		LEFT JOIN RESTAURANT r ON r.restid = #{dcourseId}
+		LEFT JOIN LODGING l ON l.lodid = #{dcourseId}
+	</select>
+	
+	
+	<resultMap id="CourseDTOMap" type="CourseDTO">
+	    <id property="courseid" column="COURID" />
+	    <result property="tripid" column="TRIPID" />
+	    <result property="areacode" column="AREACODE" />
+	    <result property="dcourse" column="DCOURSE" />
+	    <result property="courregdate" column="COURREGDATE" />
+	    <result property="courupdate" column="COURUPDATE" />
+	</resultMap>
 
 </mapper>

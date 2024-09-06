@@ -1,25 +1,29 @@
 package totreviews.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
 
-public class CourseReqDTO {
+public class CourseDTO {
 
 	private String courseid; // 코스 아이디
 	private int tripid; // 여행 아이디
 	private String areacode; // 지역 코드
 	private String dcourse; // 하루 여행 코스
+	private List<CourseResDTO> courseDetail; // 하루 여행 상세 코스
 	private Timestamp courregdate; // 등록일시
 	private Timestamp courupdate; // 수정일시
 
-	public CourseReqDTO() {
+	public CourseDTO() {
 	}
 
-	public CourseReqDTO(String courseid, int tripid, String areacode, String dcourse, Timestamp courregdate,
-			Timestamp courupdate) {
+	public CourseDTO(String courseid, int tripid, String areacode, String dcourse, List<CourseResDTO> courseDetail,
+			Timestamp courregdate, Timestamp courupdate) {
+		super();
 		this.courseid = courseid;
 		this.tripid = tripid;
 		this.areacode = areacode;
 		this.dcourse = dcourse;
+		this.courseDetail = courseDetail;
 		this.courregdate = courregdate;
 		this.courupdate = courupdate;
 	}
@@ -38,6 +42,10 @@ public class CourseReqDTO {
 
 	public String getDcourse() {
 		return dcourse;
+	}
+
+	public List<CourseResDTO> getCourseDetail() {
+		return courseDetail;
 	}
 
 	public Timestamp getCourregdate() {
@@ -64,6 +72,10 @@ public class CourseReqDTO {
 		this.dcourse = dcourse;
 	}
 
+	public void setCourseDetail(List<CourseResDTO> courseDetail) {
+		this.courseDetail = courseDetail;
+	}
+
 	public void setCourregdate(Timestamp courregdate) {
 		this.courregdate = courregdate;
 	}
@@ -75,7 +87,8 @@ public class CourseReqDTO {
 	@Override
 	public String toString() {
 		return "CourseDTO [courseid=" + courseid + ", tripid=" + tripid + ", areacode=" + areacode + ", dcourse="
-				+ dcourse + ", courregdate=" + courregdate + ", courupdate=" + courupdate + "]";
+				+ dcourse + ", courseDetail=" + courseDetail + ", courregdate=" + courregdate + ", courupdate="
+				+ courupdate + "]";
 	}
 
 }

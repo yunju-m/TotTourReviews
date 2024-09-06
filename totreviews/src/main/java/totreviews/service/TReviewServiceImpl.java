@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import totreviews.common.page.PageDTO;
 import totreviews.common.page.PageReqDTO;
 import totreviews.common.page.PageResDTO;
-import totreviews.dao.TReviewDAOImpl;
+import totreviews.dao.TReviewDAO;
 import totreviews.domain.TReviewImageVO;
 import totreviews.domain.TReviewReqDTO;
 import totreviews.domain.TReviewResDTO;
@@ -22,7 +22,7 @@ import totreviews.util.FileUtils;
 public class TReviewServiceImpl implements TReviewService {
 
 	@Autowired
-	private TReviewDAOImpl treviewDAO;
+	private TReviewDAO treviewDAO;
 
 	@Autowired
 	private FileUtils fileUtils;

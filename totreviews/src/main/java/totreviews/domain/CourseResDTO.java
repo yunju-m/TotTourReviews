@@ -1,81 +1,42 @@
 package totreviews.domain;
 
-import java.sql.Timestamp;
-
 public class CourseResDTO {
 
-	private String courseid; // 코스 아이디
-	private int tripid; // 여행 아이디
-	private String areacode; // 지역 코드
-	private String dcourse; // 하루 여행 코스
-	private Timestamp courregdate; // 등록일시
-	private Timestamp courupdate; // 수정일시
+	private String dcourseIdType; // 하루 여행 코스별 아이디 종류
+	private int dcourseId; // 하루 여행 코스별 아이디
+	private String dname;
+	private String daddress;
 
 	public CourseResDTO() {
 	}
 
-	public CourseResDTO(String courseid, int tripid, String areacode, String dcourse, Timestamp courregdate,
-			Timestamp courupdate) {
-		this.courseid = courseid;
-		this.tripid = tripid;
-		this.areacode = areacode;
-		this.dcourse = dcourse;
-		this.courregdate = courregdate;
-		this.courupdate = courupdate;
+	public CourseResDTO(String dcourseIdType, int dcourseId, String dname, String daddress) {
+		this.dcourseIdType = dcourseIdType;
+		this.dcourseId = dcourseId;
+		this.dname = dname;
+		this.daddress = daddress;
 	}
 
-	public String getCourseid() {
-		return courseid;
+	public String getDcourseIdType() {
+		return dcourseIdType;
 	}
 
-	public int getTripid() {
-		return tripid;
+	public int getDcourseId() {
+		return dcourseId;
 	}
 
-	public String getAreacode() {
-		return areacode;
+	public String getDname() {
+		return dname;
 	}
 
-	public String getDcourse() {
-		return dcourse;
-	}
-
-	public Timestamp getCourregdate() {
-		return courregdate;
-	}
-
-	public Timestamp getCourupdate() {
-		return courupdate;
-	}
-
-	public void setCourseid(String courseid) {
-		this.courseid = courseid;
-	}
-
-	public void setTripid(int tripid) {
-		this.tripid = tripid;
-	}
-
-	public void setAreacode(String areacode) {
-		this.areacode = areacode;
-	}
-
-	public void setDcourse(String dcourse) {
-		this.dcourse = dcourse;
-	}
-
-	public void setCourregdate(Timestamp courregdate) {
-		this.courregdate = courregdate;
-	}
-
-	public void setCourupdate(Timestamp courupdate) {
-		this.courupdate = courupdate;
+	public String getDaddress() {
+		return daddress;
 	}
 
 	@Override
 	public String toString() {
-		return "CourseDTO [courseid=" + courseid + ", tripid=" + tripid + ", areacode=" + areacode + ", dcourse="
-				+ dcourse + ", courregdate=" + courregdate + ", courupdate=" + courupdate + "]";
+		return "CourseResDTO [dcourseIdType=" + dcourseIdType + ", dcourseId=" + dcourseId + ", dname=" + dname
+				+ ", daddress=" + daddress + "]";
 	}
 
 }

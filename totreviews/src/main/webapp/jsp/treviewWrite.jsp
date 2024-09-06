@@ -1,4 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -36,9 +37,20 @@
                     <label for="travelCourse">여행 코스</label>
                     <select id="travelCourse" class="courseSelect" name="trevcourse">
                         <option value="" disabled selected>여행 코스를 선택하세요</option>
-                        <option value="course1">코스 1</option>
-                        <option value="course2">코스 2</option>
-                        <option value="course3">코스 3</option>
+                        <c:forEach var="course" items="${courses}">
+                            <c:set var="courseDetails" value="" />
+                            <c:forEach var="detail" items="${course.courseDetail}">
+                                <c:if test="${not empty courseDetails}">
+                                    <c:set var="courseDetails" value="${courseDetails} → ${detail.dname}" />
+                                </c:if>
+                                <c:if test="${empty courseDetails}">
+                                    <c:set var="courseDetails" value="${detail.dname}" />
+                                </c:if>
+                            </c:forEach>
+                            <option value="${course.courseid}">
+                                ${courseDetails}
+                            </option>
+                        </c:forEach>
                     </select>
                 </div>
                 <!-- 3. 여행 후기 내용 입력 -->
