@@ -55,59 +55,73 @@
 	</select>
 
 	<select id="selectTReviewListWithPaging" parameterType="PageDTO"
-		resultMap="TReviewResDTOResultMap">
-		SELECT * FROM (
+    resultMap="TReviewResDTOResultMap">
+    SELECT * FROM (
+        SELECT r.TREVID, r.TRIPID, r.MEMID, r.TREVSTATUS, r.TREVTITLE, r.TREVCONTENT,
+               r.TREVRATING, r.TREVREGDATE, r.TREVUPDATE, r.TREVCOUNT,
+               i.TREVIMGID, i.TREVID AS IMG_TREVID, i.MEMID AS IMG_MEMID, i.TREVIMGPATH,
+               i.TREVIMGREGDATE, i.TREVIMGUPDATE,
+               ROW_NUMBER() OVER(
+                   ORDER BY 
+                   <choose>
+                       <when test="dto.sortType.name() == 'LATEST'">r.TREVREGDATE DESC</when>
+                       <when test="dto.sortType.name() == 'OLDEST'">r.TREVREGDATE ASC</when>
+                       <when test="dto.sortType.name() == 'VIEWS'">r.TREVCOUNT DESC</when>
+                       <when test="dto.sortType.name() == 'RATING'">r.TREVRATING DESC</when>
+                       <otherwise>r.TREVREGDATE DESC</otherwise>
+                   </choose>
+               ) AS rn
+        FROM TREVIEW r
+        LEFT JOIN TReviewImage i ON r.TREVID = i.TREVID
+        WHERE r.TREVSTATUS = 'CMT001'
+
+        <choose>
+            <when test="boardId == 'all'">
+            </when>
+            <when test="boardId == 'my'">
+                AND r.MEMID = #{memId}
+            </when>
+        </choose>
+
+        <if test="dto.search != null and dto.search != ''">
+            <choose>
+                <when test="dto.searchType.name() == 'TITLE'">
+                    AND r.TREVTITLE LIKE '%' || #{dto.search} || '%'
+                </when>
+                <when test="dto.searchType.name() == 'CONTENT'">
+                    AND r.TREVCONTENT LIKE '%' || #{dto.search} || '%'
+                </when>
+                <when test="dto.searchType.name() == 'ALL'">
+                    AND (r.TREVTITLE LIKE '%' || #{dto.search} || '%'
+                    OR r.TREVCONTENT LIKE '%' || #{dto.search} || '%')
+                </when>
+            </choose>
+        </if>
+    ) 
+    WHERE rn BETWEEN #{offset} + 1 AND #{offset} + #{pageRowCount}
+	</select>
+
+	
+	<select id="getTReviewDetail" parameterType="int" resultMap="TReviewResDTOResultMap">
 		SELECT
-		r.TREVID,
-		r.TRIPID,
-		r.MEMID,
-		r.TREVSTATUS,
-		r.TREVTITLE,
-		r.TREVCONTENT,
-		MAX(i.TREVIMGPATH) AS TREVIMGPATH,
-		r.TREVRATING,
-		r.TREVREGDATE,
-		r.TREVUPDATE,
-		r.TREVCOUNT,
-		ROW_NUMBER() OVER (
-		<choose>
-			<when test="dto.sortType.name() == 'LATEST'">ORDER BY r.TREVREGDATE DESC</when>
-			<when test="dto.sortType.name() == 'OLDEST'">ORDER BY r.TREVREGDATE ASC</when>
-			<when test="dto.sortType.name() == 'VIEWS'">ORDER BY r.TREVCOUNT DESC</when>
-			<when test="dto.sortType.name() == 'RATING'">ORDER BY r.TREVRATING DESC</when>
-			<otherwise>ORDER BY r.TREVREGDATE DESC</otherwise>
-		</choose>
-		) AS rn
-		FROM TREVIEW r
-		LEFT JOIN TReviewImage i ON r.TREVID = i.TREVID
-		WHERE r.TREVSTATUS = 'CMT001'
-
-		<choose>
-			<when test="boardId == 'all'">
-			</when>
-			<when test="boardId == 'my'">
-				AND r.MEMID = #{memId}
-			</when>
-		</choose>
-
-		<if test="dto.search != null and dto.search != ''">
-			<choose>
-				<when test="dto.searchType.name() == 'TITLE'">
-					AND r.TREVTITLE LIKE '%' || #{dto.search} || '%'
-				</when>
-				<when test="dto.searchType.name() == 'CONTENT'">
-					AND r.TREVCONTENT LIKE '%' || #{dto.search} || '%'
-				</when>
-				<when test="dto.searchType.name() == 'ALL'">
-					AND (r.TREVTITLE LIKE '%' || #{dto.search} || '%'
-					OR r.TREVCONTENT LIKE '%' || #{dto.search} || '%')
-				</when>
-			</choose>
-		</if>
-		GROUP BY r.TREVID, r.TRIPID, r.MEMID, r.TREVSTATUS, r.TREVTITLE, r.TREVCONTENT, r.TREVRATING, r.TREVREGDATE, r.TREVUPDATE, r.TREVCOUNT
-		)
-		WHERE rn BETWEEN #{offset} + 1 AND #{offset} + #{pageRowCount}
-		ORDER BY rn
+            r.TREVID,
+            r.TRIPID,
+            r.MEMID,
+            r.TREVSTATUS,
+            r.TREVTITLE,
+            r.TREVCONTENT,
+            r.TREVRATING,
+            r.TREVREGDATE,
+            r.TREVUPDATE,
+            r.TREVCOUNT,
+            i.TREVIMGID,
+            i.TREVIMGPATH
+        FROM
+            TREVIEW r
+        LEFT JOIN
+            TReviewImage i ON r.TREVID = i.TREVID
+        WHERE
+            r.TREVID = #{trevid}
 	</select>
 
 	<resultMap id="TReviewResDTOResultMap" type="TReviewResDTO">
@@ -118,11 +132,18 @@
 		<result property="trevtitle" column="TREVTITLE" />
 		<result property="trevcourse" column="TREVCOURSE" />
 		<result property="trevcontent" column="TREVCONTENT" />
-		<result property="trevimgpath" column="TREVIMGPATH" />
 		<result property="trevrating" column="TREVRATING" />
 		<result property="trevregdate" column="TREVREGDATE" />
 		<result property="trevupdate" column="TREVUPDATE" />
 		<result property="trevcount" column="TREVCOUNT" />
+		<collection property="trevimages" ofType="TReviewImageVO">
+            <id property="trevimgid" column="TREVIMGID"/>
+            <result property="trevid" column="TREVID"/>
+            <result property="memid" column="MEMID"/>
+            <result property="trevimgpath" column="TREVIMGPATH"/>
+      	    <result property="trevimgregdate" column="TREVIMGREGDATE" />
+        	<result property="trevimgupdate" column="TREVIMGUPDATE" />
+        </collection>
 	</resultMap>
 
 </mapper>

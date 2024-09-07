@@ -1,9 +1,6 @@
 package totreviews.controller;
 
-import static totreviews.common.Constants.PAGE_DETAIL_TREVIEW;
-import static totreviews.common.Constants.PAGE_TREVIEW;
-import static totreviews.common.Constants.PAGE_WRITE_TREVIEW;
-import static totreviews.common.Constants.URL_ALL_TREVIEW;
+import static totreviews.common.Constants.*;
 
 import java.util.List;
 
@@ -71,8 +68,14 @@ public class TReviewController {
 	}
 
 	// 여행 후기 상세 화면 이동
-	@GetMapping("/detail")
-	public String showTourReviewDetail() {
+	@GetMapping("/detail/{trevid}")
+	public String showReviewDetail(@PathVariable("trevid") int trevid, Model model) {
+		MemberVO member = MemberUtil.isAuthenticatedMember();
+		TReviewResDTO review = treviewService.getTReviewDetail(trevid);
+
+		model.addAttribute("member", member);
+		model.addAttribute("review", review);
+
 		return PAGE_DETAIL_TREVIEW;
 	}
 

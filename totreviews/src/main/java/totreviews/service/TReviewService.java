@@ -9,8 +9,10 @@ import totreviews.domain.TReviewResDTO;
 
 public interface TReviewService {
 
-	public void insertTReview(TReviewReqDTO treviewReqDTO, MultipartFile[] imageFiles);
+	void insertTReview(TReviewReqDTO treviewReqDTO, MultipartFile[] imageFiles);
 
-	public PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO dto, String boardId);
+	PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO dto, String boardId);
+
+	TReviewResDTO getTReviewDetail(int trevid);
 
 }

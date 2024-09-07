@@ -69,4 +69,9 @@ public class TReviewServiceImpl implements TReviewService {
 		}
 	}
 
+	@Override
+	public TReviewResDTO getTReviewDetail(int trevid) {
+		return treviewDAO.getTReviewDetail(trevid);
+	}
+
 }

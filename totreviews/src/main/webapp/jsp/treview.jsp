@@ -64,23 +64,29 @@
         <!-- 여행 후기 목록 리스트 -->
         <div class="reviewList">
             <c:forEach var="review" items="${pagination.postList}">
-                <div class="reviewItem">
-                    <!-- 리뷰 이미지 표시, 첫 번째 이미지 사용 -->
-                    <c:choose>
-                        <c:when test="${not empty review.trevimgpath}">
-                            <img src="${pageContext.request.contextPath}${fn:trim(review.trevimgpath)}" alt="Review Image">
-                        </c:when>
-                        <c:otherwise>
-                            <img src="${pageContext.request.contextPath}/static/image/treviewDefaultImg.png" alt="Review Default Image">
-                        </c:otherwise>
-                    </c:choose>
+                 <a href="${pageContext.request.contextPath}/review/${boardId}/detail/${review.trevid}" class="reviewItem">
+		            <c:choose>
+		                <c:when test="${not empty review.trevimages and fn:length(review.trevimages) > 0}">
+		                    <c:choose>
+		                        <c:when test="${not empty review.trevimages[0].trevimgpath}">
+		                            <img src="${pageContext.request.contextPath}${review.trevimages[0].trevimgpath}" alt="Review Title Image">
+		                        </c:when>
+		                        <c:otherwise>
+		                            <img src="${pageContext.request.contextPath}/static/image/treviewDefaultImg.png" alt="Review Default Image">
+		                        </c:otherwise>
+		                    </c:choose>
+		                </c:when>
+		                <c:otherwise>
+		                    <img src="${pageContext.request.contextPath}/static/image/treviewDefaultImg.png" alt="Review Default Image">
+		                </c:otherwise>
+		            </c:choose>
                     <div class="info">
                         <div class="title">${review.trevtitle}</div>
                         <div class="author">${review.memid}</div>
                         <div class="rating">평점: ${review.trevrating}</div>
                         <div class="count">조회수: ${review.trevcount}</div>
                     </div>
-                </div>
+                </a>
             </c:forEach>
         </div>
         <!-- 여행 후기 목록 리스트 END-->

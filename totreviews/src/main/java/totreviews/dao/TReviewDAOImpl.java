@@ -39,4 +39,9 @@ public class TReviewDAOImpl implements TReviewDAO {
 		return sqlSession.selectList(NAMESPACE + ".selectTReviewListWithPaging", pageDTO);
 	}
 
+	@Override
+	public TReviewResDTO getTReviewDetail(int trevid) {
+		return sqlSession.selectOne(NAMESPACE + ".getTReviewDetail", trevid);
+	}
+
 }

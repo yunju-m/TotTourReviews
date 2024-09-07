@@ -4,6 +4,6 @@ import totreviews.domain.TourResDTO;
 
 public interface TourService {
 
-	public TourResDTO getTourById(String tourId);
+	TourResDTO getTourById(String tourId);
 
 }
