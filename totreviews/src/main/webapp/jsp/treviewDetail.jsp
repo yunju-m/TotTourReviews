@@ -1,4 +1,7 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -12,10 +15,10 @@
 <body>
     <div class="mainDiv">
         <div class="reviewTitleDiv">
-            <div class="bigTitle">클릭한 게시물의 여행 후기 제목</div>
+            <div class="bigTitle">${review.trevtitle}</div>
         </div>
         <div class="reviewIntroDiv">
-            <div>게시물의 여행 날짜</div>
+            <div><fmt:formatDate value="${review.trevregdate}" pattern="yyyy년 MM월 dd일" /></div>
         </div>
         <!-- 여행 코스 내용 -->
         <div class="reviewCourseDiv">
@@ -42,30 +45,18 @@
         </div>
         <!-- 여행 코스 날짜별 상세 내역 리스트 -->
         <div class="reviewCourseDetailDiv">
-            <div class="reviewCourseDetailItem">
-                <div class="day">Day 1</div>
-                <div class="course">course > course > course</div>
-                <img src="https://via.placeholder.com/600x400" alt="Detail Image 1">
-                <div class="detailContent">
-                    첫째 날 여행 후기 내용입니다. 상세한 설명과 후기글을 여기에 작성합니다.
-                </div>
-            </div>
-            <div class="reviewCourseDetailItem">
-                <div class="day">Day 2</div>
-                <div class="course">course > course > course</div>
-                <img src="https://via.placeholder.com/600x400" alt="Detail Image 2">
-                <div class="detailContent">
-                    둘째 날 여행 후기 내용입니다. 상세한 설명과 후기글을 여기에 작성합니다.
-                </div>
-            </div>
-            <div class="reviewCourseDetailItem">
-                <div class="day">Day 3</div>
-                <div class="course">course > course > course</div>
-                <img src="https://via.placeholder.com/600x400" alt="Detail Image 3">
-                <div class="detailContent">
-                    셋째 날 여행 후기 내용입니다. 상세한 설명과 후기글을 여기에 작성합니다.
-                </div>
-            </div>
+         	<c:forEach var="image" items="${review.trevimages}">
+	         	<c:if test="${image.trevimgpath != null && image.trevimgpath != ''}">
+		            <div class="reviewCourseDetailItem">
+		                <div class="day">Day 1</div>
+		                <div class="course">course > course > course</div>
+		                <img src="${pageContext.request.contextPath}${image.trevimgpath}" alt="Review Detail Image">
+		                <div class="detailContent">
+		                    첫째 날 여행 후기 내용입니다. 상세한 설명과 후기글을 여기에 작성합니다.
+		                </div>
+		            </div>
+	            </c:if>
+            </c:forEach>
             <button id="reviewListBtn" class="initButton2">목록으로</button>
         </div>
         <!-- 댓글 작성 및 목록 -->
