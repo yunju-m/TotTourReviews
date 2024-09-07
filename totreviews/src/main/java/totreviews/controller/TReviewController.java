@@ -1,12 +1,11 @@
 package totreviews.controller;
 
+import static totreviews.common.Constants.PAGE_DETAIL_TREVIEW;
 import static totreviews.common.Constants.PAGE_TREVIEW;
 import static totreviews.common.Constants.PAGE_WRITE_TREVIEW;
 import static totreviews.common.Constants.URL_ALL_TREVIEW;
 
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +26,7 @@ import totreviews.domain.TReviewReqDTO;
 import totreviews.domain.TReviewResDTO;
 import totreviews.service.CourseService;
 import totreviews.service.TReviewService;
+import totreviews.util.MemberUtil;
 
 @Controller
 @RequestMapping("/review/{boardId}")
@@ -51,11 +51,12 @@ public class TReviewController {
 
 	// 여행 후기 작성 화면 이동
 	@GetMapping("/write")
-	public String showTourReviewWrite(HttpSession session, Model model) {
-		MemberVO member = (MemberVO) session.getAttribute("member");
-		List<CourseDTO> courses = courseService.getCourseDetailsByMemId(member.getMemid());
+	public String showTourReviewWrite(Model model) {
+		MemberVO member = MemberUtil.isAuthenticatedMember();
 
+		List<CourseDTO> courses = courseService.getCourseDetailsByMemId(member.getMemid());
 		model.addAttribute("courses", courses);
+		model.addAttribute("member", member);
 
 		return PAGE_WRITE_TREVIEW;
 	}
@@ -67,6 +68,12 @@ public class TReviewController {
 		treviewService.insertTReview(tReviewReqDTO, imageFiles);
 
 		return "redirect:" + URL_ALL_TREVIEW;
+	}
+
+	// 여행 후기 상세 화면 이동
+	@GetMapping("/detail")
+	public String showTourReviewDetail() {
+		return PAGE_DETAIL_TREVIEW;
 	}
 
 }

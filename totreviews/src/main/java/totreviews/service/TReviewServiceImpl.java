@@ -16,7 +16,7 @@ import totreviews.domain.TReviewReqDTO;
 import totreviews.domain.TReviewResDTO;
 import totreviews.domain.TReviewVO;
 import totreviews.exception.ServerException;
-import totreviews.util.FileUtils;
+import totreviews.util.FileUtil;
 
 @Service
 public class TReviewServiceImpl implements TReviewService {
@@ -25,7 +25,7 @@ public class TReviewServiceImpl implements TReviewService {
 	private TReviewDAO treviewDAO;
 
 	@Autowired
-	private FileUtils fileUtils;
+	private FileUtil fileUtils;
 
 	@Override
 	public void insertTReview(TReviewReqDTO treviewReqDTO, MultipartFile[] imageFiles) {

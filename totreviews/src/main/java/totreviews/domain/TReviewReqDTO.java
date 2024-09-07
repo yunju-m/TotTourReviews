@@ -1,7 +1,7 @@
 package totreviews.domain;
 
 import totreviews.exception.ErrorCode;
-import totreviews.util.ValidationUtils;
+import totreviews.util.ValidationUtil;
 
 public class TReviewReqDTO {
 
@@ -31,13 +31,13 @@ public class TReviewReqDTO {
 
 	// DTO 검증 메소드
 	public void validate() {
-		ValidationUtils.validateNotEmpty(trevtitle, ErrorCode.NOT_FOUND_TREVTITLE);
-		ValidationUtils.validateNotEmpty(trevcourse, ErrorCode.NOT_FOUND_TREVCOURSE);
-		ValidationUtils.validateNotEmpty(trevcontent, ErrorCode.NOT_FOUND_TREVCONTENT);
-		ValidationUtils.validateLength(trevtitle, 200, ErrorCode.TITLE_TOO_LONG);
-		ValidationUtils.validateLength(trevcontent, 1000, ErrorCode.CONTENT_TOO_LONG);
-		ValidationUtils.validateNotEmpty(trevAgree, ErrorCode.NOT_FOUND_TREVAGREE);
-		ValidationUtils.validateCheck(trevAgree, ErrorCode.NOT_CHECK_TREVAGREE);
+		ValidationUtil.validateNotEmpty(trevtitle, ErrorCode.NOT_FOUND_TREVTITLE);
+		ValidationUtil.validateNotEmpty(trevcourse, ErrorCode.NOT_FOUND_TREVCOURSE);
+		ValidationUtil.validateNotEmpty(trevcontent, ErrorCode.NOT_FOUND_TREVCONTENT);
+		ValidationUtil.validateLength(trevtitle, 200, ErrorCode.TITLE_TOO_LONG);
+		ValidationUtil.validateLength(trevcontent, 1000, ErrorCode.CONTENT_TOO_LONG);
+		ValidationUtil.validateNotEmpty(trevAgree, ErrorCode.NOT_FOUND_TREVAGREE);
+		ValidationUtil.validateCheck(trevAgree, ErrorCode.NOT_CHECK_TREVAGREE);
 	}
 
 	public int getTrevid() {

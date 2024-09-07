@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
-public class FileUtils {
+public class FileUtil {
 
     @Value("${file.upload-dir}")
     private String uploadDir;

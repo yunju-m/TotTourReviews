@@ -3,7 +3,7 @@ package totreviews.util;
 import totreviews.exception.ValidationException;
 import totreviews.exception.ErrorCode;
 
-public class ValidationUtils {
+public class ValidationUtil {
 
 	public static void validateNotEmpty(String value, ErrorCode errorCode) {
 		if (value == null || value.trim().isEmpty()) {
