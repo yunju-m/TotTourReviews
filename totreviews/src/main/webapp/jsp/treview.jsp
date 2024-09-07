@@ -68,8 +68,7 @@
                     <!-- 리뷰 이미지 표시, 첫 번째 이미지 사용 -->
                     <c:choose>
                         <c:when test="${not empty review.trevimgpath}">
-                            <c:set var="imgPaths" value="${fn:split(review.trevimgpath, ',')}" />
-                            <img src="${pageContext.request.contextPath}${fn:trim(imgPaths[0])}" alt="Review Title Image">
+                            <img src="${pageContext.request.contextPath}${fn:trim(review.trevimgpath)}" alt="Review Image">
                         </c:when>
                         <c:otherwise>
                             <img src="${pageContext.request.contextPath}/static/image/treviewDefaultImg.png" alt="Review Default Image">
