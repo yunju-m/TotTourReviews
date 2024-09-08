@@ -110,8 +110,17 @@ const handleFileSelect = event => {
                     name: 'reviewImage',
                     class: 'reviewImage'
                 });
-                $('#reviewContentAndImgDiv').append(img);
-                addNewFileInput(file, img);
+                const imgWrapper = $('<div>', { class: 'img-wrapper' });
+                
+                let hiddenImageInput = $('<input>', {
+                    type: 'hidden',
+                    name: 'trevcontent',
+                    value: 'image'
+                });
+                imgWrapper.append(img).append(hiddenImageInput);
+                $('#reviewContentAndImgDiv').append(imgWrapper);
+                
+                addNewFileInput(file, imgWrapper);
             };
             reader.readAsDataURL(file);
         });
@@ -119,7 +128,7 @@ const handleFileSelect = event => {
     }
 }
 
-const addNewFileInput = (file, img) => {
+const addNewFileInput = (file, imgWrapper) => {
     const inputWrapper = $('<div>', {
         class: 'file-input-wrapper'
     });
@@ -137,7 +146,7 @@ const addNewFileInput = (file, img) => {
         class: 'initButton'
     }).on('click', function () {
         // 삭제 버튼 클릭 시 해당 요소 삭제
-        img.remove();
+        imgWrapper.remove();
         inputWrapper.remove();
         fileList = fileList.filter(f => f !== file);
     });

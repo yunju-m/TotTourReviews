@@ -29,36 +29,56 @@
             </div>
             <!-- 여행 코스 날짜별 내역 리스트 -->
             <div class="reviewCourseDayDiv">
-                <div class="courseDay">
-                    <div class="day">day1</div>
-                    <div class="course">course > course > course</div>
-                </div>
-                <div class="courseDay">
-                    <div class="day">day2</div>
-                    <div class="course">course > course > course</div>
-                </div>
-                <div class="courseDay">
-                    <div class="day">day3</div>
-                    <div class="course">course > course > course</div>
-                </div>
+                <c:forEach var="course" items="${courses}" varStatus="courseStatus">
+                    <div class="courseDay">
+                        <!-- DAY 번호 출력 -->
+                        <div class="day">Day ${courseStatus.index + 1}</div>
+                        <div class="course">
+                            <c:forEach var="detail" items="${course.courseDetail}" varStatus="detailStatus">
+                                <c:choose>
+                                    <c:when test="${not empty detail.dname}">
+                                        <c:out value="${detail.dname}" />
+                                        <c:choose>
+                                            <c:when test="${not empty detail.daddress}">
+                                                <c:if test="${detailStatus.index < course.courseDetail.size() - 1}">
+                                                    &rsaquo;
+                                                </c:if>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:when>
+                                    <c:when test="${not empty detail.daddress}">
+                                        <c:out value="${detail.daddress}" />
+                                        <c:if test="${detailStatus.index < course.courseDetail.size() - 1}">
+                                            &rsaquo;
+                                        </c:if>
+                                    </c:when>
+                                </c:choose>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
-        </div>
+        </div>     
         <!-- 여행 코스 날짜별 상세 내역 리스트 -->
-        <div class="reviewCourseDetailDiv">
-         	<c:forEach var="image" items="${review.trevimages}">
-	         	<c:if test="${image.trevimgpath != null && image.trevimgpath != ''}">
-		            <div class="reviewCourseDetailItem">
-		                <div class="day">Day 1</div>
-		                <div class="course">course > course > course</div>
-		                <img src="${pageContext.request.contextPath}${image.trevimgpath}" alt="Review Detail Image">
-		                <div class="detailContent">
-		                    첫째 날 여행 후기 내용입니다. 상세한 설명과 후기글을 여기에 작성합니다.
-		                </div>
-		            </div>
-	            </c:if>
-            </c:forEach>
-            <button id="reviewListBtn" class="initButton2">목록으로</button>
-        </div>
+		<div class="reviewCourseDetailDiv">
+		    <c:set var="imageIndex" value="0" />
+		    <c:forEach var="content" items="${fn:split(review.trevcontent, ',')}" varStatus="status">
+		        <div class="reviewCourseDetailItem">
+		            <c:choose>
+		                <c:when test="${content == 'image'}">
+		                    <c:if test="${imageIndex < review.trevimages.size()}">
+		                        <img src="${pageContext.request.contextPath}${review.trevimages[imageIndex].trevimgpath}" alt="Review Detail Image">
+		                        <c:set var="imageIndex" value="${imageIndex + 1}" />
+		                    </c:if>
+		                </c:when>
+		                <c:otherwise>
+		                    <div class="detailContent">${content}</div>
+		                </c:otherwise>
+		            </c:choose>
+		        </div>
+		    </c:forEach>
+		    <button id="reviewListBtn" class="initButton2">목록으로</button>
+		</div>
         <!-- 댓글 작성 및 목록 -->
         <div class="commentsSection">
             <h2>댓글</h2>

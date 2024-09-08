@@ -72,9 +72,11 @@ public class TReviewController {
 	public String showReviewDetail(@PathVariable("trevid") int trevid, Model model) {
 		MemberVO member = MemberUtil.isAuthenticatedMember();
 		TReviewResDTO review = treviewService.getTReviewDetail(trevid);
+		List<CourseDTO> courses = courseService.getCourseDetailsByMemId(member.getMemid());
 
 		model.addAttribute("member", member);
 		model.addAttribute("review", review);
+		model.addAttribute("courses", courses);
 
 		return PAGE_DETAIL_TREVIEW;
 	}
