@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="totreviews.mapper.TripMapper">
+
+	<select id="getTripByMemId" parameterType="String" resultMap="TripVOMap">
+        SELECT TRIPID, MEMID, AREACODE, TRIPNAME, TRAMT, TRSTADATE, TRENDDATE, TRPERIOD, TRPEOPLE, TRIMGPATH
+        FROM TRIP
+        WHERE MEMID = #{memid}
+    </select>
+	
+	<resultMap id="TripVOMap" type="totreviews.domain.TripVO">
+        <id property="tripid" column="TRIPID" />
+        <result property="memid" column="MEMID" />
+        <result property="areacode" column="AREACODE" />
+        <result property="tripname" column="TRIPNAME" />
+        <result property="tramt" column="TRAMT" />
+        <result property="trstadate" column="TRSTADATE" />
+        <result property="trenddate" column="TRENDDATE" />
+        <result property="trperiod" column="TRPERIOD" />
+        <result property="trpeople" column="TRPEOPLE" />
+        <result property="trimgpath" column="TRIMGPATH" />
+    </resultMap>
+
+</mapper>

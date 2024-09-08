@@ -25,14 +25,24 @@
             <form id="reviewForm" action="${pageContext.request.contextPath}/review/all/write" method="post"
                 enctype="multipart/form-data">
                 
-                <input type="hidden" name="memid" value="${member.memid}" />
-                
                 <!-- 1. 여행 후기 제목 입력 -->
                 <div class="formGroup">
                     <label for="reviewTitle">제목</label>
                     <input id="reviewTitle" type="text" class="titleInput" name="trevtitle">
                 </div>
-                <!-- 2. 여행 코스 선택 -->
+
+                <!-- 2.1 여행 항목 선택 -->
+                <div class="formGroup">
+                	<label for="trip">여행 항목</label>
+                	<select id="travelTrip" class="tripSelect" name="trevtrip">
+                		<option value="" disabled selected>여행을 선택하세요</option>
+                		<c:forEach var="trip" items="${trips}">
+				            <option value="${trip.tripid}">${trip.tripname}</option>
+				        </c:forEach>
+                	</select>
+                </div>
+                
+                <!-- 2.2 여행 코스 선택 -->
                 <div class="formGroup">
                     <label for="travelCourse">여행 코스</label>
                     <select id="travelCourse" class="courseSelect" name="trevcourse">
@@ -53,6 +63,7 @@
                         </c:forEach>
                     </select>
                 </div>
+                
                 <!-- 3. 여행 후기 내용 입력 -->
                 <div class="reviewContentDiv">
                     <label for="reviewContent">후기 내용</label>
@@ -60,6 +71,7 @@
                         <input class="reviewContent" name="trevcontent" />
                     </div>
                 </div>
+                
                 <!-- 4. 이미지 파일 업로드 -->
                 <div class="formGroup">
                     <label for="reviewImage">이미지 업로드</label>
@@ -67,6 +79,7 @@
                         <input id="reviewImage" type="file" name="image" multiple />
                     </div>
                 </div>
+                
                 <!-- 5. 이용 약관 동의 -->
                 <div class="formGroup">
                     <fieldset class="termsFieldset">
@@ -81,6 +94,7 @@
                         </label>
                     </fieldset>
                 </div>
+                
                 <!-- 버튼 -->
                 <div class="formGroup">
                     <div class="submitAndCancleBtnDiv">

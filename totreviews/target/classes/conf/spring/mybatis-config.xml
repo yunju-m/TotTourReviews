@@ -27,6 +27,7 @@
         <mapper resource="conf/mapper/TReviewMapper.xml"/>
         <mapper resource="conf/mapper/CourseMapper.xml"/>
         <mapper resource="conf/mapper/TourMapper.xml"/>
+        <mapper resource="conf/mapper/TripMapper.xml"/>
     </mappers>
     
 </configuration>

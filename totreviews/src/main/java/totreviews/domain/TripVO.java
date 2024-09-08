@@ -7,6 +7,7 @@ public class TripVO {
 	private int tripid; // 여행 아이디
 	private String memid; // 회원 아이디
 	private String areacode; // 지역코드
+	private String tripname; // 여행 이름
 	private int tramt; // 여행 예상 비용
 	private Timestamp trstadate; // 여행 시작일
 	private Timestamp trenddate; // 예상 도착일
@@ -17,11 +18,12 @@ public class TripVO {
 	public TripVO() {
 	}
 
-	public TripVO(int tripid, String memid, String areacode, int tramt, Timestamp trstadate, Timestamp trenddate,
-			String trperiod, int trpeople, String trimgpath) {
+	public TripVO(int tripid, String memid, String areacode, String tripname, int tramt, Timestamp trstadate,
+			Timestamp trenddate, String trperiod, int trpeople, String trimgpath) {
 		this.tripid = tripid;
 		this.memid = memid;
 		this.areacode = areacode;
+		this.tripname = tripname;
 		this.tramt = tramt;
 		this.trstadate = trstadate;
 		this.trenddate = trenddate;
@@ -40,6 +42,10 @@ public class TripVO {
 
 	public String getAreacode() {
 		return areacode;
+	}
+
+	public String getTripname() {
+		return tripname;
 	}
 
 	public int getTramt() {
@@ -68,9 +74,9 @@ public class TripVO {
 
 	@Override
 	public String toString() {
-		return "TripVO [tripid=" + tripid + ", memid=" + memid + ", areacode=" + areacode + ", tramt=" + tramt
-				+ ", trstadate=" + trstadate + ", trenddate=" + trenddate + ", trperiod=" + trperiod + ", trpeople="
-				+ trpeople + ", trimgpath=" + trimgpath + "]";
+		return "TripVO [tripid=" + tripid + ", memid=" + memid + ", areacode=" + areacode + ", tripname=" + tripname
+				+ ", tramt=" + tramt + ", trstadate=" + trstadate + ", trenddate=" + trenddate + ", trperiod="
+				+ trperiod + ", trpeople=" + trpeople + ", trimgpath=" + trimgpath + "]";
 	}
 
 }

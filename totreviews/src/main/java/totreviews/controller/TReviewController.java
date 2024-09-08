@@ -1,6 +1,9 @@
 package totreviews.controller;
 
-import static totreviews.common.Constants.*;
+import static totreviews.common.Constants.PAGE_DETAIL_TREVIEW;
+import static totreviews.common.Constants.PAGE_TREVIEW;
+import static totreviews.common.Constants.PAGE_WRITE_TREVIEW;
+import static totreviews.common.Constants.URL_ALL_TREVIEW;
 
 import java.util.List;
 
@@ -21,8 +24,10 @@ import totreviews.domain.CourseDTO;
 import totreviews.domain.MemberVO;
 import totreviews.domain.TReviewReqDTO;
 import totreviews.domain.TReviewResDTO;
+import totreviews.domain.TripVO;
 import totreviews.service.CourseService;
 import totreviews.service.TReviewService;
+import totreviews.service.TripService;
 import totreviews.util.MemberUtil;
 
 @Controller
@@ -31,6 +36,9 @@ public class TReviewController {
 
 	@Autowired
 	private TReviewService treviewService;
+
+	@Autowired
+	private TripService tripService;
 
 	@Autowired
 	private CourseService courseService;
@@ -51,7 +59,10 @@ public class TReviewController {
 	public String showTourReviewWrite(Model model) {
 		MemberVO member = MemberUtil.isAuthenticatedMember();
 
+		List<TripVO> trips = tripService.getTripByMemId(member.getMemid());
 		List<CourseDTO> courses = courseService.getCourseDetailsByMemId(member.getMemid());
+
+		model.addAttribute("trips", trips);
 		model.addAttribute("courses", courses);
 		model.addAttribute("member", member);
 

@@ -195,6 +195,7 @@
     width: 90% !important;
 }
 
+.tripSelect,
 .courseSelect {
     width: 90%;
     padding: 10px;
