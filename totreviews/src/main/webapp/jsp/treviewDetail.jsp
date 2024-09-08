@@ -10,6 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/global.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/review.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/treview.js"></script>
     <title>여행 후기 상세</title>
 </head>
 <body>

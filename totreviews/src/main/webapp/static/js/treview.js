@@ -71,6 +71,12 @@ $(document).ready(() => {
     $('#cancleButton').on('click', () => {
         window.history.back();
     });
+    
+    // 나의 여행 상세 후기 목록 버튼 클릭 시 뒤로가기
+    $('#reviewListBtn').on('click', () => {
+        window.history.back();
+    });
+    
 });
 
 // 업로드 파일 정보와 함께 글쓰기 등록 처리
