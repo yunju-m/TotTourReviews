@@ -112,9 +112,16 @@
 		                </div>
 		                <div id="commentSetting" class="commentSetting">⋮</div>
 		            </div>
-		            <div class="commentReplyForm">
-		                <div type="submit" class="commentReply">댓글 작성</div>
-		            </div>
+		            <div class="commentReply" data-comment-id="${comment.commentId}">댓글 작성</div>
+		            <!-- 대댓글 입력 폼 -->
+			        <div class="commentReplyForm" style="display: none;">
+			            <form class="replyForm" action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add" method="post">
+			                <input type="hidden" name="parentId" value="${comment.commentId}" />
+			                <input type="text" name="content" placeholder="대댓글을 작성해주세요." required />
+			                <button type="submit" class="initButton active">작성</button>
+			                <button type="button" class="initButton cancelReply">취소</button>
+			            </form>
+			        </div>
 		        </div>
 		    </c:forEach>
             <!-- 댓글 목록 END -->

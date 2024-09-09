@@ -9,6 +9,6 @@ public interface CommentService {
 
 	List<CommentVO> getCommentsByReviewId(int trevid);
 
-	void insertComment(CommentReqDTO commentReqDTO);
+	void insertComment(String boardId, int postId, CommentReqDTO commentReqDTO);
 
 }

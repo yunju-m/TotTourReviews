@@ -91,6 +91,22 @@ $(document).ready(() => {
     $('#commentCancelBtn').on('click', () => {
     	$('#commentContent').val('');
     });
+    
+    // 댓글 취소 버튼 클릭 시 댓글 내용 비우기
+    $('#commentCancelBtn').on('click', () => {
+        $('#commentContent').val('');
+    });
+
+    // 대댓글 작성 버튼 클릭 시 대댓글 입력 폼 열기
+    $('.commentReply').on('click', function() {
+        $(this).next('.commentReplyForm').toggle();
+    });
+    
+    // 대댓글 취소 버튼 클릭 시 댓글 내용 비우기
+    $('.commentReplyForm .cancelReply').on('click', function() {
+        let replyForm = $(this).closest('.commentReplyForm');
+        replyForm.find('input[name="content"]').val('');
+    });
 
 });
 

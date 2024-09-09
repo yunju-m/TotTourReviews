@@ -6,40 +6,75 @@
     	SELECT
             TREVCID AS commentId,
             TREVID AS postId,
+            TOPPARENTID AS topParentId,
+            PARENTID AS parentId,
             MEMNICK AS memnick,
             COMMENTSTATUS AS status,
             TREVCTEXT AS content,
+            TREVDEPTH AS depth,
             TREVCREGDATE AS regdate,
             TREVDUPDATE AS updates
         FROM 
-        	TREVIEWCOMMENT
+            TREVIEWCOMMENT
         WHERE 
-        	TREVID = #{trevid}
+            TREVID = #{trevid}
+        ORDER BY TOPPARENTID ASC, TREVDEPTH ASC, TREVCREGDATE ASC
     </select>
     
-    <insert id="insertComment" parameterType="CommentReqDTO">
+    <select id="getCommentById" parameterType="int" resultType="CommentVO">
+	    SELECT
+	        TREVCID AS commentId,
+	        TREVID AS postId,
+	        TOPPARENTID AS topParentId,
+	        PARENTID AS parentId,
+	        MEMID AS memId,
+	        MEMNICK AS memnick,
+	        COMMENTSTATUS AS status,
+	        TREVCTEXT AS content,
+	        TREVDEPTH AS depth,
+	        TREVCREGDATE AS regdate,
+	        TREVDUPDATE AS updates
+	    FROM 
+	        TREVIEWCOMMENT
+	    WHERE 
+	        TREVCID = #{commentId}
+	</select>  
+    
+    <insert id="insertComment" parameterType="CommentVO">
 	    INSERT INTO TREVIEWCOMMENT (
-	        TREVCID,
-	        TREVID,
-	        MEMNICK,
-	        TREVCTEXT,
-	        TREVCREGDATE
-	    )
-	    VALUES (
-	        SEQ_TREVCID.NEXTVAL,
-	        #{postId},
-	        #{memnick},
-	        #{content},
-	        CURRENT_TIMESTAMP
-	    )
+            TREVCID,
+            TREVID,
+            TOPPARENTID,
+            PARENTID,
+            MEMID,
+            MEMNICK,
+            TREVCTEXT,
+            TREVDEPTH,
+            TREVCREGDATE
+        )
+        VALUES (
+            SEQ_TREVCID.NEXTVAL,
+            #{postId},
+            #{topParentId},
+            #{parentId},
+            #{memId},
+            #{memnick},
+            #{content},
+            #{depth},
+            CURRENT_TIMESTAMP
+        )
     </insert>
 	
 	<resultMap id="CommentVOMap" type="CommentVO">
         <id property="commentId" column="commentId"/>
         <result property="postId" column="postId"/>
+        <result property="topParentId" column="topParentId"/>
+        <result property="parentId" column="parentId"/>
+        <result property="memId" column="memId"/> 
         <result property="memnick" column="memnick"/>   
         <result property="status" column="status"/>          
         <result property="content" column="content"/> 
+        <result property="depth" column="depth"/>
         <result property="regdate" column="regdate"/>    
         <result property="update" column="update"/>      
     </resultMap>

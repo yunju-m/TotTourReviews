@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import totreviews.domain.CommentReqDTO;
 import totreviews.domain.CommentVO;
 
 @Repository
@@ -23,8 +22,13 @@ public class CommentDAOImpl implements CommentDAO {
 	}
 
 	@Override
-	public void insertComment(CommentReqDTO commentReqDTO) {
-		sqlSession.selectOne(NAMESPACE + ".insertComment", commentReqDTO);
+	public CommentVO getCommentById(int commentId) {
+		return sqlSession.selectOne(NAMESPACE + ".getCommentById", commentId);
+	}
+
+	@Override
+	public void insertComment(CommentVO commentVO) {
+		sqlSession.insert(NAMESPACE + ".insertComment", commentVO);
 	}
 
 }
