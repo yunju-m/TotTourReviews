@@ -22,7 +22,7 @@
         </div>
         <!-- 여행 후기 작섬 폼 -->
         <div class="reviewForm">
-            <form id="reviewForm" action="${pageContext.request.contextPath}/review/all/write" method="post"
+            <form id="reviewForm" action="${pageContext.request.contextPath}/review/all/add" method="post"
                 enctype="multipart/form-data">
                 
                 <!-- 1. 여행 후기 제목 입력 -->

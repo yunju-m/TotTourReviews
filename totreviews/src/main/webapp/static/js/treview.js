@@ -2,7 +2,7 @@
 const BASE_TREVIEW_URL = '/totreviews/review';
 const GET_ALL_TREVIEW = `${BASE_TREVIEW_URL}/all/1`;
 const GET_MY_TREVIEW = `${BASE_TREVIEW_URL}/my/1`;
-const GET_WRITE_TREVIEW = `${BASE_TREVIEW_URL}/all/write`;
+const GET_WRITE_TREVIEW = `${BASE_TREVIEW_URL}/all/add`;
 
 // 에러 메시지 선언
 const ERROR_MESSAGES = {

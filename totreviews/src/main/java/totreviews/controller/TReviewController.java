@@ -58,7 +58,7 @@ public class TReviewController {
 	}
 
 	// 여행 후기 작성 화면 이동
-	@GetMapping("/write")
+	@GetMapping("/add")
 	public String showTourReviewWrite(Model model) {
 		MemberVO member = MemberUtil.isAuthenticatedMember();
 
@@ -72,7 +72,7 @@ public class TReviewController {
 
 	// 해당 여행의 코스 정보 처리
 	@ResponseBody
-	@GetMapping("/write/{tripId}")
+	@GetMapping("/add/{tripId}")
 	public List<CourseDTO> getCourseDetailById(@RequestParam("tripId") int tripId) {
 		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(tripId);
 
@@ -80,7 +80,7 @@ public class TReviewController {
 	}
 
 	// 여행 후기 작성 처리
-	@PostMapping("/write")
+	@PostMapping("/add")
 	public String submitTourReviewWrite(@ModelAttribute TReviewReqDTO tReviewReqDTO,
 			@RequestParam(value = "reviewImage", required = false) MultipartFile[] imageFiles) {
 		MemberVO member = MemberUtil.isAuthenticatedMember();
