@@ -5,10 +5,9 @@
     <select id="getCommentsByReviewId" parameterType="int" resultMap="CommentVOMap">
     	SELECT
             TREVCID AS commentId,
-            TREVID AS boardId,
+            TREVID AS postId,
             MEMNICK AS memnick,
             COMMENTSTATUS AS status,
-            TREVCTITLE AS title,
             TREVCTEXT AS content,
             TREVCREGDATE AS regdate,
             TREVDUPDATE AS updates
@@ -17,13 +16,29 @@
         WHERE 
         	TREVID = #{trevid}
     </select>
+    
+    <insert id="insertComment" parameterType="CommentReqDTO">
+	    INSERT INTO TREVIEWCOMMENT (
+	        TREVCID,
+	        TREVID,
+	        MEMNICK,
+	        TREVCTEXT,
+	        TREVCREGDATE
+	    )
+	    VALUES (
+	        SEQ_TREVCID.NEXTVAL,
+	        #{postId},
+	        #{memnick},
+	        #{content},
+	        CURRENT_TIMESTAMP
+	    )
+    </insert>
 	
 	<resultMap id="CommentVOMap" type="CommentVO">
         <id property="commentId" column="commentId"/>
-        <result property="boardId" column="boardId"/>
+        <result property="postId" column="postId"/>
         <result property="memnick" column="memnick"/>   
-        <result property="status" column="status"/>      
-        <result property="title" column="title"/>        
+        <result property="status" column="status"/>          
         <result property="content" column="content"/> 
         <result property="regdate" column="regdate"/>    
         <result property="update" column="update"/>      

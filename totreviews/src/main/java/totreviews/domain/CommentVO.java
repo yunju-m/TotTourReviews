@@ -6,10 +6,9 @@ import totreviews.common.enums.Flag;
 
 public class CommentVO {
 	private int commentId; // 댓글 아이디
-	private int boardId; // 게시글 아이디
+	private int postId; // 게시물 아이디
 	private String memnick; // 댓글 작성자
 	private Flag status; // 게시여부코드
-	private String title; // 제목
 	private String content; // 내용
 	private Timestamp regdate; // 작성일시
 	private Timestamp update; // 수정일시
@@ -17,14 +16,12 @@ public class CommentVO {
 	public CommentVO() {
 	}
 
-	public CommentVO(int commentId, int boardId, String memnick, Flag status, String title, String content,
-			Timestamp regdate, Timestamp update) {
-		super();
+	public CommentVO(int commentId, int postId, String memnick, Flag status, String content, Timestamp regdate,
+			Timestamp update) {
 		this.commentId = commentId;
-		this.boardId = boardId;
+		this.postId = postId;
 		this.memnick = memnick;
 		this.status = status;
-		this.title = title;
 		this.content = content;
 		this.regdate = regdate;
 		this.update = update;
@@ -34,8 +31,8 @@ public class CommentVO {
 		return commentId;
 	}
 
-	public int getBoardId() {
-		return boardId;
+	public int getPostId() {
+		return postId;
 	}
 
 	public String getMemnick() {
@@ -44,10 +41,6 @@ public class CommentVO {
 
 	public Flag getStatus() {
 		return status;
-	}
-
-	public String getTitle() {
-		return title;
 	}
 
 	public String getContent() {
@@ -64,9 +57,8 @@ public class CommentVO {
 
 	@Override
 	public String toString() {
-		return "CommentVO [commentId=" + commentId + ", boardId=" + boardId + ", memnick=" + memnick + ", status="
-				+ status + ", title=" + title + ", content=" + content + ", regdate=" + regdate + ", update=" + update
-				+ "]";
+		return "CommentVO [commentId=" + commentId + ", postId=" + postId + ", memnick=" + memnick + ", status="
+				+ status + ", content=" + content + ", regdate=" + regdate + ", update=" + update + "]";
 	}
 
 }

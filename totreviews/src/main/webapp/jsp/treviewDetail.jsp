@@ -89,9 +89,9 @@
                 <div class="profileImg">
                     <img src="https://via.placeholder.com/50" alt="Profile Image 1">
                 </div>
-                <form id="commentForm" action="" method="post">
-                    <div id="commentMember" class="commentMember" name="member">회원1</div>
-                    <input id="commentContent" name="comment" type="text" placeholder="댓글을 작성해주세요." required />
+                <form id="commentForm" action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add" method="post">
+                    <div id="commentMember" class="commentMember" name="member">${member.memnick}</div>
+                    <input id="commentContent" name="content" type="text" placeholder="댓글을 작성해주세요." required />
                     <button id="commentRegBtn" type="submit" class="initButton active">댓글 작성</button>
                     <button id="commentCancelBtn" type="button" class="initButton">취소</button>
                 </form>
@@ -119,6 +119,7 @@
 		    </c:forEach>
             <!-- 댓글 목록 END -->
         </div>
+        <!-- 댓글 작성 및 목록 끝 -->
     </div>
 </body>
 </html>

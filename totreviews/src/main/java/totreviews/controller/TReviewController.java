@@ -93,13 +93,15 @@ public class TReviewController {
 
 	// 여행 후기 상세 화면 이동
 	@GetMapping("/detail/{trevid}")
-	public String showReviewDetail(@PathVariable("trevid") int trevid, Model model) {
+	public String showReviewDetail(@PathVariable("boardId") String boardId, @PathVariable("trevid") int trevid,
+			Model model) {
 		MemberVO member = MemberUtil.isAuthenticatedMember();
 
 		TReviewResDTO review = treviewService.getTReviewDetail(trevid);
 		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(review.getTripid());
 		List<CommentVO> comments = commentService.getCommentsByReviewId(trevid);
 
+		model.addAttribute("boardId", boardId);
 		model.addAttribute("member", member);
 		model.addAttribute("review", review);
 		model.addAttribute("courses", courses);
