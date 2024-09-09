@@ -84,7 +84,12 @@ $(document).ready(() => {
 
     // 나의 여행 상세 후기 목록 버튼 클릭 시 뒤로가기
     $('#reviewListBtn').on('click', () => {
-        window.history.back();
+        window.location.href = GET_ALL_TREVIEW;
+    });
+    
+    // 여행 상세 후기 댓글 취소 버튼 클릭 시 내용 삭제
+    $('#commentCancelBtn').on('click', () => {
+    	$('#commentContent').val('');
     });
 
 });
