@@ -6,40 +6,44 @@
         SELECT * FROM COURSE WHERE COURID = #{courseId}
     </select>
 
-	<select id="getCourseByMemId" parameterType="String" resultMap="CourseDTOMap">
+	<select id="getCourseByTripId" parameterType="int" resultMap="CourseDTOMap">
 		SELECT 
-	    C.COURID, 
-	    C.TRIPID, 
-	    C.AREACODE, 
-	    C.DCOURSE, 
-	    C.COURREGDATE, 
-	    C.COURUPDATE
-	FROM 
-	    COURSE C
-	JOIN 
-	    TRIP T ON C.TRIPID = T.TRIPID
-	WHERE 
-	    T.MEMID = #{memId}
+		    C.COURID, 
+		    C.TRIPID, 
+		    C.AREACODE, 
+		    C.DCOURSE, 
+		    C.COURREGDATE, 
+		    C.COURUPDATE
+		FROM 
+		    COURSE C
+		JOIN 
+		    TRIP T ON C.TRIPID = T.TRIPID
+		WHERE 
+		    T.TRIPID = #{tripId}
 	</select>
 	
 	<select id="getCourseDetailsById" parameterType="map" resultType="CourseResDTO">
-		SELECT 
-		    CASE 
-		        WHEN #{dcourseType} = 'TOID' THEN t.TONAME 
-		        WHEN #{dcourseType} = 'RESTID' THEN r.RESTNAME 
-		        WHEN #{dcourseType} = 'LODID' THEN l.LODNAME
-		    END AS dname,
-		    CASE 
-		        WHEN #{dcourseType} = 'TOID' THEN t.TOADDRESS 
-		        WHEN #{dcourseType} = 'RESTID' THEN r.RESTADDRESS 
-		        WHEN #{dcourseType} = 'LODID' THEN l.LODADDRESS
-		    END AS daddress
-		FROM DUAL
-		LEFT JOIN TOUR t ON t.toid = #{dcourseId}
-		LEFT JOIN RESTAURANT r ON r.restid = #{dcourseId}
-		LEFT JOIN LODGING l ON l.lodid = #{dcourseId}
+	    <choose>
+	        <when test="dcourseType == 'TOID'">
+	            SELECT t.TONAME AS dname, t.TOADDRESS AS daddress
+	            FROM TOUR t
+	            WHERE t.toid = #{dcourseId}
+	        </when>
+	        <when test="dcourseType == 'RESTID'">
+	            SELECT r.RESTNAME AS dname, r.RESTADDRESS AS daddress
+	            FROM RESTAURANT r
+	            WHERE r.restid = #{dcourseId}
+	        </when>
+	        <when test="dcourseType == 'LODID'">
+	            SELECT l.LODNAME AS dname, l.LODADDRESS AS daddress
+	            FROM LODGING l
+	            WHERE l.lodid = #{dcourseId}
+	        </when>
+	        <otherwise>
+	            SELECT NULL AS dname, NULL AS daddress FROM DUAL
+	        </otherwise>
+   		</choose>
 	</select>
-	
 	
 	<resultMap id="CourseDTOMap" type="CourseDTO">
 	    <id property="courseid" column="COURID" />

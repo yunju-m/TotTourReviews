@@ -25,8 +25,8 @@ public class CourseDAOImpl implements CourseDAO {
 	}
 
 	@Override
-	public List<CourseDTO> getCourseByMemId(String memId) {
-		return sqlSession.selectList(NAMESPACE + ".getCourseByMemId", memId);
+	public List<CourseDTO> getCourseByTripId(int tripId) {
+		return sqlSession.selectList(NAMESPACE + ".getCourseByTripId", tripId);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public interface CourseDAO {
 
 	CourseDTO getCourseById(String courseId);
 
-	List<CourseDTO> getCourseByMemId(String memId);
+	List<CourseDTO> getCourseByTripId(int tripId);
 
 	CourseResDTO getCourseDetailsById(String dcourseType, int dcourseId);
 

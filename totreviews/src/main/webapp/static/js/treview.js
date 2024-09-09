@@ -7,7 +7,7 @@ const GET_WRITE_TREVIEW = `${BASE_TREVIEW_URL}/all/write`;
 // 에러 메시지 선언
 const ERROR_MESSAGES = {
     TITLE_REQUIRED: '제목을 입력해주세요.',
-    COURSE_REQUIRED: '여행 코스를 선택해주세요.',
+    TRIP_REQUIRED: '작성할 여행을 선택해주세요.',
     CONTENT_REQUIRED: '후기 내용을 입력해주세요.',
     AGREE_REQUIRED: '개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.',
     FILE_UPLOAD: '파일 업로드 중 오류가 발생했습니다.'
@@ -27,6 +27,15 @@ $(document).ready(() => {
         $('#myReviewsBtn').addClass('active');
         $('#TotalReviewsBtn').removeClass('active');
     }
+
+    // 여행 후기의 여행을 선택하는 경우
+    $('#travelTrip').on('change', function () {
+        var tripId = $(this).val();
+
+        if (tripId) {
+            handleCourseSelect(tripId);
+        }
+    });
 
     // 글쓰기 버튼 클릭 시 이동
     $('#writeReviewBtn').on('click', function () {
@@ -49,6 +58,7 @@ $(document).ready(() => {
     // 여행 후기 항목 유효성 검사 및 등록
     $('#submitButton').on('click', function (event) {
         event.preventDefault();
+
         const validationResult = validate();
         if (validationResult.isValid) {
             submitReview();
@@ -71,13 +81,34 @@ $(document).ready(() => {
     $('#cancleButton').on('click', () => {
         window.history.back();
     });
-    
+
     // 나의 여행 상세 후기 목록 버튼 클릭 시 뒤로가기
     $('#reviewListBtn').on('click', () => {
         window.history.back();
     });
-    
+
 });
+
+// 여행 선택 시 이벤트 처리
+const handleCourseSelect = tripId => {
+    $.ajax({
+        url: `${GET_WRITE_TREVIEW}/${tripId}`,
+        type: 'GET',
+        data: { tripId: tripId },
+        success: function (courses) {
+            let courseHtml = '';
+            courses.forEach((course, index) => {
+                let day = `[Day${index + 1}]`;
+                let courseDetails = course.courseDetail.map(detail => detail.dname).join(' &rarr; ');
+                courseHtml += `<div class="courseDetailItem">${day} ${courseDetails}</div><hr/>`;
+            });
+            $('#travelCourse').html(courseHtml);
+        },
+        error: function () {
+            alert('코스를 가져오는 데 실패했습니다.');
+        }
+    });
+}
 
 // 업로드 파일 정보와 함께 글쓰기 등록 처리
 const submitReview = () => {
@@ -117,7 +148,7 @@ const handleFileSelect = event => {
                     class: 'reviewImage'
                 });
                 const imgWrapper = $('<div>', { class: 'img-wrapper' });
-                
+
                 let hiddenImageInput = $('<input>', {
                     type: 'hidden',
                     name: 'trevcontent',
@@ -125,7 +156,7 @@ const handleFileSelect = event => {
                 });
                 imgWrapper.append(img).append(hiddenImageInput);
                 $('#reviewContentAndImgDiv').append(imgWrapper);
-                
+
                 addNewFileInput(file, imgWrapper);
             };
             reader.readAsDataURL(file);
@@ -195,7 +226,7 @@ const checkField = (selector, errorMessage) => {
 const validate = () => {
     const validations = [
         { selector: '#reviewTitle', errorMessage: ERROR_MESSAGES.TITLE_REQUIRED },
-        { selector: '#travelCourse', errorMessage: ERROR_MESSAGES.COURSE_REQUIRED },
+        { selector: '#travelTrip', errorMessage: ERROR_MESSAGES.TRIP_REQUIRED },
         { selector: '#reviewContentAndImgDiv .reviewContent', errorMessage: ERROR_MESSAGES.CONTENT_REQUIRED }
     ];
 

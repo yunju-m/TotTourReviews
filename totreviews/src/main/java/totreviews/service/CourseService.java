@@ -8,6 +8,6 @@ public interface CourseService {
 
 	CourseDTO getCourseById(String courseId);
 
-	List<CourseDTO> getCourseDetailsByMemId(String memId);
+	List<CourseDTO> getCourseDetailsByTripId(int tripId);
 
 }

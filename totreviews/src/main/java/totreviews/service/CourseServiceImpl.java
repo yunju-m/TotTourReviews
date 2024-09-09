@@ -22,9 +22,8 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
-	public List<CourseDTO> getCourseDetailsByMemId(String memId) {
-		List<CourseDTO> courseList = courseDAO.getCourseByMemId(memId);
-
+	public List<CourseDTO> getCourseDetailsByTripId(int tripId) {
+		List<CourseDTO> courseList = courseDAO.getCourseByTripId(tripId);
 		for (CourseDTO course : courseList) {
 			List<CourseResDTO> courseDetails = new ArrayList<>();
 			String[] courseTypes = course.getDcourse().split(",");

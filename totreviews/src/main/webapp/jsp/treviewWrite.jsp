@@ -34,7 +34,7 @@
                 <!-- 2.1 여행 항목 선택 -->
                 <div class="formGroup">
                 	<label for="trip">여행 항목</label>
-                	<select id="travelTrip" class="tripSelect" name="trevtrip">
+                	<select id="travelTrip" class="tripSelect" name="tripid">
                 		<option value="" disabled selected>여행을 선택하세요</option>
                 		<c:forEach var="trip" items="${trips}">
 				            <option value="${trip.tripid}">${trip.tripname}</option>
@@ -42,27 +42,23 @@
                 	</select>
                 </div>
                 
-                <!-- 2.2 여행 코스 선택 -->
+                <!-- 2.2 해당 여행의 코스 정보 출력 -->
                 <div class="formGroup">
-                    <label for="travelCourse">여행 코스</label>
-                    <select id="travelCourse" class="courseSelect" name="trevcourse">
-                        <option value="" disabled selected>여행 코스를 선택하세요</option>
-                        <c:forEach var="course" items="${courses}">
-                            <c:set var="courseDetails" value="" />
-                            <c:forEach var="detail" items="${course.courseDetail}">
-                                <c:if test="${not empty courseDetails}">
-                                    <c:set var="courseDetails" value="${courseDetails} → ${detail.dname}" />
-                                </c:if>
-                                <c:if test="${empty courseDetails}">
-                                    <c:set var="courseDetails" value="${detail.dname}" />
-                                </c:if>
-                            </c:forEach>
-                            <option value="${course.courseid}">
-                                ${courseDetails}
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
+				    <label for="travelCourse">여행 코스</label>
+				    <div id="travelCourse" class="courseDetails">
+				        <c:forEach var="course" items="${courses}">
+				            <div class="courseDetailItem">
+				                <c:forEach var="detail" items="${course.courseDetail}">
+				                    <c:if test="${not empty detail.dname}">
+				                        <span>${detail.dname}</span>
+				                        <span>${detail.daddress}</span><br/>
+				                    </c:if>
+				                </c:forEach>
+				            </div>
+				            <hr />
+				        </c:forEach>
+				    </div>
+				</div>
                 
                 <!-- 3. 여행 후기 내용 입력 -->
                 <div class="reviewContentDiv">

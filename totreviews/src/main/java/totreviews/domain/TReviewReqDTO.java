@@ -32,7 +32,7 @@ public class TReviewReqDTO {
 	// DTO 검증 메소드
 	public void validate() {
 		ValidationUtil.validateNotEmpty(trevtitle, ErrorCode.NOT_FOUND_TREVTITLE);
-		ValidationUtil.validateNotEmpty(trevcourse, ErrorCode.NOT_FOUND_TREVCOURSE);
+		ValidationUtil.validateNotEmpty(String.valueOf(trevid), ErrorCode.NOT_FOUND_TRIPID);
 		ValidationUtil.validateNotEmpty(trevcontent, ErrorCode.NOT_FOUND_TREVCONTENT);
 		ValidationUtil.validateLength(trevtitle, 200, ErrorCode.TITLE_TOO_LONG);
 		ValidationUtil.validateLength(trevcontent, 1000, ErrorCode.CONTENT_TOO_LONG);

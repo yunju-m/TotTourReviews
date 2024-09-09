@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import totreviews.common.page.PageReqDTO;
@@ -60,19 +61,29 @@ public class TReviewController {
 		MemberVO member = MemberUtil.isAuthenticatedMember();
 
 		List<TripVO> trips = tripService.getTripByMemId(member.getMemid());
-		List<CourseDTO> courses = courseService.getCourseDetailsByMemId(member.getMemid());
 
 		model.addAttribute("trips", trips);
-		model.addAttribute("courses", courses);
 		model.addAttribute("member", member);
 
 		return PAGE_WRITE_TREVIEW;
+	}
+
+	// 해당 여행의 코스 정보 처리
+	@ResponseBody
+	@GetMapping("/write/{tripId}")
+	public List<CourseDTO> getCourseDetailById(@RequestParam("tripId") int tripId) {
+		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(tripId);
+
+		return courses;
 	}
 
 	// 여행 후기 작성 처리
 	@PostMapping("/write")
 	public String submitTourReviewWrite(@ModelAttribute TReviewReqDTO tReviewReqDTO,
 			@RequestParam(value = "reviewImage", required = false) MultipartFile[] imageFiles) {
+		MemberVO member = MemberUtil.isAuthenticatedMember();
+		tReviewReqDTO.setMemid(member.getMemid());
+
 		treviewService.insertTReview(tReviewReqDTO, imageFiles);
 
 		return "redirect:" + URL_ALL_TREVIEW;
@@ -83,7 +94,7 @@ public class TReviewController {
 	public String showReviewDetail(@PathVariable("trevid") int trevid, Model model) {
 		MemberVO member = MemberUtil.isAuthenticatedMember();
 		TReviewResDTO review = treviewService.getTReviewDetail(trevid);
-		List<CourseDTO> courses = courseService.getCourseDetailsByMemId(member.getMemid());
+		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(review.getTripid());
 
 		model.addAttribute("member", member);
 		model.addAttribute("review", review);
