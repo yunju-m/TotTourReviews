@@ -11,9 +11,11 @@
     <typeAliases>
     	<typeAlias alias="TripVO" type="totreviews.domain.TripVO"/>
     	<typeAlias alias="TReviewVO" type="totreviews.domain.TReviewVO"/>
-    	<typeAlias alias="TReviewImageVO" type="totreviews.domain.TReviewImageVO"/>
     	<typeAlias alias="TReviewReqDTO" type="totreviews.domain.TReviewReqDTO"/>
     	<typeAlias alias="TReviewResDTO" type="totreviews.domain.TReviewResDTO"/>
+    	<typeAlias alias="TReviewImageVO" type="totreviews.domain.TReviewImageVO"/>
+    	<typeAlias alias="CommentVO" type="totreviews.domain.CommentVO"/>
+    	<typeAlias alias="CommentResDTO" type="totreviews.domain.CommentResDTO"/>
     	<typeAlias alias="CourseDTO" type="totreviews.domain.CourseDTO"/>
     	<typeAlias alias="CourseResDTO" type="totreviews.domain.CourseResDTO"/>
     	<typeAlias alias="TourReqDTO" type="totreviews.domain.TourReqDTO"/>
@@ -28,6 +30,7 @@
         <mapper resource="conf/mapper/CourseMapper.xml"/>
         <mapper resource="conf/mapper/TourMapper.xml"/>
         <mapper resource="conf/mapper/TripMapper.xml"/>
+        <mapper resource="conf/mapper/CommentMapper.xml"/>
     </mappers>
     
 </configuration>

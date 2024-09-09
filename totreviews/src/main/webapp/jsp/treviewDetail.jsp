@@ -97,38 +97,26 @@
                 </form>
             </div>
             <!-- 댓글 목록 -->
-            <div class="commentItem">
-                <div class="commentDetailItem">
-                    <div class="profileImg">
-                        <img src="https://via.placeholder.com/50" alt="Profile Image 1">
-                    </div>
-                    <div class="commentMemberDiv">
-                        <div id="commentMember" class="commentMember" name="member">댓글사용자1</div>
-                        <div class="commentText">이것은 첫 번째 댓글입니다. 아주 유익한 후기네요!</div>
-                    </div>
-                    <div class="commentDate">2024-08-27 14:00 </div>
-                    <div id="commentSetting" class="commentSetting">⋮</div>
-                </div>
-                <div class="commentReplyForm">
-                    <div type="submit" class="commentReply">댓글 작성</div>
-                </div>
-            </div>
-            <div class="commentItem">
-                <div class="commentDetailItem">
-                    <div class="profileImg">
-                        <img src="https://via.placeholder.com/50" alt="Profile Image 1">
-                    </div>
-                    <div class="commentMemberDiv">
-                        <div id="commentMember" class="commentMember" name="member">댓글사용자2</div>
-                        <div class="commentText">이것은 두 번째 댓글입니다. 너무 좋은 코스에요!</div>
-                    </div>
-                    <div class="commentDate">2024-08-25 14:40 </div>
-                    <div id="commentSetting" class="commentSetting">⋮</div>
-                </div>
-                <div class="commentReplyForm">
-                    <div type="submit" class="commentReply">댓글 작성</div>
-                </div>
-            </div>
+            <c:forEach var="comment" items="${comments}">
+		        <div class="commentItem">
+		            <div class="commentDetailItem">
+		                <div class="profileImg">
+		                    <img src="https://via.placeholder.com/50" alt="Profile Image">
+		                </div>
+		                <div class="commentMemberDiv">
+		                    <div id="commentMember" class="commentMember" name="member">${comment.memnick}</div>
+		                    <div class="commentText">${comment.content}</div>
+		                </div>
+		                <div class="commentDate">
+		                	<fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" />
+		                </div>
+		                <div id="commentSetting" class="commentSetting">⋮</div>
+		            </div>
+		            <div class="commentReplyForm">
+		                <div type="submit" class="commentReply">댓글 작성</div>
+		            </div>
+		        </div>
+		    </c:forEach>
             <!-- 댓글 목록 END -->
         </div>
     </div>

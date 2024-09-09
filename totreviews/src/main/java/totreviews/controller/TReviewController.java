@@ -1,9 +1,6 @@
 package totreviews.controller;
 
-import static totreviews.common.Constants.PAGE_DETAIL_TREVIEW;
-import static totreviews.common.Constants.PAGE_TREVIEW;
-import static totreviews.common.Constants.PAGE_WRITE_TREVIEW;
-import static totreviews.common.Constants.URL_ALL_TREVIEW;
+import static totreviews.common.Constants.*;
 
 import java.util.List;
 
@@ -21,11 +18,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import totreviews.common.page.PageReqDTO;
 import totreviews.common.page.PageResDTO;
+import totreviews.domain.CommentVO;
 import totreviews.domain.CourseDTO;
 import totreviews.domain.MemberVO;
 import totreviews.domain.TReviewReqDTO;
 import totreviews.domain.TReviewResDTO;
 import totreviews.domain.TripVO;
+import totreviews.service.CommentService;
 import totreviews.service.CourseService;
 import totreviews.service.TReviewService;
 import totreviews.service.TripService;
@@ -43,6 +42,9 @@ public class TReviewController {
 
 	@Autowired
 	private CourseService courseService;
+
+	@Autowired
+	private CommentService commentService;
 
 	// 여행 후기 화면 이동
 	@GetMapping("/{page}")
@@ -93,12 +95,15 @@ public class TReviewController {
 	@GetMapping("/detail/{trevid}")
 	public String showReviewDetail(@PathVariable("trevid") int trevid, Model model) {
 		MemberVO member = MemberUtil.isAuthenticatedMember();
+
 		TReviewResDTO review = treviewService.getTReviewDetail(trevid);
 		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(review.getTripid());
+		List<CommentVO> comments = commentService.getCommentsByReviewId(trevid);
 
 		model.addAttribute("member", member);
 		model.addAttribute("review", review);
 		model.addAttribute("courses", courses);
+		model.addAttribute("comments", comments);
 
 		return PAGE_DETAIL_TREVIEW;
 	}
