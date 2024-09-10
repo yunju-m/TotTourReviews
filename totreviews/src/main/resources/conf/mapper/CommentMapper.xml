@@ -40,7 +40,10 @@
 	        TREVCID = #{commentId}
 	</select>  
     
-    <insert id="insertComment" parameterType="CommentVO">
+    <insert id="insertComment" parameterType="CommentVO" useGeneratedKeys="true" keyProperty="commentId">
+    <selectKey keyProperty="commentId" resultType="int" order="BEFORE">
+		SELECT SEQ_TREVCID.NEXTVAL FROM dual
+	</selectKey>
 	    INSERT INTO TREVIEWCOMMENT (
             TREVCID,
             TREVID,
@@ -53,7 +56,7 @@
             TREVCREGDATE
         )
         VALUES (
-            SEQ_TREVCID.NEXTVAL,
+            #{commentId},
             #{postId},
             #{topParentId},
             #{parentId},
@@ -64,6 +67,12 @@
             CURRENT_TIMESTAMP
         )
     </insert>
+    
+    <update id="updateTopParentId" parameterType="int">
+	    UPDATE TREVIEWCOMMENT
+	    SET TOPPARENTID = #{commentId}
+	    WHERE TREVCID = #{commentId}
+	</update>
 	
 	<resultMap id="CommentVOMap" type="CommentVO">
         <id property="commentId" column="commentId"/>

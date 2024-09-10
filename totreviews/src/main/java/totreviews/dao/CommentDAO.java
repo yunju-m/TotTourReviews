@@ -12,4 +12,6 @@ public interface CommentDAO {
 
 	void insertComment(CommentVO commentVO);
 
+	void updateTopParentId(int commentId);
+
 }

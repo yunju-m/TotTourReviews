@@ -31,4 +31,9 @@ public class CommentDAOImpl implements CommentDAO {
 		sqlSession.insert(NAMESPACE + ".insertComment", commentVO);
 	}
 
+	@Override
+	public void updateTopParentId(int commentId) {
+		sqlSession.update(NAMESPACE + ".updateTopParentId", commentId);
+	}
+
 }

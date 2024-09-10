@@ -30,31 +30,42 @@ public class CommentServiceImpl implements CommentService {
 	public void insertComment(String boardId, int postId, CommentReqDTO commentReqDTO) {
 		try {
 			CommentVO commentVO = new CommentVO(postId, commentReqDTO);
-			
+
 			// 댓글 정보 처리(최상위 댓글 ID, 댓글 depth 저장)
 			handleSetCommentInfo(commentVO, postId);
+
 			commentDAO.insertComment(commentVO);
+
+			int insertedCommentId = commentVO.getCommentId();
+			if (commentVO.getParentId() == 0) {
+				// 최상위 댓글일 경우, 자신의 commentId를 topParentId로 설정
+				commentVO.setCommentInfo(insertedCommentId, 0);
+
+				// 서비스에서 topParentId 업데이트 처리
+				updateTopParentId(commentVO);
+			}
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 댓글 작성 등록 중 오류 발생", e);
 		}
 	}
-	
+
 	// 추가되는 댓글에 대한 최상위 부모 댓글 ID, depth 설정
 	private void handleSetCommentInfo(CommentVO vo, int postId) {
 		// 부모 댓글 ID가 있을 경우, 대댓글로 간주
-	    if (vo.getParentId() != 0) {
-	    	System.out.println("대댓글?");
-	        CommentVO parentComment = commentDAO.getCommentById(vo.getParentId());
-	        System.out.println(parentComment);
+		if (vo.getParentId() != 0) {
+			CommentVO parentComment = commentDAO.getCommentById(vo.getParentId());
 
-	        if (parentComment != null) {
-	        	System.out.println("최상위 부모 등록!");
-	            vo.setCommentInfo(parentComment.getTopParentId(), parentComment.getDepth() + 1);
-	        }
-	    } else {
-	    	System.out.println("최상위댓글!");
-	        vo.setCommentInfo(vo.getCommentId(), 0);
-	    }
+			if (parentComment != null) {
+				vo.setCommentInfo(parentComment.getTopParentId(), parentComment.getDepth() + 1);
+			}
+		} else {
+			vo.setCommentInfo(vo.getCommentId(), 0);
+		}
+	}
+
+	// topParentId 업데이트 처리
+	private void updateTopParentId(CommentVO commentVO) {
+		commentDAO.updateTopParentId(commentVO.getCommentId());
 	}
 
 }
