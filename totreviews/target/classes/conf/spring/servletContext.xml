@@ -12,6 +12,10 @@
 	<!-- Enable Spring MVC annotations -->
 	<mvc:annotation-driven />
 	
+	<mvc:interceptors>
+        <bean class="totreviews.conf.AuthInterceptor" />
+    </mvc:interceptors>
+	
 	<!-- ViewResolver -->
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/jsp/" />

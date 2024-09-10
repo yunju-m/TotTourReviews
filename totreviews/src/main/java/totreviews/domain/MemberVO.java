@@ -10,14 +10,7 @@ public class MemberVO {
 	private Timestamp memregdate;
 	private String ttimg;
 
-	// TODO 임시 사용자 생성
 	public MemberVO() {
-		this.memid = "user001";
-		this.member_001 = "M01";
-		this.member_002 = "TT01";
-		this.memnick = "member";
-		this.memregdate = new Timestamp(System.currentTimeMillis());
-		this.ttimg = "";
 	}
 
 	public MemberVO(String memid, String member_001, String member_002, String memnick, Timestamp memregdate,

@@ -10,7 +10,8 @@ const ERROR_MESSAGES = {
     TRIP_REQUIRED: '작성할 여행을 선택해주세요.',
     CONTENT_REQUIRED: '후기 내용을 입력해주세요.',
     AGREE_REQUIRED: '개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.',
-    FILE_UPLOAD: '파일 업로드 중 오류가 발생했습니다.'
+    FILE_UPLOAD: '파일 업로드 중 오류가 발생했습니다.',
+    FAIL_GET_COURSE: '코스를 가져오는 데 실패했습니다.',
 };
 
 let fileList = [];
@@ -86,26 +87,40 @@ $(document).ready(() => {
     $('#reviewListBtn').on('click', () => {
         window.location.href = GET_ALL_TREVIEW;
     });
-    
+
     // 여행 상세 후기 댓글 취소 버튼 클릭 시 내용 삭제
     $('#commentCancelBtn').on('click', () => {
-    	$('#commentContent').val('');
+        $('#commentContent').val('');
     });
-    
+
     // 댓글 취소 버튼 클릭 시 댓글 내용 비우기
     $('#commentCancelBtn').on('click', () => {
         $('#commentContent').val('');
     });
 
     // 대댓글 작성 버튼 클릭 시 대댓글 입력 폼 열기
-    $('.commentReply').on('click', function() {
+    $('.commentReply').on('click', function () {
         $(this).next('.commentReplyForm').toggle();
     });
-    
+
     // 대댓글 취소 버튼 클릭 시 댓글 내용 비우기
-    $('.commentReplyForm .cancelReply').on('click', function() {
+    $('.commentReplyForm .cancelReply').on('click', function () {
         let replyForm = $(this).closest('.commentReplyForm');
         replyForm.find('input[name="content"]').val('');
+    });
+
+    // 댓글 설정 버튼 클릭 시 수정, 삭제, 신고 목록 열기
+    $(document).on('click', '.commentSetting', function () {
+        console.log('hello');  // 디버깅 로그
+        $('.commentOptionsMenu').not($(this).next('.commentOptionsMenu')).hide();
+        $(this).next('.commentOptionsMenu').toggle();
+    });
+
+    // 설정 재 클릭 시 메뉴 숨김
+    $(document).on('click', function (event) {
+        if (!$(event.target).closest('.commentSetting').length) {
+            $('.commentOptionsMenu').hide();
+        }
     });
 
 });
@@ -126,7 +141,7 @@ const handleCourseSelect = tripId => {
             $('#travelCourse').html(courseHtml);
         },
         error: function () {
-            alert('코스를 가져오는 데 실패했습니다.');
+            alert(ERROR_MESSAGES.FAIL_GET_COURSE);
         }
     });
 }
@@ -139,12 +154,13 @@ const submitReview = () => {
     });
 
     $.ajax({
-        url: $('#reviewForm').attr('action'), // form action 경로
+        url: `${GET_WRITE_TREVIEW}`, // form action 경로
         type: 'POST',
         data: formData,
         contentType: false,
         processData: false,
         success: function () {
+            alert('여행 후기가 등록되었습니다.');
             window.location.href = GET_ALL_TREVIEW;
         },
         error: function (error) {

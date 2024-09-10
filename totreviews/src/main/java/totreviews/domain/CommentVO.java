@@ -24,8 +24,8 @@ public class CommentVO {
 	public CommentVO(int postId, CommentReqDTO commentReqDTO) {
 		this.postId = postId;
 		this.parentId = commentReqDTO.getParentId();
-		this.memId = MemberUtil.isAuthenticatedMember().getMemid();
-		this.memnick = MemberUtil.isAuthenticatedMember().getMemnick();
+		this.memId = MemberUtil.getAuthenticatedMember().getMemid();
+		this.memnick = MemberUtil.getAuthenticatedMember().getMemnick();
 		this.content = commentReqDTO.getContent();
 	}
 

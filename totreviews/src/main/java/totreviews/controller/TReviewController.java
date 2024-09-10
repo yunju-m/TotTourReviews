@@ -60,7 +60,7 @@ public class TReviewController {
 	// 여행 후기 작성 화면 이동
 	@GetMapping("/add")
 	public String showTourReviewWrite(Model model) {
-		MemberVO member = MemberUtil.isAuthenticatedMember();
+		MemberVO member = MemberUtil.getAuthenticatedMember();
 
 		List<TripVO> trips = tripService.getTripByMemId(member.getMemid());
 
@@ -83,7 +83,7 @@ public class TReviewController {
 	@PostMapping("/add")
 	public String submitTourReviewWrite(@ModelAttribute TReviewReqDTO tReviewReqDTO,
 			@RequestParam(value = "reviewImage", required = false) MultipartFile[] imageFiles) {
-		MemberVO member = MemberUtil.isAuthenticatedMember();
+		MemberVO member = MemberUtil.getAuthenticatedMember();
 		tReviewReqDTO.setMemid(member.getMemid());
 
 		treviewService.insertTReview(tReviewReqDTO, imageFiles);
@@ -95,7 +95,7 @@ public class TReviewController {
 	@GetMapping("/detail/{trevid}")
 	public String showReviewDetail(@PathVariable("boardId") String boardId, @PathVariable("trevid") int trevid,
 			Model model) {
-		MemberVO member = MemberUtil.isAuthenticatedMember();
+		MemberVO member = MemberUtil.getAuthenticatedMember();
 
 		TReviewResDTO review = treviewService.getTReviewDetail(trevid);
 		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(review.getTripid());
@@ -106,6 +106,7 @@ public class TReviewController {
 		model.addAttribute("review", review);
 		model.addAttribute("courses", courses);
 		model.addAttribute("comments", comments);
+		System.out.println(comments);
 
 		return PAGE_DETAIL_TREVIEW;
 	}
