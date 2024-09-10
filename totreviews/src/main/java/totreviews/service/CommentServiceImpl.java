@@ -20,28 +20,31 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public List<CommentVO> getCommentsByReviewId(int trevid) {
 		try {
-			return commentDAO.getCommentsByReviewId(trevid);
+			List<CommentVO> comments = commentDAO.getCommentsByReviewId(trevid);
+
+			return comments;
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 댓글 목록 가져오던 중 오류 발생", e);
 		}
 	}
 
+	/*
+	 * 댓글 정보 처리
+	 * 최상위 댓글 ID, 댓글 depth 저장 최상위 댓글일 경우, 
+	 * 자신의 commentId를 topParentId로 설정
+	 */
 	@Override
 	public void insertComment(String boardId, int postId, CommentReqDTO commentReqDTO) {
 		try {
 			CommentVO commentVO = new CommentVO(postId, commentReqDTO);
-
-			// 댓글 정보 처리(최상위 댓글 ID, 댓글 depth 저장)
 			handleSetCommentInfo(commentVO, postId);
 
 			commentDAO.insertComment(commentVO);
 
 			int insertedCommentId = commentVO.getCommentId();
 			if (commentVO.getParentId() == 0) {
-				// 최상위 댓글일 경우, 자신의 commentId를 topParentId로 설정
 				commentVO.setCommentInfo(insertedCommentId, 0);
 
-				// 서비스에서 topParentId 업데이트 처리
 				updateTopParentId(commentVO);
 			}
 		} catch (DataAccessException e) {
@@ -49,7 +52,10 @@ public class CommentServiceImpl implements CommentService {
 		}
 	}
 
-	// 추가되는 댓글에 대한 최상위 부모 댓글 ID, depth 설정
+	/*
+	 * 추가되는 댓글에 대한 최상위 부모 댓글 ID, depth 설정
+	 * 부모 댓글 ID가 있을 경우, 대댓글로 간주
+	 */
 	private void handleSetCommentInfo(CommentVO vo, int postId) {
 		// 부모 댓글 ID가 있을 경우, 대댓글로 간주
 		if (vo.getParentId() != 0) {
@@ -63,7 +69,9 @@ public class CommentServiceImpl implements CommentService {
 		}
 	}
 
-	// topParentId 업데이트 처리
+	/*
+	 * 최상위 댓글 topParentId 업데이트 처리
+	 */
 	private void updateTopParentId(CommentVO commentVO) {
 		commentDAO.updateTopParentId(commentVO.getCommentId());
 	}

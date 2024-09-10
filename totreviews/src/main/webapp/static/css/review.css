@@ -387,7 +387,8 @@ input[name="reviewImage"] {
     border-bottom: none;
 }
 
-.commentDetailItem {
+.commentDetailItem,
+.replyDetailItem {
     display: flex;
     align-items: center;
 }
@@ -405,46 +406,51 @@ input[name="reviewImage"] {
     height: auto;
 }
 
-.commentMember {
+.commentMember,
+.replyMember {
     margin-right: 10px;
     margin-bottom: 5px;
     font-weight: bold;
     font-size: 15px;
 }
 
-.commentContent {
+.commentContent,
+.replyContent {
     flex: 1;
     display: flex;
     flex-direction: column;
 }
 
-.commentText {
+.commentText,
+.replyText {
     font-size: 16px;
     color: #333;
     margin-bottom: 5px;
     flex: 1;
 }
 
-.commentDate {
+.commentDate,
+.replyDate {
     font-size: 14px;
     color: #888;
     margin-left: auto;
 }
 
-.commentSetting {
+.commentSetting,
+.replySetting {
     padding: 10px;
     cursor: pointer;
 }
 
 .commentReply {
-    padding-top: 15px;
-    padding-left: 60px;
+    padding: 15px 0 10px 60px;
     cursor: pointer;
+    color: #888;
 }
 
 .commentReplyForm {
 	padding-left: 60px;
-	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 /* 반응형 css */

@@ -20,7 +20,9 @@
             <div class="bigTitle">${review.trevtitle}</div>
         </div>
         <div class="reviewIntroDiv">
-            <div><fmt:formatDate value="${review.trevregdate}" pattern="yyyy년 MM월 dd일" /></div>
+            <div>
+                <fmt:formatDate value="${review.trevregdate}" pattern="yyyy년 MM월 dd일" />
+            </div>
         </div>
         <!-- 여행 코스 내용 -->
         <div class="reviewCourseDiv">
@@ -60,71 +62,84 @@
                     </div>
                 </c:forEach>
             </div>
-        </div>     
+        </div>
+
         <!-- 여행 코스 날짜별 상세 내역 리스트 -->
-		<div class="reviewCourseDetailDiv">
-		    <c:set var="imageIndex" value="0" />
-		    <c:forEach var="content" items="${fn:split(review.trevcontent, ',')}" varStatus="status">
-		        <div class="reviewCourseDetailItem">
-		            <c:choose>
-		                <c:when test="${content == 'image'}">
-		                    <c:if test="${imageIndex < review.trevimages.size()}">
-		                        <img src="${pageContext.request.contextPath}${review.trevimages[imageIndex].trevimgpath}" alt="Review Detail Image">
-		                        <c:set var="imageIndex" value="${imageIndex + 1}" />
-		                    </c:if>
-		                </c:when>
-		                <c:otherwise>
-		                    <div class="detailContent">${content}</div>
-		                </c:otherwise>
-		            </c:choose>
-		        </div>
-		    </c:forEach>
-		    <button id="reviewListBtn" class="initButton2">목록으로</button>
-		</div>
+        <div class="reviewCourseDetailDiv">
+            <c:set var="imageIndex" value="0" />
+            <c:forEach var="content" items="${fn:split(review.trevcontent, ',')}" varStatus="status">
+                <div class="reviewCourseDetailItem">
+                    <c:choose>
+                        <c:when test="${content == 'image'}">
+                            <c:if test="${imageIndex < review.trevimages.size()}">
+                                <img src="${pageContext.request.contextPath}${review.trevimages[imageIndex].trevimgpath}"
+                                    alt="Review Detail Image">
+                                <c:set var="imageIndex" value="${imageIndex + 1}" />
+                            </c:if>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="detailContent">${content}</div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </c:forEach>
+            <button id="reviewListBtn" class="initButton2">목록으로</button>
+        </div>
+        <!-- 여행 코스 날짜별 상세 내역 리스트 끝 -->
+
         <!-- 댓글 작성 및 목록 -->
         <div class="commentsSection">
             <h2>댓글</h2>
+
             <!-- 댓글 입력 폼 -->
             <div class="commentInputDiv">
                 <div class="profileImg">
                     <img src="https://via.placeholder.com/50" alt="Profile Image 1">
                 </div>
-                <form id="commentForm" action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add" method="post">
+                <form id="commentForm"
+                    action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add" method="post">
                     <div id="commentMember" class="commentMember" name="member">${member.memnick}</div>
                     <input id="commentContent" name="content" type="text" placeholder="댓글을 작성해주세요." required />
                     <button id="commentRegBtn" type="submit" class="initButton active">댓글 작성</button>
                     <button id="commentCancelBtn" type="button" class="initButton">취소</button>
                 </form>
             </div>
+            <!-- 댓글 입력 폼 끝 -->
+
             <!-- 댓글 목록 -->
             <c:forEach var="comment" items="${comments}">
-		        <div class="commentItem">
-		            <div class="commentDetailItem">
-		                <div class="profileImg">
-		                    <img src="https://via.placeholder.com/50" alt="Profile Image">
-		                </div>
-		                <div class="commentMemberDiv">
-		                    <div id="commentMember" class="commentMember" name="member">${comment.memnick}</div>
-		                    <div class="commentText">${comment.content}</div>
-		                </div>
-		                <div class="commentDate">
-		                	<fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" />
-		                </div>
-		                <div id="commentSetting" class="commentSetting">⋮</div>
-		            </div>
-		            <div class="commentReply" data-comment-id="${comment.commentId}">댓글 작성</div>
-		            <!-- 대댓글 입력 폼 -->
-			        <div class="commentReplyForm" style="display: none;">
-			            <form class="replyForm" action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add" method="post">
-			                <input type="hidden" name="parentId" value="${comment.commentId}" />
-			                <input type="text" name="content" placeholder="대댓글을 작성해주세요." required />
-			                <button type="submit" class="initButton active">작성</button>
-			                <button type="button" class="initButton cancelReply">취소</button>
-			            </form>
-			        </div>
-		        </div>
-		    </c:forEach>
-            <!-- 댓글 목록 END -->
+                <div class="commentItem">
+                    <div class="commentDetailItem" style="margin-left: ${comment.depth * 20}px;">
+                        <div class="profileImg">
+                            <img src="https://via.placeholder.com/50" alt="Profile Image">
+                        </div>
+                        <div class="commentMemberDiv">
+                            <div id="commentMember" class="commentMember" name="member">
+                                ${comment.memnick}</div>
+                            <div class="commentText">${comment.content}</div>
+                        </div>
+                        <div class="commentDate">
+                            <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" />
+                        </div>
+                        <div id="commentSetting" class="commentSetting">⋮</div>
+                    </div>
+                    <div class="commentReply" data-comment-id="${comment.commentId}">댓글 작성</div>
+
+                    <!-- 대댓글 입력 폼 -->
+                    <div class="commentReplyForm" style="display: none;">
+                        <form class="replyForm"
+                            action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add"
+                            method="post">
+                            <input type="hidden" name="parentId" value="${comment.commentId}" />
+                            <input type="text" name="content" placeholder="대댓글을 작성해주세요." required />
+                            <button type="submit" class="initButton active">작성</button>
+                            <button type="button" class="initButton cancelReply">취소</button>
+                        </form>
+                    </div>
+                    <!-- 대댓글 입력 폼 끝 -->
+                </div>
+            </c:forEach>
+            <!-- 댓글 목록 끝  -->
         </div>
         <!-- 댓글 작성 및 목록 끝 -->
     </div>

@@ -21,7 +21,6 @@ public class CommentController {
 	@PostMapping("/add")
 	public String addComment(@PathVariable("boardId") String boardId, @PathVariable("postId") int postId,
 			@ModelAttribute CommentReqDTO commentReqDTO, Model model) {
-
 		commentService.insertComment(boardId, postId, commentReqDTO);
 
 		// 원래 페이지로 리다이렉트

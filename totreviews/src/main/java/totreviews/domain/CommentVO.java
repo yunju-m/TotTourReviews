@@ -87,7 +87,7 @@ public class CommentVO {
 	public Timestamp getUpdate() {
 		return update;
 	}
-	
+
 	// 최상위 댓글 ID, 댓글 depth 설정
 	public void setCommentInfo(int topParentId, int depth) {
 		this.topParentId = topParentId;

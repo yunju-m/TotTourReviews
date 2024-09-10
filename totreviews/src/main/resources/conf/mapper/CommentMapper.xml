@@ -18,7 +18,7 @@
             TREVIEWCOMMENT
         WHERE 
             TREVID = #{trevid}
-        ORDER BY TOPPARENTID ASC, TREVDEPTH ASC, TREVCREGDATE ASC
+        ORDER BY TOPPARENTID ASC, PARENTID ASC, TREVDEPTH ASC, TREVCREGDATE ASC
     </select>
     
     <select id="getCommentById" parameterType="int" resultType="CommentVO">
