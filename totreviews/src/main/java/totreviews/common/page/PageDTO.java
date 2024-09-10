@@ -1,6 +1,7 @@
 package totreviews.common.page;
 
 import totreviews.common.Constants;
+import totreviews.util.MemberUtil;
 
 public class PageDTO {
 
@@ -21,8 +22,7 @@ public class PageDTO {
 		this.pageRowCount = Constants.PAGE_ROW_COUNT;
 		this.boardId = boardId;
 		this.dto = dto;
-		// TODO 유저 정보 확인
-		this.memId = "user001";
+		this.memId = MemberUtil.getAuthenticatedMember().getMemid();
 		offset = (dto.getPage() - 1) * pageRowCount;
 	}
 
@@ -31,8 +31,7 @@ public class PageDTO {
 		this.boardId = boardId;
 		this.postId = postId;
 		this.dto = dto;
-		// TODO 유저 정보 확인
-		this.memId = "user001";
+		this.memId = MemberUtil.getAuthenticatedMember().getMemid();
 		offset = (dto.getPage() - 1) * pageRowCount;
 	}
 
