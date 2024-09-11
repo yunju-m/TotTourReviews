@@ -3,7 +3,7 @@
 <mapper namespace="totreviews.mapper.CommentMapper">
 
     <select id="getCommentsByReviewId" parameterType="int" resultMap="CommentVOMap">
-    	SELECT
+		SELECT
             TREVCID AS commentId,
             TREVID AS postId,
             TOPPARENTID AS topParentId,
@@ -15,11 +15,16 @@
             TREVDEPTH AS depth,
             TREVCREGDATE AS regdate,
             TREVDUPDATE AS updates
-        FROM 
-            TREVIEWCOMMENT
-        WHERE 
-            TREVID = #{trevid}
-        ORDER BY TOPPARENTID ASC, PARENTID ASC, TREVDEPTH ASC, TREVCREGDATE ASC
+		FROM
+		    TREVIEWCOMMENT
+		WHERE
+		    TREVID = #{trevid}
+		START WITH
+		    TREVCID = TOPPARENTID      
+		CONNECT BY
+		    PRIOR TREVCID = PARENTID    
+		ORDER SIBLINGS BY
+		    TREVCREGDATE ASC     
     </select>
     
     <select id="getCommentById" parameterType="int" resultType="CommentVO">
