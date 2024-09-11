@@ -19,6 +19,8 @@
 		    TREVIEWCOMMENT
 		WHERE
 		    TREVID = #{trevid}
+		AND
+			COMMENTSTATUS IN ('CMT001', 'CMT003')
 		START WITH
 		    TREVCID = TOPPARENTID      
 		CONNECT BY
@@ -85,6 +87,20 @@
 		SET TREVCTEXT = #{content}
 		WHERE TREVCID = #{commentId}
 	</update>
+	
+	<delete id="deleteComment" parameterType="int">
+		UPDATE TREVIEWCOMMENT
+    	SET COMMENTSTATUS = 'CMT002'
+		WHERE TREVCID IN (
+		    SELECT TREVCID
+		    FROM (
+		        SELECT TREVCID
+		        FROM TREVIEWCOMMENT
+		        START WITH TREVCID = #{commentId}
+		        CONNECT BY PRIOR TREVCID = PARENTID
+		    )
+		)
+	</delete>
 	
 	<resultMap id="CommentVOMap" type="CommentVO">
         <id property="commentId" column="commentId"/>

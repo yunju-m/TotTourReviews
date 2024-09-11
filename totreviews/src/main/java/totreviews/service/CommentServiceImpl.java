@@ -64,6 +64,19 @@ public class CommentServiceImpl implements CommentService {
 			throw new ServerException("여행 후기 댓글 수정 중 오류 발생", e);
 		}
 	}
+	
+	/*
+	 * 댓글 삭제 처리
+	 * 해당 댓글 삭제 후 history 상태 업데이트
+	 * */
+	@Override
+	public void deleteComment(int commentId) {
+		try {
+			commentDAO.deleteComment(commentId);
+		} catch (DataAccessException e) {
+			throw new ServerException("여행 후기 댓글 삭제 중 오류 발생", e);
+		}
+	}
 
 	/*
 	 * 추가되는 댓글에 대한 최상위 부모 댓글 ID, depth 설정

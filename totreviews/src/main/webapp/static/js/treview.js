@@ -12,7 +12,8 @@ const ERROR_MESSAGES = {
     AGREE_REQUIRED: '개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.',
     FILE_UPLOAD: '파일 업로드 중 오류가 발생했습니다.',
     FAIL_GET_COURSE: '코스를 가져오는 데 실패했습니다.',
-    FAIL_EDIT_COMMENT: '댓글 수정에 실패했습니다.'
+    FAIL_EDIT_COMMENT: '댓글 수정에 실패했습니다.',
+    FAIL_DELETE_COMMENT: '댓글 삭제를 실패했습니다.'
 };
 
 let fileList = [];
@@ -155,7 +156,6 @@ $(document).ready(() => {
                 content: newContent
             },
             dataType: "text",
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
             success: function (response) {
                 // 성공 시, 댓글 내용을 다시 텍스트로 변경
                 commentItem.find('.commentText').html(newContent);
@@ -182,6 +182,32 @@ $(document).ready(() => {
 
         commentItem.find('.saveCommentEditBtn').remove();
         commentItem.find('.cancelCommentEditBtn').remove();
+    });
+
+    // 댓글 삭제 버튼 클릭 시 삭제 여부 확인 및 삭제 기능 구현
+    $(document).on('click', '.deleteComment', function (e) {
+        e.preventDefault();
+		let commentItem = $(this).closest('.commentItem');
+        let commentText = commentItem.find('.commentText').text().trim();
+        let deleteUrl = $(this).attr('href');
+
+        // 사용자에게 삭제 확인
+        if (confirm(`"${commentText}"댓글과 모든 하위댓글을 삭제하시겠습니까?`)) {
+            $.ajax({
+                url: deleteUrl,
+                type: 'POST',
+                dataType: "text",
+                success: function (response) {
+                    // 성공 시, 성공 응답 메시지 출력
+                    alert(response);
+                    window.location.reload();
+                },
+                error: function (error) {
+                    alert(ERROR_MESSAGES.FAIL_DELETE_COMMENT);
+                    console.error(error);
+                }
+            });
+        }
     });
 
 });

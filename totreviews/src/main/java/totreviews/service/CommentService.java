@@ -13,4 +13,6 @@ public interface CommentService {
 
 	void editComment(int commentId, String content);
 	
+	void deleteComment(int commentId);
+	
 }

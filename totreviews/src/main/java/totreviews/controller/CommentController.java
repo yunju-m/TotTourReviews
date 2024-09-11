@@ -39,4 +39,12 @@ public class CommentController {
 		return ResponseEntity.ok("댓글 수정이 완료되었습니다.");
 	}
 
+	@PostMapping(value = "/delete/{commentId}", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<String> deleteComment(@PathVariable("commentId") int commentId) {
+		commentService.deleteComment(commentId);
+
+		return ResponseEntity.ok("댓글이 삭제되었습니다.");
+	}
+
 }

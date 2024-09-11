@@ -1,7 +1,7 @@
 package totreviews.common.enums;
 
 public enum Flag {
-	CMT001("완료"), CMT002("제재");
+	CMT001("완료"), CMT002("삭제"), CMT003("신고"), CMT004("제재");
 
 	private final String description;
 
