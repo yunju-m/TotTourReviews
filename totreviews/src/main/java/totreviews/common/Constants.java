@@ -29,7 +29,10 @@ public class Constants {
 	public static final String TREVIEW_BASE_URL = "/review";
 	public static final String URL_ALL_TREVIEW = TREVIEW_BASE_URL + "/all/1";
 	public static final String URL_MY_TREVIEW = TREVIEW_BASE_URL + "/my/1";
-	public static final Pattern URL_ALL_DETAIL_TREVIEW = Pattern.compile("^" + BASIC_URL + "/review/all/detail/\\d+$");
+
+	public static final Pattern PATTERN_ALL_TREVIEW = Pattern.compile("^" + BASIC_URL + "/review/all/\\d+$");
+	public static final Pattern PATTERN_ALL_DETAIL_TREVIEW = Pattern
+			.compile("^" + BASIC_URL + "/review/all/detail/\\d+$");
 
 	// 생성자를 private으로 설정하여 인스턴스화 방지
 	private Constants() {

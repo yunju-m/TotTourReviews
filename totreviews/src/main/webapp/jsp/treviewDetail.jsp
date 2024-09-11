@@ -125,7 +125,7 @@
                         <!-- 댓글 옵션 메뉴 -->
 			            <c:if test="${member.memid == comment.memId}">
 			                <div class="commentOptionsMenu" style="display: none;">
-			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/edit/${comment.commentId}">수정</a>
+			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/edit/${comment.commentId}" class="editComment">수정</a>
 			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/delete/${comment.commentId}">삭제</a>
 			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${comment.commentId}">신고</a>
 			                </div>

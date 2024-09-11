@@ -14,4 +14,6 @@ public interface CommentDAO {
 
 	void updateTopParentId(int commentId);
 
+	void editComment(int commentId, String content);
+
 }

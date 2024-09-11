@@ -106,7 +106,6 @@ public class TReviewController {
 		model.addAttribute("review", review);
 		model.addAttribute("courses", courses);
 		model.addAttribute("comments", comments);
-		System.out.println(comments);
 
 		return PAGE_DETAIL_TREVIEW;
 	}

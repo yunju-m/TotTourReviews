@@ -22,7 +22,8 @@ public class AuthInterceptor implements HandlerInterceptor {
 			BASIC_URL + URL_ALL_TREVIEW);
 
 	// ID값을 갖는 경로
-	private static final List<Pattern> EXCLUDED_PATTERNS = Arrays.asList(URL_ALL_DETAIL_TREVIEW);
+	private static final List<Pattern> EXCLUDED_PATTERNS = Arrays.asList(PATTERN_ALL_TREVIEW,
+			PATTERN_ALL_DETAIL_TREVIEW);
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

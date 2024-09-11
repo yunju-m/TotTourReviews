@@ -1,6 +1,8 @@
 package totreviews.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,15 @@ public class CommentDAOImpl implements CommentDAO {
 	@Override
 	public void updateTopParentId(int commentId) {
 		sqlSession.update(NAMESPACE + ".updateTopParentId", commentId);
+	}
+
+	@Override
+	public void editComment(int commentId, String content) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("commentId", commentId);
+		params.put("content", content);
+
+		sqlSession.update(NAMESPACE + ".editComment", params);
 	}
 
 }

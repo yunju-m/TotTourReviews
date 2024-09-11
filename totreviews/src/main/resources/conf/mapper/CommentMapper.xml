@@ -8,6 +8,7 @@
             TREVID AS postId,
             TOPPARENTID AS topParentId,
             PARENTID AS parentId,
+            MEMID AS memId,
             MEMNICK AS memnick,
             COMMENTSTATUS AS status,
             TREVCTEXT AS content,
@@ -72,6 +73,12 @@
 	    UPDATE TREVIEWCOMMENT
 	    SET TOPPARENTID = #{commentId}
 	    WHERE TREVCID = #{commentId}
+	</update>
+	
+	<update id="editComment">
+		UPDATE TREVIEWCOMMENT
+		SET TREVCTEXT = #{content}
+		WHERE TREVCID = #{commentId}
 	</update>
 	
 	<resultMap id="CommentVOMap" type="CommentVO">

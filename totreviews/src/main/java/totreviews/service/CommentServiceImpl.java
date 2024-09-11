@@ -51,6 +51,19 @@ public class CommentServiceImpl implements CommentService {
 			throw new ServerException("여행 후기 댓글 작성 등록 중 오류 발생", e);
 		}
 	}
+	
+	/*
+	 * 댓글 수정 처리
+	 * 새로운 댓글 내용으로 업데이트
+	 * */
+	@Override
+	public void editComment(int commentId, String content) {
+		try {
+			commentDAO.editComment(commentId, content);
+		} catch (DataAccessException e) {
+			throw new ServerException("여행 후기 댓글 수정 중 오류 발생", e);
+		}
+	}
 
 	/*
 	 * 추가되는 댓글에 대한 최상위 부모 댓글 ID, depth 설정

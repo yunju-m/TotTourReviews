@@ -12,6 +12,7 @@ const ERROR_MESSAGES = {
     AGREE_REQUIRED: '개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.',
     FILE_UPLOAD: '파일 업로드 중 오류가 발생했습니다.',
     FAIL_GET_COURSE: '코스를 가져오는 데 실패했습니다.',
+    FAIL_EDIT_COMMENT: '댓글 수정에 실패했습니다.'
 };
 
 let fileList = [];
@@ -111,16 +112,71 @@ $(document).ready(() => {
 
     // 댓글 설정 버튼 클릭 시 수정, 삭제, 신고 목록 열기
     $(document).on('click', '.commentSetting', function () {
-        console.log('hello');  // 디버깅 로그
         $('.commentOptionsMenu').not($(this).next('.commentOptionsMenu')).hide();
         $(this).next('.commentOptionsMenu').toggle();
     });
 
-    // 설정 재 클릭 시 메뉴 숨김
-    $(document).on('click', function (event) {
-        if (!$(event.target).closest('.commentSetting').length) {
-            $('.commentOptionsMenu').hide();
-        }
+    // 댓글 설정의 수정 버튼 클릭 시 input으로 변경
+    $('.commentOptionsMenu a.editComment').click(function (e) {
+        e.preventDefault();
+
+        let commentItem = $(this).closest('.commentDetailItem');
+        let commentText = commentItem.find('.commentText');
+        let editUrl = $(this).attr('href');
+
+        // 댓글의 현재 내용을 가져와서 data 속성에 저장
+        let originalText = commentText.text().trim();
+        commentItem.data('original-text', originalText);
+
+        // 기존의 저장 및 취소 버튼이 이미 있는 경우 제거
+        commentText.find('.editCommentInput, .saveCommentEditBtn, .cancelCommentEditBtn').remove();
+
+        // 기존의 댓글을 input으로 변경
+        commentText.html('<input type="text" class="editCommentInput" value="' + originalText + '" />');
+        commentText.append('<button class="saveCommentEditBtn initButton active" data-edit-url="' + editUrl + '">저장</button>');
+        commentText.append('<button class="cancelCommentEditBtn initButton">취소</button>');
+    });
+
+    // 댓글 수정 저장 버튼 클릭 시 수정된 댓글을 서버로 전송
+    $(document).on('click', '.saveCommentEditBtn', function () {
+        let commentItem = $(this).closest('.commentDetailItem');
+        let newContent = commentItem.find('.editCommentInput').val();
+        let editUrl = $(this).data('edit-url');
+
+        $.ajax({
+        	type: "POST",
+            url: editUrl,
+            data: {
+                content: newContent
+            },
+            dataType: "text",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            success: function (response) {
+                // 성공 시, 댓글 내용을 다시 텍스트로 변경
+                commentItem.find('.commentText').html(newContent);
+                commentItem.find('.saveCommentEditBtn').remove();
+                commentItem.find('.cancelCommentEditBtn').remove();
+                alert(response);
+            },
+            error: function (xhr, status, error) {
+            	console.log(error);
+                alert(ERROR_MESSAGES.FAIL_EDIT_COMMENT + " " + xhr.responseText);
+            }
+        });
+    });
+
+    // 댓글 수정 취소 버튼 클릭 시 수정 취소
+    $(document).on('click', '.cancelCommentEditBtn', function () {
+        let commentItem = $(this).closest('.commentDetailItem');
+
+        // data 속성에서 원래 내용 가져오기
+        let originalText = commentItem.data('original-text');
+
+        // 댓글 내용을 원래대로 복원
+        commentItem.find('.commentText').html(originalText);
+
+        commentItem.find('.saveCommentEditBtn').remove();
+        commentItem.find('.cancelCommentEditBtn').remove();
     });
 
 });
