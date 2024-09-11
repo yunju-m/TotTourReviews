@@ -119,7 +119,14 @@
                             <div class="commentText">${comment.content}</div>
                         </div>
                         <div class="commentDate">
-                            <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" />
+                            <c:choose>
+						        <c:when test="${not empty comment.update}">
+						            <fmt:formatDate value="${comment.update}" pattern="yyyy-MM-dd HH:mm" />
+						        </c:when>
+						        <c:otherwise>
+						            <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" />
+						        </c:otherwise>
+						    </c:choose>
                         </div>
                         <div id="commentSetting" class="commentSetting">⋮</div>
                         <!-- 댓글 옵션 메뉴 -->
@@ -127,7 +134,7 @@
 			                <div class="commentOptionsMenu" style="display: none;">
 			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/edit/${comment.commentId}" class="editComment">수정</a>
 			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/delete/${comment.commentId}" class="deleteComment">삭제</a>
-			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${comment.commentId}">신고</a>
+			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${comment.commentId}" class="reportComment">신고</a>
 			                </div>
 			            </c:if>
 			            <c:if test="${member.memid != comment.memId}">

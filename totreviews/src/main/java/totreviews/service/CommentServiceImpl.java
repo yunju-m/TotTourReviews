@@ -67,7 +67,7 @@ public class CommentServiceImpl implements CommentService {
 	
 	/*
 	 * 댓글 삭제 처리
-	 * 해당 댓글 삭제 후 history 상태 업데이트
+	 * 해당 댓글 삭제 상태 업데이트
 	 * */
 	@Override
 	public void deleteComment(int commentId) {
@@ -75,6 +75,32 @@ public class CommentServiceImpl implements CommentService {
 			commentDAO.deleteComment(commentId);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 댓글 삭제 중 오류 발생", e);
+		}
+	}
+	
+	/*
+	 * 댓글 신고 처리
+	 * 해당 댓글 신고 상태 업데이트 
+	 * */
+	@Override
+	public void reportComment(int commentId) {
+		try {
+			commentDAO.reportComment(commentId);
+		} catch (DataAccessException e) {
+			throw new ServerException("여행 후기 댓글 신고 중 오류 발생", e);
+		}
+		
+	}
+	
+	/*
+	 * 댓글 수정, 삭제에 대한 업데이트 시간 반환
+	 * */
+	@Override
+	public String getUpdateDate(int commentId) {
+		try {
+			return commentDAO.getUpdateDate(commentId);
+		} catch (DataAccessException e) {
+			throw new ServerException("여행 후기 댓글 신고 중 오류 발생", e);
 		}
 	}
 

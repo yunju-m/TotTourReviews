@@ -13,7 +13,8 @@ const ERROR_MESSAGES = {
     FILE_UPLOAD: '파일 업로드 중 오류가 발생했습니다.',
     FAIL_GET_COURSE: '코스를 가져오는 데 실패했습니다.',
     FAIL_EDIT_COMMENT: '댓글 수정에 실패했습니다.',
-    FAIL_DELETE_COMMENT: '댓글 삭제를 실패했습니다.'
+    FAIL_DELETE_COMMENT: '댓글 삭제를 실패했습니다.',
+    FAIL_REPORT_COMMENT: '댓글 신고를 실패했습니다.'
 };
 
 let fileList = [];
@@ -155,13 +156,15 @@ $(document).ready(() => {
             data: {
                 content: newContent
             },
-            dataType: "text",
+            dataType: "json",
             success: function (response) {
+            	console.log(response);
                 // 성공 시, 댓글 내용을 다시 텍스트로 변경
                 commentItem.find('.commentText').html(newContent);
                 commentItem.find('.saveCommentEditBtn').remove();
                 commentItem.find('.cancelCommentEditBtn').remove();
-                alert(response);
+                commentItem.find('.commentDate').html(response.updatedDate);
+                alert(response.message);
             },
             error: function (xhr, status, error) {
                 console.log(error);
@@ -187,7 +190,7 @@ $(document).ready(() => {
     // 댓글 삭제 버튼 클릭 시 삭제 여부 확인 및 삭제 기능 구현
     $(document).on('click', '.deleteComment', function (e) {
         e.preventDefault();
-		let commentItem = $(this).closest('.commentItem');
+        let commentItem = $(this).closest('.commentItem');
         let commentText = commentItem.find('.commentText').text().trim();
         let deleteUrl = $(this).attr('href');
 
@@ -195,15 +198,41 @@ $(document).ready(() => {
         if (confirm(`"${commentText}"댓글과 모든 하위댓글을 삭제하시겠습니까?`)) {
             $.ajax({
                 url: deleteUrl,
-                type: 'POST',
-                dataType: "text",
+                type: 'GET',
+                dataType: "json",
                 success: function (response) {
                     // 성공 시, 성공 응답 메시지 출력
-                    alert(response);
+                    alert(response.message);
                     window.location.reload();
                 },
                 error: function (error) {
                     alert(ERROR_MESSAGES.FAIL_DELETE_COMMENT);
+                    console.error(error);
+                }
+            });
+        }
+    });
+
+    // 댓글 신고 버튼 클릭 시 신고 여부 확인 및 기능 구현
+    $(document).on('click', '.reportComment', function (e) {
+        e.preventDefault();
+        let commentItem = $(this).closest('.commentItem');
+        let commentText = commentItem.find('.commentText').text().trim();
+        let deleteUrl = $(this).attr('href');
+
+        // 사용자에게 삭제 확인
+        if (confirm(`"${commentText}"댓글을 신고하시겠습니까?`)) {
+            $.ajax({
+                url: deleteUrl,
+                type: 'GET',
+                dataType: "json",
+                success: function (response) {
+                    // 성공 시, 성공 응답 메시지 출력
+                    alert(response.message);
+                    window.location.reload();
+                },
+                error: function (error) {
+                    alert(ERROR_MESSAGES.FAIL_REPORT_COMMENT);
                     console.error(error);
                 }
             });

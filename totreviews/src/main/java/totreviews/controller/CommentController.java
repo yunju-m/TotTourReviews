@@ -1,9 +1,14 @@
 package totreviews.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,19 +37,40 @@ public class CommentController {
 
 	@PostMapping(value = "/edit/{commentId}", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public ResponseEntity<String> editComment(@PathVariable("commentId") int commentId,
+	public ResponseEntity<Map<String, String>> editComment(@PathVariable("commentId") int commentId,
 			@RequestParam("content") String content) {
 		commentService.editComment(commentId, content);
 
-		return ResponseEntity.ok("댓글 수정이 완료되었습니다.");
+		return createCommentResponse("댓글 수정이 완료되었습니다.", commentId);
 	}
 
-	@PostMapping(value = "/delete/{commentId}", produces = "application/json; charset=UTF-8")
+	@GetMapping(value = "/delete/{commentId}", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public ResponseEntity<String> deleteComment(@PathVariable("commentId") int commentId) {
+	public ResponseEntity<Map<String, String>> deleteComment(@PathVariable("commentId") int commentId) {
 		commentService.deleteComment(commentId);
 
-		return ResponseEntity.ok("댓글이 삭제되었습니다.");
+		return createCommentResponse("댓글이 삭제되었습니다.", commentId);
+	}
+
+	@GetMapping(value = "/report/{commentId}", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> reportComment(@PathVariable("commentId") int commentId) {
+		commentService.reportComment(commentId);
+		Map<String, String> response = new HashMap<>();
+		response.put("message", "신고가 접수되었습니다.");
+
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	// 댓글 공통 응답 메소드
+	private ResponseEntity<Map<String, String>> createCommentResponse(String message, int commentId) {
+		String updatedDate = commentService.getUpdateDate(commentId);
+
+		Map<String, String> response = new HashMap<>();
+		response.put("message", message);
+		response.put("updatedDate", updatedDate);
+
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 }

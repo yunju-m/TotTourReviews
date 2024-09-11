@@ -84,13 +84,13 @@
 	
 	<update id="editComment">
 		UPDATE TREVIEWCOMMENT
-		SET TREVCTEXT = #{content}
+		SET TREVCTEXT = #{content}, TREVDUPDATE = CURRENT_TIMESTAMP
 		WHERE TREVCID = #{commentId}
 	</update>
 	
-	<delete id="deleteComment" parameterType="int">
+	<update id="deleteComment" parameterType="int">
 		UPDATE TREVIEWCOMMENT
-    	SET COMMENTSTATUS = 'CMT002'
+    	SET COMMENTSTATUS = 'CMT002', TREVDUPDATE = CURRENT_TIMESTAMP
 		WHERE TREVCID IN (
 		    SELECT TREVCID
 		    FROM (
@@ -100,7 +100,19 @@
 		        CONNECT BY PRIOR TREVCID = PARENTID
 		    )
 		)
-	</delete>
+	</update>
+	
+	<update id="reportComment" parameterType="int">
+		UPDATE TREVIEWCOMMENT
+		SET COMMENTSTATUS = 'CMT003'
+		WHERE TREVCID = #{commentId}
+	</update>
+	
+	<select id="getUpdateDate" parameterType="int" resultType="String">
+		SELECT TO_CHAR(TREVDUPDATE, 'YYYY-MM-DD HH24:MI') AS updatedDate
+	    FROM TREVIEWCOMMENT
+	    WHERE TREVCID = #{commentId}
+	</select>
 	
 	<resultMap id="CommentVOMap" type="CommentVO">
         <id property="commentId" column="commentId"/>
@@ -113,7 +125,7 @@
         <result property="content" column="content"/> 
         <result property="depth" column="depth"/>
         <result property="regdate" column="regdate"/>    
-        <result property="update" column="update"/>      
+        <result property="update" column="updates"/>      
     </resultMap>
 
 </mapper>

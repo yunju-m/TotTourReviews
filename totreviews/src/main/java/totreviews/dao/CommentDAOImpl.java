@@ -49,7 +49,17 @@ public class CommentDAOImpl implements CommentDAO {
 
 	@Override
 	public void deleteComment(int commentId) {
-		sqlSession.delete(NAMESPACE + ".deleteComment", commentId);
+		sqlSession.update(NAMESPACE + ".deleteComment", commentId);
+	}
+
+	@Override
+	public void reportComment(int commentId) {
+		sqlSession.update(NAMESPACE + ".reportComment", commentId);
+	}
+
+	@Override
+	public String getUpdateDate(int commentId) {
+		return sqlSession.selectOne(NAMESPACE + ".getUpdateDate", commentId);
 	}
 
 }

@@ -18,4 +18,8 @@ public interface CommentDAO {
 
 	void deleteComment(int commentId);
 
+	void reportComment(int commentId);
+
+	String getUpdateDate(int commentId);
+
 }
