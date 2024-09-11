@@ -124,6 +124,11 @@ $(document).ready(() => {
         let commentText = commentItem.find('.commentText');
         let editUrl = $(this).attr('href');
 
+        // 댓글 내용이 이미 input으로 변경된 상태인지 확인
+        if (commentText.html().includes('<input')) {
+            return;
+        }
+
         // 댓글의 현재 내용을 가져와서 data 속성에 저장
         let originalText = commentText.text().trim();
         commentItem.data('original-text', originalText);
@@ -144,7 +149,7 @@ $(document).ready(() => {
         let editUrl = $(this).data('edit-url');
 
         $.ajax({
-        	type: "POST",
+            type: "POST",
             url: editUrl,
             data: {
                 content: newContent
@@ -159,7 +164,7 @@ $(document).ready(() => {
                 alert(response);
             },
             error: function (xhr, status, error) {
-            	console.log(error);
+                console.log(error);
                 alert(ERROR_MESSAGES.FAIL_EDIT_COMMENT + " " + xhr.responseText);
             }
         });
