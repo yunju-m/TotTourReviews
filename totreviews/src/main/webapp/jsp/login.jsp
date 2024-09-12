@@ -2,7 +2,7 @@
 <%@page import="java.sql.Timestamp"%>
 <%@page import="totreviews.domain.MemberVO"%>
 <%
-	MemberVO member = new MemberVO("user001", "M01", "TT01", "member", 
+	MemberVO member = new MemberVO("user123", "M01", "TT01", "member", 
 			new Timestamp(System.currentTimeMillis()), "");
 	
 	session.setAttribute("member", member);

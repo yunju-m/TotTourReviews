@@ -106,60 +106,146 @@
             </div>
             <!-- 댓글 입력 폼 끝 -->
 
-            <!-- 댓글 목록 -->
+			<!-- 댓글 목록 -->
             <c:forEach var="comment" items="${comments}">
-                <div class="commentItem">
-                    <div class="commentDetailItem" style="margin-left: ${comment.depth * 20}px;">
-                        <div class="profileImg">
-                            <img src="https://via.placeholder.com/50" alt="Profile Image">
-                        </div>
-                        <div class="commentMemberDiv">
-                            <div id="commentMember" class="commentMember" name="member">
-                                ${comment.memnick}</div>
-                            <div class="commentText">${comment.content}</div>
-                        </div>
-                        <div class="commentDate">
-                            <c:choose>
-						        <c:when test="${not empty comment.update}">
-						            <fmt:formatDate value="${comment.update}" pattern="yyyy-MM-dd HH:mm" />
-						        </c:when>
-						        <c:otherwise>
-						            <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" />
-						        </c:otherwise>
-						    </c:choose>
-                        </div>
-                        <div id="commentSetting" class="commentSetting">⋮</div>
-                        <!-- 댓글 옵션 메뉴 -->
-			            <c:if test="${member.memid == comment.memId}">
-			                <div class="commentOptionsMenu" style="display: none;">
-			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/edit/${comment.commentId}" class="editComment">수정</a>
-			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/delete/${comment.commentId}" class="deleteComment">삭제</a>
-			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${comment.commentId}" class="reportComment">신고</a>
+			    <c:if test="${comment.depth == 0}">
+			        <!-- 최상위 댓글 -->
+			        <div class="commentItem">
+			            <div class="commentDetailItem" style="margin-left: ${comment.depth * 20}px;">
+			                <div class="profileImg">
+			                    <img src="https://via.placeholder.com/50" alt="Profile Image">
 			                </div>
-			            </c:if>
-			            <c:if test="${member.memid != comment.memId}">
-			                <div class="commentOptionsMenu" style="display: none;">
-			                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${comment.commentId}">신고</a>
+			                <div class="commentMemberDiv">
+			                    <div id="commentMember" class="commentMember" name="member">${comment.memnick}</div>
+			                    <div class="commentText">${comment.content}</div>
 			                </div>
-			            </c:if>
-                    </div>
-                    <div class="commentReply" data-comment-id="${comment.commentId}">댓글 작성</div>
+			                <div class="commentDate">
+			                    <c:choose>
+			                        <c:when test="${not empty comment.update}">
+			                            <fmt:formatDate value="${comment.update}" pattern="yyyy-MM-dd HH:mm" />
+			                        </c:when>
+			                        <c:otherwise>
+			                            <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" />
+			                        </c:otherwise>
+			                    </c:choose>
+			                </div>
+			                <div id="commentSetting" class="commentSetting">⋮</div>
+			                <!-- 댓글 옵션 메뉴 -->
+			                <c:if test="${member.memid == comment.memId}">
+			                    <div class="commentOptionsMenu" style="display: none;">
+			                        <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/edit/${comment.commentId}"
+			                            class="editComment">수정</a>
+			                        <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/delete/${comment.commentId}"
+			                            class="deleteComment">삭제</a>
+			                        <a
+			                            href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${comment.commentId}">신고</a>
+			                    </div>
+			                </c:if>
+			                <c:if test="${member.memid != comment.memId}">
+			                    <div class="commentOptionsMenu" style="display: none;">
+			                        <a
+			                            href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${comment.commentId}">신고</a>
+			                    </div>
+			                </c:if>
+			            </div>
 
-                    <!-- 대댓글 입력 폼 -->
-                    <div class="commentReplyForm" style="display: none;">
-                        <form class="replyForm"
-                            action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add"
-                            method="post">
-                            <input type="hidden" name="parentId" value="${comment.commentId}" />
-                            <input type="text" name="content" placeholder="대댓글을 작성해주세요." required />
-                            <button type="submit" class="initButton active">작성</button>
-                            <button type="button" class="initButton cancelReply">취소</button>
-                        </form>
-                    </div>
-                    <!-- 대댓글 입력 폼 끝 -->
-                </div>
-            </c:forEach>
-            <!-- 댓글 목록 끝  -->
+			            <div class="commentReply" data-comment-id="${comment.commentId}">댓글 작성</div>
+			            <!-- 대댓글 입력 폼 -->
+			            <div class="commentReplyForm" style="display: none;">
+			                <form class="replyForm"
+			                    action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add" method="post">
+			                    <input type="hidden" name="parentId" value="${comment.commentId}" />
+			                    <input type="text" name="content" placeholder="댓글을 작성해주세요." required />
+			                    <button type="submit" class="initButton active">작성</button>
+			                    <button type="button" class="initButton cancelReply">취소</button>
+			                </form>
+			            </div>
+			            <!-- 대댓글 입력 폼 끝 -->
+			            
+			            <!-- 댓글이 있는지 확인 및 댓글 보이기 -->
+			            <c:set var="hasReplies" value="false" />
+			            <c:forEach var="reply" items="${comments}">
+			                <c:if test="${reply.parentId == comment.commentId && reply.depth > comment.depth}">
+			                    <c:set var="hasReplies" value="true" />
+			                </c:if>
+			            </c:forEach>
+			            <c:if test="${hasReplies}">
+			                <div class="showRepliesButton" data-comment-id="${comment.commentId}">▶ 댓글 보기</div>
+			            </c:if>
+			        </div>
+			        
+			        <!-- 대댓글 표시 영역 -->
+			        <div class="replyComments" data-comment-id="${comment.commentId}" style="display: none;">
+			            <c:forEach var="reply" items="${comments}">
+			                <c:if test="${reply.topParentId == comment.commentId && reply.depth > 0}">
+			                    <div class="commentItem" style="margin-left: 20px;">
+			                        <div class="commentDetailItem">
+			                            <div class="profileImg">
+			                                <img src="https://via.placeholder.com/50" alt="Profile Image">
+			                            </div>
+			                            <div class="commentMemberDiv">
+			                                <div id="commentMember" class="commentMember">${reply.memnick}</div>
+			                                <div class="commentText">
+				                                <c:if test="${not empty reply.parentNickname}">
+										            <span class="nickname-highlight">@${reply.parentNickname}</span>
+										        </c:if>
+				                                ${reply.content}
+			                                </div>
+			                            </div>
+			                            <div class="commentDate">
+			                                <c:choose>
+			                                    <c:when test="${not empty reply.update}">
+			                                        <fmt:formatDate value="${reply.update}" pattern="yyyy-MM-dd HH:mm" />
+			                                    </c:when>
+			                                    <c:otherwise>
+			                                        <fmt:formatDate value="${reply.regdate}" pattern="yyyy-MM-dd HH:mm" />
+			                                    </c:otherwise>
+			                                </c:choose>
+			                            </div>
+			                            <div class="commentSetting">⋮</div>
+			                            <!-- 댓글 옵션 메뉴 -->
+			                            <c:if test="${member.memid == reply.memId}">
+			                                <div class="commentOptionsMenu" style="display: none;">
+			                                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/edit/${reply.commentId}"
+			                                        class="editComment">수정</a>
+			                                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/delete/${reply.commentId}"
+			                                        class="deleteComment">삭제</a>
+			                                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${reply.commentId}"
+			                                        class="reportComment">신고</a>
+			                                </div>
+			                            </c:if>
+			                            <c:if test="${member.memid != reply.memId}">
+			                                <div class="commentOptionsMenu" style="display: none;">
+			                                    <a
+			                                        href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${reply.commentId}">신고</a>
+			                                </div>
+			                            </c:if>
+			                        </div>
+			                       			                        
+			                        <div class="commentReply">댓글 작성</div>
+						            <!-- 대댓글 입력 폼 -->
+						            <div class="commentReplyForm" style="display: none;">
+						            	<div class="parentNicknameDisplay"></div>
+						                <form class="replyForm"
+						                    action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add" method="post">
+						                    <input type="hidden" name="parentId" value="${reply.commentId}" />
+						                    <input type="hidden" name="parentNickname" class="parentNicknameInput" value="" />
+						                    <input type="text" class="replyInput" name="content" placeholder="댓글을 작성해주세요." required />
+						                    <button type="submit" class="initButton active">작성</button>
+						                    <button type="button" class="initButton cancelReply">취소</button>
+						                </form>
+						            </div>
+						            <!-- 대댓글 입력 폼 끝 -->
+						            
+						            <!-- 대댓글은 해당 댓글에 대해 언급해서 표현 -->
+			                    </div>
+			                </c:if>
+			            </c:forEach>
+			        </div>
+			        <!-- 대댓글 표시 영역 끝-->
+			    </c:if>
+			</c:forEach>
+			<!-- 댓글 목록 끝  -->
         </div>
         <!-- 댓글 작성 및 목록 끝 -->
     </div>

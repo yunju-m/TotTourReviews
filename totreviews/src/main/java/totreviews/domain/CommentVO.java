@@ -10,6 +10,7 @@ public class CommentVO {
 	private int postId; // 게시물 아이디
 	private int topParentId; // 최상위 부모 댓글 아이디
 	private int parentId; // 부모 댓글 아이디
+	private String parentNickname; // 부모 댓글 닉네임
 	private String memId; // 댓글 작성자 아이디
 	private String memnick; // 댓글 작성자 이름
 	private String content; // 내용
@@ -24,17 +25,19 @@ public class CommentVO {
 	public CommentVO(int postId, CommentReqDTO commentReqDTO) {
 		this.postId = postId;
 		this.parentId = commentReqDTO.getParentId();
+		this.parentNickname = commentReqDTO.getParentNickname();
 		this.memId = MemberUtil.getAuthenticatedMember().getMemid();
 		this.memnick = MemberUtil.getAuthenticatedMember().getMemnick();
 		this.content = commentReqDTO.getContent();
 	}
 
-	public CommentVO(int commentId, int postId, int topParentId, int parentId, String memId, String memnick,
-			String content, int depth, Flag status, Timestamp regdate, Timestamp update) {
+	public CommentVO(int commentId, int postId, int topParentId, int parentId, String parentNickname, String memId,
+			String memnick, String content, int depth, Flag status, Timestamp regdate, Timestamp update) {
 		this.commentId = commentId;
 		this.postId = postId;
 		this.topParentId = topParentId;
 		this.parentId = parentId;
+		this.parentNickname = parentNickname;
 		this.memId = memId;
 		this.memnick = memnick;
 		this.content = content;
@@ -58,6 +61,10 @@ public class CommentVO {
 
 	public int getParentId() {
 		return parentId;
+	}
+
+	public String getParentNickname() {
+		return parentNickname;
 	}
 
 	public String getMemId() {
@@ -97,8 +104,9 @@ public class CommentVO {
 	@Override
 	public String toString() {
 		return "CommentVO [commentId=" + commentId + ", postId=" + postId + ", topParentId=" + topParentId
-				+ ", parentId=" + parentId + ", memId=" + memId + ", memnick=" + memnick + ", content=" + content
-				+ ", depth=" + depth + ", status=" + status + ", regdate=" + regdate + ", update=" + update + "]";
+				+ ", parentId=" + parentId + ", parentNickname=" + parentNickname + ", memId=" + memId + ", memnick="
+				+ memnick + ", content=" + content + ", depth=" + depth + ", status=" + status + ", regdate=" + regdate
+				+ ", update=" + update + "]";
 	}
 
 }

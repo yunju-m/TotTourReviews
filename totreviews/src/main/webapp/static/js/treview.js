@@ -103,7 +103,16 @@ $(document).ready(() => {
 
     // 대댓글 작성 버튼 클릭 시 대댓글 입력 폼 열기
     $('.commentReply').on('click', function () {
-        $(this).next('.commentReplyForm').toggle();
+        let parentNickname = $(this).closest('.commentItem').find('.commentMember').text().trim();
+        let replyForm = $(this).next('.commentReplyForm');
+        let parentNicknameDisplay = replyForm.find('.parentNicknameDisplay');
+        let parentNicknameInput = replyForm.find('.parentNicknameInput');
+        
+        if (replyForm.find('input[name="content"]').val() === '') {
+        	parentNicknameDisplay.html('<span class="nickname-highlight">' + '@' + parentNickname + '</span> ');
+    		parentNicknameInput.val(parentNickname);
+    	}
+        replyForm.toggle();
     });
 
     // 대댓글 취소 버튼 클릭 시 댓글 내용 비우기
@@ -158,7 +167,7 @@ $(document).ready(() => {
             },
             dataType: "json",
             success: function (response) {
-            	console.log(response);
+                console.log(response);
                 // 성공 시, 댓글 내용을 다시 텍스트로 변경
                 commentItem.find('.commentText').html(newContent);
                 commentItem.find('.saveCommentEditBtn').remove();
@@ -236,6 +245,22 @@ $(document).ready(() => {
                     console.error(error);
                 }
             });
+        }
+    });
+
+    // 댓글 보기 버튼 클릭 시 댓글 목록 토글
+    $(document).on('click', '.showRepliesButton', function () {
+        const commentId = $(this).data('comment-id');
+        const replyComments = $(`.replyComments[data-comment-id="${commentId}"]`);
+
+        // 댓글 목록의 표시 상태를 토글
+        replyComments.toggle();
+
+        // 버튼 텍스트를 변경
+        if (replyComments.is(':visible')) {
+            $(this).text('▼ 댓글 닫기');
+        } else {
+            $(this).text('▶ 댓글 보기');
         }
     });
 

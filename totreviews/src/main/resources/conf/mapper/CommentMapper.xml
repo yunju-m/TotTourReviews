@@ -8,6 +8,7 @@
             TREVID AS postId,
             TOPPARENTID AS topParentId,
             PARENTID AS parentId,
+            PARENTNICKNAME AS parentNickname,
             MEMID AS memId,
             MEMNICK AS memnick,
             COMMENTSTATUS AS status,
@@ -57,6 +58,7 @@
             TREVID,
             TOPPARENTID,
             PARENTID,
+            PARENTNICKNAME,
             MEMID,
             MEMNICK,
             TREVCTEXT,
@@ -68,6 +70,7 @@
             #{postId},
             #{topParentId},
             #{parentId},
+            #{parentNickname},
             #{memId},
             #{memnick},
             #{content},
@@ -119,6 +122,7 @@
         <result property="postId" column="postId"/>
         <result property="topParentId" column="topParentId"/>
         <result property="parentId" column="parentId"/>
+        <result property="parentNickname" column="parentNickname"/>
         <result property="memId" column="memId"/> 
         <result property="memnick" column="memnick"/>   
         <result property="status" column="status"/>          
