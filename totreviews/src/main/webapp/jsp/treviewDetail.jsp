@@ -89,7 +89,7 @@
 
         <!-- 댓글 작성 및 목록 -->
         <div class="commentsSection">
-            <h2>댓글</h2>
+            <h2>댓글(${fn:length(comments)})</h2>
 
             <!-- 댓글 입력 폼 -->
             <div class="commentInputDiv">

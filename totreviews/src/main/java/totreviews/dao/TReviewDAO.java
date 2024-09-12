@@ -17,6 +17,8 @@ public interface TReviewDAO {
 
 	List<TReviewResDTO> selectTReviewListWithPaging(PageDTO pageDTO);
 
+	void incrementTReviewCount(int trevid);
+	
 	TReviewResDTO getTReviewDetail(int trevid);
 
 }

@@ -72,6 +72,7 @@ public class TReviewServiceImpl implements TReviewService {
 	@Override
 	public TReviewResDTO getTReviewDetail(int trevid) {
 		try {
+			treviewDAO.incrementTReviewCount(trevid);
 			return treviewDAO.getTReviewDetail(trevid);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 상세 정보 정보 가져오던 중 오류 발생", e);

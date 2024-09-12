@@ -99,8 +99,12 @@
 	    LEFT JOIN TReviewImage i ON r.TREVID = i.TREVID
 	    WHERE r.rn BETWEEN #{offset} + 1 AND #{offset} + #{pageRowCount}
 	</select>
-
-
+	
+	<update id="incrementTReviewCount" parameterType="int">
+	    UPDATE TREVIEW
+	    SET TREVCOUNT = TREVCOUNT + 1
+	    WHERE TREVID = #{trevid}
+	</update>
 	
 	<select id="getTReviewDetail" parameterType="int" resultMap="TReviewResDTOResultMap">
 		SELECT

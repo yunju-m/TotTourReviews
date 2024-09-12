@@ -40,6 +40,11 @@ public class TReviewDAOImpl implements TReviewDAO {
 	}
 
 	@Override
+	public void incrementTReviewCount(int trevid) {
+		sqlSession.update(NAMESPACE + ".incrementTReviewCount", trevid);
+	}
+
+	@Override
 	public TReviewResDTO getTReviewDetail(int trevid) {
 		return sqlSession.selectOne(NAMESPACE + ".getTReviewDetail", trevid);
 	}
