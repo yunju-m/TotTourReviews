@@ -107,11 +107,11 @@ $(document).ready(() => {
         let replyForm = $(this).next('.commentReplyForm');
         let parentNicknameDisplay = replyForm.find('.parentNicknameDisplay');
         let parentNicknameInput = replyForm.find('.parentNicknameInput');
-        
+
         if (replyForm.find('input[name="content"]').val() === '') {
-        	parentNicknameDisplay.html('<span class="nickname-highlight">' + '@' + parentNickname + '</span> ');
-    		parentNicknameInput.val(parentNickname);
-    	}
+            parentNicknameDisplay.html('<span class="nickname-highlight">' + '@' + parentNickname + '</span> ');
+            parentNicknameInput.val(parentNickname);
+        }
         replyForm.toggle();
     });
 
@@ -167,7 +167,6 @@ $(document).ready(() => {
             },
             dataType: "json",
             success: function (response) {
-                console.log(response);
                 // 성공 시, 댓글 내용을 다시 텍스트로 변경
                 commentItem.find('.commentText').html(newContent);
                 commentItem.find('.saveCommentEditBtn').remove();
@@ -222,30 +221,47 @@ $(document).ready(() => {
         }
     });
 
-    // 댓글 신고 버튼 클릭 시 신고 여부 확인 및 기능 구현
+    // 댓글 신고 버튼 클릭 시 신고 모달 창 띄우기
     $(document).on('click', '.reportComment', function (e) {
         e.preventDefault();
-        let commentItem = $(this).closest('.commentItem');
-        let commentText = commentItem.find('.commentText').text().trim();
-        let deleteUrl = $(this).attr('href');
 
-        // 사용자에게 삭제 확인
-        if (confirm(`"${commentText}"댓글을 신고하시겠습니까?`)) {
-            $.ajax({
-                url: deleteUrl,
-                type: 'GET',
-                dataType: "json",
-                success: function (response) {
-                    // 성공 시, 성공 응답 메시지 출력
-                    alert(response.message);
-                    window.location.reload();
-                },
-                error: function (error) {
-                    alert(ERROR_MESSAGES.FAIL_REPORT_COMMENT);
-                    console.error(error);
-                }
-            });
-        }
+        let commentText = $(this).closest('.commentItem').find('.commentText').text().trim();
+        let reportUrl = $(this).data('url'); // 신고 URL 가져오기
+
+        $('#reportCommentText').text(`댓글 내용: "${commentText}"`);
+        $('#reportForm').attr('action', reportUrl);
+        $('#reportModal').show();
+    });
+
+    // 신고 댓글 모달 폼 닫기
+    $(document).on('click', '.close-button', function () {
+        $('#reportModal').hide();
+    });
+
+    // 신고 제출 시 신고 처리
+    $('#reportForm').on('submit', function (e) {
+        e.preventDefault();
+
+        let reportReason = $('#reportReason').val();
+        let formAction = $(this).attr('action');
+
+        $.post({
+            url: formAction,
+            dataType: 'json',
+            data: {
+                reportedContentType: 'Treview comment',
+                reportReason: reportReason,
+
+            },
+            success: function (response) {
+                alert(response.message);
+                $('#reportModal').hide();
+            },
+            error: function (error) {
+                alert(ERROR_MESSAGES.FAIL_REPORT_COMMENT);
+                console.error(error);
+            }
+        });
     });
 
     // 댓글 보기 버튼 클릭 시 댓글 목록 토글

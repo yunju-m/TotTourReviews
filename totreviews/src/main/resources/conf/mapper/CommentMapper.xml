@@ -105,11 +105,32 @@
 		)
 	</update>
 	
-	<update id="reportComment" parameterType="int">
+	<update id="updateCommentStatus" parameterType="int">
 		UPDATE TREVIEWCOMMENT
 		SET COMMENTSTATUS = 'CMT003'
 		WHERE TREVCID = #{commentId}
 	</update>
+	
+	<insert id="insertReportComment" parameterType="ReportVO">
+		INSERT INTO REPORT(
+			REPORTID,
+			REPORTERID,
+			REPORTEDTREVCID,
+			REPORTEDCONTENTTYPE,
+			REPORTREASON,
+			REPORTDATE,
+			REPORTSTATUS
+		)
+		VALUES(
+			SEQ_REPORTID.NEXTVAL,
+			#{reporterId},
+			#{reportedTrevcId},
+			#{reportedContentType},
+			#{reportReason},
+			CURRENT_TIMESTAMP,
+			#{reportStatus}
+		)
+	</insert>
 	
 	<select id="getUpdateDate" parameterType="int" resultType="String">
 		SELECT TO_CHAR(TREVDUPDATE, 'YYYY-MM-DD HH24:MI') AS updatedDate

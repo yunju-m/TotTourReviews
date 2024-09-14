@@ -3,6 +3,7 @@ package totreviews.dao;
 import java.util.List;
 
 import totreviews.domain.CommentVO;
+import totreviews.domain.ReportVO;
 
 public interface CommentDAO {
 
@@ -18,7 +19,9 @@ public interface CommentDAO {
 
 	void deleteComment(int commentId);
 
-	void reportComment(int commentId);
+	void updateCommentStatus(int commentId);
+
+	void insertReportComment(ReportVO reportVO);
 
 	String getUpdateDate(int commentId);
 

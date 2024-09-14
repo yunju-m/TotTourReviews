@@ -6,6 +6,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import totreviews.domain.MemberVO;
+import totreviews.exception.ErrorCode;
+import totreviews.exception.ValidationException;
 
 public class MemberUtil {
 
@@ -21,6 +23,19 @@ public class MemberUtil {
 		// member가 null인 경우 빈 MemberVO 반환
 		if (member == null) {
 			return new MemberVO(); // 빈 MemberVO 객체 반환
+		}
+
+		return member;
+	}
+
+	public static MemberVO isAuthenticatedMember() {
+		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		HttpSession session = attr.getRequest().getSession();
+
+		MemberVO member = (MemberVO) session.getAttribute("member");
+
+		if (member == null) {
+			throw new ValidationException(ErrorCode.NOT_FOUND_MEMBERID);
 		}
 
 		return member;

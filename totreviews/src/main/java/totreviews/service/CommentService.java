@@ -15,7 +15,7 @@ public interface CommentService {
 
 	void deleteComment(int commentId);
 
-	void reportComment(int commentId);
+	void reportComment(int commentId, String reportedContentType, String reportReason);
 
 	String getUpdateDate(int commentId);
 

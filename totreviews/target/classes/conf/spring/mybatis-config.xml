@@ -23,6 +23,8 @@
     	<typeAlias alias="PageDTO" type="totreviews.common.page.PageDTO"/>
     	<typeAlias alias="PageReqDTO" type="totreviews.common.page.PageReqDTO"/>
     	<typeAlias alias="PageResDTO" type="totreviews.common.page.PageResDTO"/>
+    	<typeAlias alias="ReportVO" type="totreviews.domain.ReportVO"/>
+    	<typeAlias alias="ReportCommentDTO" type="totreviews.domain.ReportCommentDTO"/>
     </typeAliases>
     
     <mappers>

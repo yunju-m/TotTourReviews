@@ -137,16 +137,25 @@
 			                            class="editComment">수정</a>
 			                        <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/delete/${comment.commentId}"
 			                            class="deleteComment">삭제</a>
-			                        <a
-			                            href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${comment.commentId}">신고</a>
+			                        <a data-url="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${comment.commentId}"
+			                        	class="reportComment">신고</a>
 			                    </div>
 			                </c:if>
-			                <c:if test="${member.memid != comment.memId}">
-			                    <div class="commentOptionsMenu" style="display: none;">
-			                        <a
-			                            href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${comment.commentId}">신고</a>
-			                    </div>
-			                </c:if>
+			                
+			                <!-- 댓글 신고 모달 폼 -->
+	                        <div id="reportModal" class="modal">
+							    <div class="modal-content">
+							        <span class="close-button">&times;</span>
+							        <h2>댓글 신고</h2>
+							        <p id="reportCommentText"></p>
+							        <form id="reportForm" method="post">
+							            <label for="reportReason">신고 사유:</label>
+							            <textarea id="reportReason" name="reportReason" required></textarea>
+							            <button class="initButton active" type="submit">신고하기</button>
+							        </form>
+							    </div>
+							</div>
+							<!-- 댓글 신고 모달 폼 끝 -->
 			            </div>
 
 			            <div class="commentReply" data-comment-id="${comment.commentId}">댓글 작성</div>
@@ -210,14 +219,8 @@
 			                                        class="editComment">수정</a>
 			                                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/delete/${reply.commentId}"
 			                                        class="deleteComment">삭제</a>
-			                                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${reply.commentId}"
-			                                        class="reportComment">신고</a>
-			                                </div>
-			                            </c:if>
-			                            <c:if test="${member.memid != reply.memId}">
-			                                <div class="commentOptionsMenu" style="display: none;">
-			                                    <a
-			                                        href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${reply.commentId}">신고</a>
+			                                    <a data-url="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${reply.commentId}"
+			                                    	class="reportComment">신고</a>
 			                                </div>
 			                            </c:if>
 			                        </div>

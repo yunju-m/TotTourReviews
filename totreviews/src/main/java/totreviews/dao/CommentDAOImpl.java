@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import totreviews.domain.CommentVO;
+import totreviews.domain.ReportVO;
 
 @Repository
 public class CommentDAOImpl implements CommentDAO {
@@ -53,8 +54,13 @@ public class CommentDAOImpl implements CommentDAO {
 	}
 
 	@Override
-	public void reportComment(int commentId) {
-		sqlSession.update(NAMESPACE + ".reportComment", commentId);
+	public void updateCommentStatus(int commentId) {
+		sqlSession.update(NAMESPACE + ".updateCommentStatus", commentId);
+	}
+
+	@Override
+	public void insertReportComment(ReportVO reportVO) {
+		sqlSession.update(NAMESPACE + ".insertReportComment", reportVO);
 	}
 
 	@Override

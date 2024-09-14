@@ -52,10 +52,14 @@ public class CommentController {
 		return createCommentResponse("댓글이 삭제되었습니다.", commentId);
 	}
 
-	@GetMapping(value = "/report/{commentId}", produces = "application/json; charset=UTF-8")
+	@PostMapping(value = "/report/{commentId}", produces = "application/json; charset=UTF-8")
 	@ResponseBody
-	public ResponseEntity<Map<String, String>> reportComment(@PathVariable("commentId") int commentId) {
-		commentService.reportComment(commentId);
+	public ResponseEntity<Map<String, String>> reportComment(@PathVariable("commentId") int commentId,
+			@RequestParam("reportedContentType") String reportedContentType,
+			@RequestParam("reportReason") String reportReason) {
+
+		commentService.reportComment(commentId, reportedContentType, reportReason);
+
 		Map<String, String> response = new HashMap<>();
 		response.put("message", "신고가 접수되었습니다.");
 

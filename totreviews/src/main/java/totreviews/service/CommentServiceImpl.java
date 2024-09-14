@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 import totreviews.dao.CommentDAO;
 import totreviews.domain.CommentReqDTO;
 import totreviews.domain.CommentVO;
+import totreviews.domain.MemberVO;
+import totreviews.domain.ReportCommentDTO;
+import totreviews.domain.ReportVO;
 import totreviews.exception.ServerException;
+import totreviews.util.MemberUtil;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -83,9 +87,15 @@ public class CommentServiceImpl implements CommentService {
 	 * 해당 댓글 신고 상태 업데이트 
 	 * */
 	@Override
-	public void reportComment(int commentId) {
+	public void reportComment(int commentId, String reportedContentType, String reportReason) {
 		try {
-			commentDAO.reportComment(commentId);
+			MemberVO member = MemberUtil.isAuthenticatedMember();
+			
+			ReportCommentDTO reportCommentDTO = new ReportCommentDTO(member.getMemid(), commentId, reportedContentType, reportReason);
+			ReportVO reportVO = new ReportVO(reportCommentDTO);
+			
+			commentDAO.updateCommentStatus(commentId);
+			commentDAO.insertReportComment(reportVO);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 댓글 신고 중 오류 발생", e);
 		}
