@@ -59,4 +59,9 @@ public class TReviewDAOImpl implements TReviewDAO {
 		sqlSession.delete(NAMESPACE + ".deleteTReviewImages", trevId);
 	}
 
+	@Override
+	public void deleteTReview(int trevId) {
+		sqlSession.update(NAMESPACE + ".deleteTReview", trevId);
+	}
+
 }

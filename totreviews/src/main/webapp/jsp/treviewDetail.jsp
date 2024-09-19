@@ -27,7 +27,7 @@
         <c:if test="${review.memId == member.memId}">
 		    <div class="reviewEditDeleteDiv">
 		        <a href="${pageContext.request.contextPath}/review/${boardId}/edit/${review.trevId}" class="initButton">수정</a>
-		        <button id="delTReviewBtn" class="initButton">삭제</button>
+		        <button id="delTReviewBtn" class="initButton" data-title="${review.trevTitle}" data-delete-url="${pageContext.request.contextPath}/review/${boardId}/delete/${review.trevId}">삭제</button>
 		    </div>
 		</c:if>
         <!-- 여행 코스 내용 -->

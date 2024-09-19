@@ -146,6 +146,12 @@
         WHERE
             r.TREVID = #{trevId}
 	</select>
+	
+	<update id="deleteTReview" parameterType="int">
+		UPDATE TREVIEW
+		SET TREVSTATUS = 'CMT002', TREVUPDATE = CURRENT_TIMESTAMP
+		WHERE TREVID = #{trevId}
+	</update>
 
 	<resultMap id="TReviewResDTOResultMap" type="TReviewResDTO">
 		<id property="trevId" column="TREVID" />

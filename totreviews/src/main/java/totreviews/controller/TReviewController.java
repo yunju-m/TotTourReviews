@@ -130,6 +130,15 @@ public class TReviewController {
 		return ResponseUtil.createTReviewResponse("여행 후기 글 수정이 완료되었습니다.");
 	}
 
+	// 여행 후기 수정 화면 이동
+	@GetMapping("/delete/{trevId}")
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> deleteTourReview(@PathVariable int trevId) {
+		treviewService.deleteTReview(trevId);
+
+		return ResponseUtil.createTReviewResponse("여행 후기 글 삭제가 완료되었습니다.");
+	}
+
 	// 여행 후기 상세 화면 이동
 	@GetMapping("/detail/{trevId}")
 	public String showTourReviewDetail(@PathVariable("boardId") String boardId, @PathVariable("trevId") int trevId,

@@ -25,4 +25,6 @@ public interface TReviewDAO {
 
 	void deleteTReviewImages(int trevId);
 
+	void deleteTReview(int trevId);
+
 }

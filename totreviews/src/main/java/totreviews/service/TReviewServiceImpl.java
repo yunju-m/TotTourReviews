@@ -139,9 +139,18 @@ public class TReviewServiceImpl implements TReviewService {
 				}
 			}
 		} catch (DataAccessException e) {
-			throw new ServerException("여행 후기 데이터 수정 중 데이터베이스 오류 발생", e);
+			throw new ServerException("여행 후기 글 수정 중 데이터베이스 오류 발생", e);
 		}
 
+	}
+
+	@Override
+	public void deleteTReview(int trevId) {
+		try {
+			treviewDAO.deleteTReview(trevId);
+		} catch (DataAccessException e) {
+			throw new ServerException("여행 후기 글 삭제 중 데이터베이스 오류 발생", e);
+		}
 	}
 
 }

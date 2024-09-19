@@ -21,4 +21,5 @@ public interface TReviewService {
 
 	void editTReview(TReviewReqDTO treviewReqDTO, MultipartFile[] imageFiles, List<String> existingImages);
 
+	void deleteTReview(int trevId);
 }

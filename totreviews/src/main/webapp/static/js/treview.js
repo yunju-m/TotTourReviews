@@ -94,14 +94,16 @@ $(document).ready(() => {
     // 여행 후기 글 삭제 검사 버튼 클릭 시 삭제 처리
     $('#delTReviewBtn').on('click', function (event) {
         event.preventDefault();
-        console.log('클릭!');
+        
+        const reviewTitle = $(this).data('title');
+        const deleteUrl = $(this).data('delete-url');
 
-        if (confirm(`해당 여행 후기글을 삭제하시겠습니까?`)) {
+        if (confirm(`${reviewTitle} 여행 후기를 삭제하시겠습니까?`)) {
             $.get({
                 url: deleteUrl,
                 success: function (response) {
                     alert(response.message);
-                    window.location.reload();
+                    window.location.href = GET_MY_TREVIEW;
                 },
                 error: function (error) {
                     alert(ERROR_MESSAGES.FAIL_TREVIEW_DELETE);
