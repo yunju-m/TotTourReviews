@@ -5,20 +5,20 @@
 	<select id="getTripByMemId" parameterType="String" resultMap="TripVOMap">
         SELECT TRIPID, MEMID, AREACODE, TRIPNAME, TRAMT, TRSTADATE, TRENDDATE, TRPERIOD, TRPEOPLE, TRIMGPATH
         FROM TRIP
-        WHERE MEMID = #{memid}
+        WHERE MEMID = #{memId}
     </select>
 	
 	<resultMap id="TripVOMap" type="totreviews.domain.TripVO">
-        <id property="tripid" column="TRIPID" />
-        <result property="memid" column="MEMID" />
-        <result property="areacode" column="AREACODE" />
-        <result property="tripname" column="TRIPNAME" />
-        <result property="tramt" column="TRAMT" />
-        <result property="trstadate" column="TRSTADATE" />
-        <result property="trenddate" column="TRENDDATE" />
-        <result property="trperiod" column="TRPERIOD" />
-        <result property="trpeople" column="TRPEOPLE" />
-        <result property="trimgpath" column="TRIMGPATH" />
+        <id property="tripId" column="TRIPID" />
+        <result property="memId" column="MEMID" />
+        <result property="areaCode" column="AREACODE" />
+        <result property="tripName" column="TRIPNAME" />
+        <result property="trAmt" column="TRAMT" />
+        <result property="trStaDate" column="TRSTADATE" />
+        <result property="trEndDate" column="TRENDDATE" />
+        <result property="trPeriod" column="TRPERIOD" />
+        <result property="trPeople" column="TRPEOPLE" />
+        <result property="trImgpath" column="TRIMGPATH" />
     </resultMap>
 
 </mapper>

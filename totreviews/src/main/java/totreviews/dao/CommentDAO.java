@@ -7,7 +7,7 @@ import totreviews.domain.ReportVO;
 
 public interface CommentDAO {
 
-	List<CommentVO> getCommentsByReviewId(int trevid);
+	List<CommentVO> getCommentsByReviewId(int trevId);
 
 	CommentVO getCommentById(int commentId);
 

@@ -22,9 +22,9 @@ public class CommentServiceImpl implements CommentService {
 	private CommentDAO commentDAO;
 
 	@Override
-	public List<CommentVO> getCommentsByReviewId(int trevid) {
+	public List<CommentVO> getCommentsByReviewId(int trevId) {
 		try {
-			List<CommentVO> comments = commentDAO.getCommentsByReviewId(trevid);
+			List<CommentVO> comments = commentDAO.getCommentsByReviewId(trevId);
 
 			return comments;
 		} catch (DataAccessException e) {
@@ -91,7 +91,7 @@ public class CommentServiceImpl implements CommentService {
 		try {
 			MemberVO member = MemberUtil.isAuthenticatedMember();
 			
-			ReportCommentDTO reportCommentDTO = new ReportCommentDTO(member.getMemid(), commentId, reportedContentType, reportReason);
+			ReportCommentDTO reportCommentDTO = new ReportCommentDTO(member.getMemId(), commentId, reportedContentType, reportReason);
 			ReportVO reportVO = new ReportVO(reportCommentDTO);
 			
 			commentDAO.updateCommentStatus(commentId);

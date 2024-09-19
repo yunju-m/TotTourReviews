@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import totreviews.domain.CommentReqDTO;
 import totreviews.service.CommentService;
+import totreviews.util.ResponseUtil;
 
 @Controller
 @RequestMapping("{boardId}/{postId}/comment")
@@ -40,16 +41,18 @@ public class CommentController {
 	public ResponseEntity<Map<String, String>> editComment(@PathVariable("commentId") int commentId,
 			@RequestParam("content") String content) {
 		commentService.editComment(commentId, content);
+		String updatedDate = commentService.getUpdateDate(commentId);
 
-		return createCommentResponse("댓글 수정이 완료되었습니다.", commentId);
+		return ResponseUtil.createCommentResponse("댓글 수정이 완료되었습니다.", updatedDate);
 	}
 
 	@GetMapping(value = "/delete/{commentId}", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public ResponseEntity<Map<String, String>> deleteComment(@PathVariable("commentId") int commentId) {
 		commentService.deleteComment(commentId);
+		String updatedDate = commentService.getUpdateDate(commentId);
 
-		return createCommentResponse("댓글이 삭제되었습니다.", commentId);
+		return ResponseUtil.createCommentResponse("댓글이 삭제되었습니다.", updatedDate);
 	}
 
 	@PostMapping(value = "/report/{commentId}", produces = "application/json; charset=UTF-8")
@@ -62,17 +65,6 @@ public class CommentController {
 
 		Map<String, String> response = new HashMap<>();
 		response.put("message", "신고가 접수되었습니다.");
-
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
-
-	// 댓글 공통 응답 메소드
-	private ResponseEntity<Map<String, String>> createCommentResponse(String message, int commentId) {
-		String updatedDate = commentService.getUpdateDate(commentId);
-
-		Map<String, String> response = new HashMap<>();
-		response.put("message", message);
-		response.put("updatedDate", updatedDate);
 
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}

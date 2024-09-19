@@ -26,7 +26,7 @@ public class CourseServiceImpl implements CourseService {
 		List<CourseDTO> courseList = courseDAO.getCourseByTripId(tripId);
 		for (CourseDTO course : courseList) {
 			List<CourseResDTO> courseDetails = new ArrayList<>();
-			String[] courseTypes = course.getDcourse().split(",");
+			String[] courseTypes = course.getdCourse().split(",");
 			for (String courseType : courseTypes) {
 				String[] typeAndId = courseType.split(":");
 				CourseResDTO courseDetail = courseDAO.getCourseDetailsById(typeAndId[0],

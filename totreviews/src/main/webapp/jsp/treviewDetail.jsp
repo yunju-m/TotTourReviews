@@ -17,13 +17,19 @@
 <body>
     <div class="mainDiv">
         <div class="reviewTitleDiv">
-            <div class="bigTitle">${review.trevtitle}</div>
+            <div class="bigTitle">${review.trevTitle}</div>
         </div>
         <div class="reviewIntroDiv">
             <div>
-                <fmt:formatDate value="${review.trevregdate}" pattern="yyyy년 MM월 dd일" />
+                <fmt:formatDate value="${review.trevRegdate}" pattern="yyyy년 MM월 dd일" />
             </div>
         </div>
+        <c:if test="${review.memId == member.memId}">
+		    <div class="reviewEditDeleteDiv">
+		        <a href="${pageContext.request.contextPath}/review/${boardId}/edit/${review.trevId}" class="initButton">수정</a>
+		        <button id="delTReviewBtn" class="initButton">삭제</button>
+		    </div>
+		</c:if>
         <!-- 여행 코스 내용 -->
         <div class="reviewCourseDiv">
             <!-- 여행 코스 이미지 -->
@@ -67,12 +73,12 @@
         <!-- 여행 코스 날짜별 상세 내역 리스트 -->
         <div class="reviewCourseDetailDiv">
             <c:set var="imageIndex" value="0" />
-            <c:forEach var="content" items="${fn:split(review.trevcontent, ',')}" varStatus="status">
+            <c:forEach var="content" items="${fn:split(review.trevContent, ',')}" varStatus="status">
                 <div class="reviewCourseDetailItem">
                     <c:choose>
                         <c:when test="${content == 'image'}">
-                            <c:if test="${imageIndex < review.trevimages.size()}">
-                                <img src="${pageContext.request.contextPath}${review.trevimages[imageIndex].trevimgpath}"
+                            <c:if test="${imageIndex < review.trevImages.size()}">
+                                <img src="${pageContext.request.contextPath}${review.trevImages[imageIndex].trevImgpath}"
                                     alt="Review Detail Image">
                                 <c:set var="imageIndex" value="${imageIndex + 1}" />
                             </c:if>
@@ -97,8 +103,8 @@
                     <img src="https://via.placeholder.com/50" alt="Profile Image 1">
                 </div>
                 <form id="commentForm"
-                    action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add" method="post">
-                    <div id="commentMember" class="commentMember" name="member">${member.memnick}</div>
+                    action="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/add" method="post">
+                    <div id="commentMember" class="commentMember" name="member">${member.memNick}</div>
                     <input id="commentContent" name="content" type="text" placeholder="댓글을 작성해주세요." required />
                     <button id="commentRegBtn" type="submit" class="initButton active">댓글 작성</button>
                     <button id="commentCancelBtn" type="button" class="initButton">취소</button>
@@ -116,7 +122,7 @@
 			                    <img src="https://via.placeholder.com/50" alt="Profile Image">
 			                </div>
 			                <div class="commentMemberDiv">
-			                    <div id="commentMember" class="commentMember" name="member">${comment.memnick}</div>
+			                    <div id="commentMember" class="commentMember" name="member">${comment.memNick}</div>
 			                    <div class="commentText">${comment.content}</div>
 			                </div>
 			                <div class="commentDate">
@@ -125,19 +131,19 @@
 			                            <fmt:formatDate value="${comment.update}" pattern="yyyy-MM-dd HH:mm" />
 			                        </c:when>
 			                        <c:otherwise>
-			                            <fmt:formatDate value="${comment.regdate}" pattern="yyyy-MM-dd HH:mm" />
+			                            <fmt:formatDate value="${comment.regDate}" pattern="yyyy-MM-dd HH:mm" />
 			                        </c:otherwise>
 			                    </c:choose>
 			                </div>
 			                <div id="commentSetting" class="commentSetting">⋮</div>
 			                <!-- 댓글 옵션 메뉴 -->
-			                <c:if test="${member.memid == comment.memId}">
+			                <c:if test="${member.memId == comment.memId}">
 			                    <div class="commentOptionsMenu" style="display: none;">
-			                        <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/edit/${comment.commentId}"
+			                        <a href="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/edit/${comment.commentId}"
 			                            class="editComment">수정</a>
-			                        <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/delete/${comment.commentId}"
+			                        <a href="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/delete/${comment.commentId}"
 			                            class="deleteComment">삭제</a>
-			                        <a data-url="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${comment.commentId}"
+			                        <a data-url="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/report/${comment.commentId}"
 			                        	class="reportComment">신고</a>
 			                    </div>
 			                </c:if>
@@ -162,7 +168,7 @@
 			            <!-- 대댓글 입력 폼 -->
 			            <div class="commentReplyForm" style="display: none;">
 			                <form class="replyForm"
-			                    action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add" method="post">
+			                    action="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/add" method="post">
 			                    <input type="hidden" name="parentId" value="${comment.commentId}" />
 			                    <input type="text" name="content" placeholder="댓글을 작성해주세요." required />
 			                    <button type="submit" class="initButton active">작성</button>
@@ -193,7 +199,7 @@
 			                                <img src="https://via.placeholder.com/50" alt="Profile Image">
 			                            </div>
 			                            <div class="commentMemberDiv">
-			                                <div id="commentMember" class="commentMember">${reply.memnick}</div>
+			                                <div id="commentMember" class="commentMember">${reply.memNick}</div>
 			                                <div class="commentText">
 				                                <c:if test="${not empty reply.parentNickname}">
 										            <span class="nickname-highlight">@${reply.parentNickname}</span>
@@ -207,19 +213,19 @@
 			                                        <fmt:formatDate value="${reply.update}" pattern="yyyy-MM-dd HH:mm" />
 			                                    </c:when>
 			                                    <c:otherwise>
-			                                        <fmt:formatDate value="${reply.regdate}" pattern="yyyy-MM-dd HH:mm" />
+			                                        <fmt:formatDate value="${reply.regDate}" pattern="yyyy-MM-dd HH:mm" />
 			                                    </c:otherwise>
 			                                </c:choose>
 			                            </div>
 			                            <div class="commentSetting">⋮</div>
 			                            <!-- 댓글 옵션 메뉴 -->
-			                            <c:if test="${member.memid == reply.memId}">
+			                            <c:if test="${member.memId == reply.memId}">
 			                                <div class="commentOptionsMenu" style="display: none;">
-			                                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/edit/${reply.commentId}"
+			                                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/edit/${reply.commentId}"
 			                                        class="editComment">수정</a>
-			                                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/delete/${reply.commentId}"
+			                                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/delete/${reply.commentId}"
 			                                        class="deleteComment">삭제</a>
-			                                    <a data-url="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/report/${reply.commentId}"
+			                                    <a data-url="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/report/${reply.commentId}"
 			                                    	class="reportComment">신고</a>
 			                                </div>
 			                            </c:if>
@@ -230,7 +236,7 @@
 						            <div class="commentReplyForm" style="display: none;">
 						            	<div class="parentNicknameDisplay"></div>
 						                <form class="replyForm"
-						                    action="${pageContext.request.contextPath}/${boardId}/${review.trevid}/comment/add" method="post">
+						                    action="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/add" method="post">
 						                    <input type="hidden" name="parentId" value="${reply.commentId}" />
 						                    <input type="hidden" name="parentNickname" class="parentNicknameInput" value="" />
 						                    <input type="text" class="replyInput" name="content" placeholder="댓글을 작성해주세요." required />

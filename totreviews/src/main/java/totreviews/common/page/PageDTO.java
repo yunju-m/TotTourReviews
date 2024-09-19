@@ -22,7 +22,7 @@ public class PageDTO {
 		this.pageRowCount = Constants.PAGE_ROW_COUNT;
 		this.boardId = boardId;
 		this.dto = dto;
-		this.memId = MemberUtil.getAuthenticatedMember().getMemid();
+		this.memId = MemberUtil.getAuthenticatedMember().getMemId();
 		offset = (dto.getPage() - 1) * pageRowCount;
 	}
 
@@ -31,7 +31,7 @@ public class PageDTO {
 		this.boardId = boardId;
 		this.postId = postId;
 		this.dto = dto;
-		this.memId = MemberUtil.getAuthenticatedMember().getMemid();
+		this.memId = MemberUtil.getAuthenticatedMember().getMemId();
 		offset = (dto.getPage() - 1) * pageRowCount;
 	}
 

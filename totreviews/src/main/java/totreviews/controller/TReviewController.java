@@ -1,10 +1,15 @@
 package totreviews.controller;
 
-import static totreviews.common.Constants.*;
+import static totreviews.common.Constants.PAGE_DETAIL_TREVIEW;
+import static totreviews.common.Constants.PAGE_EDIT_TREVIEW;
+import static totreviews.common.Constants.PAGE_TREVIEW;
+import static totreviews.common.Constants.PAGE_WRITE_TREVIEW;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +34,7 @@ import totreviews.service.CourseService;
 import totreviews.service.TReviewService;
 import totreviews.service.TripService;
 import totreviews.util.MemberUtil;
+import totreviews.util.ResponseUtil;
 
 @Controller
 @RequestMapping("/review/{boardId}")
@@ -62,7 +68,7 @@ public class TReviewController {
 	public String showTourReviewWrite(Model model) {
 		MemberVO member = MemberUtil.getAuthenticatedMember();
 
-		List<TripVO> trips = tripService.getTripByMemId(member.getMemid());
+		List<TripVO> trips = tripService.getTripByMemId(member.getMemId());
 
 		model.addAttribute("trips", trips);
 		model.addAttribute("member", member);
@@ -81,25 +87,59 @@ public class TReviewController {
 
 	// 여행 후기 작성 처리
 	@PostMapping("/add")
-	public String submitTourReviewWrite(@ModelAttribute TReviewReqDTO tReviewReqDTO,
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> submitTourReviewWrite(@ModelAttribute TReviewReqDTO tReviewReqDTO,
 			@RequestParam(value = "reviewImage", required = false) MultipartFile[] imageFiles) {
 		MemberVO member = MemberUtil.getAuthenticatedMember();
-		tReviewReqDTO.setMemid(member.getMemid());
+		tReviewReqDTO.setMemId(member.getMemId());
 
 		treviewService.insertTReview(tReviewReqDTO, imageFiles);
 
-		return "redirect:" + URL_ALL_TREVIEW;
+		return ResponseUtil.createTReviewResponse("여행 후기 글이 등록되었습니다.");
+	}
+
+	// 여행 후기 수정 화면 이동
+	@GetMapping("/edit/{trevId}")
+	public String showTourReviewEdit(@PathVariable int trevId, Model model) {
+		MemberVO member = MemberUtil.getAuthenticatedMember();
+
+		List<TripVO> trips = tripService.getTripByMemId(member.getMemId());
+		TReviewResDTO review = treviewService.getTReviewById(trevId);
+		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(review.getTripId());
+
+		model.addAttribute("trips", trips);
+		model.addAttribute("member", member);
+		model.addAttribute("review", review);
+		model.addAttribute("courses", courses);
+
+		return PAGE_EDIT_TREVIEW;
+	}
+
+	// 여행 후기 수정 처리
+	@PostMapping(value = "/edit/{trevId}")
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> editTourReview(@PathVariable int trevId,
+			@ModelAttribute TReviewReqDTO tReviewReqDTO,
+			@RequestParam(value = "reviewImage", required = false) MultipartFile[] imageFiles,
+			@RequestParam(value = "existingImages", required = false) List<String> existingImages) {
+		MemberVO member = MemberUtil.getAuthenticatedMember();
+		tReviewReqDTO.setMemId(member.getMemId());
+
+		treviewService.editTReview(tReviewReqDTO, imageFiles, existingImages);
+
+		return ResponseUtil.createTReviewResponse("여행 후기 글 수정이 완료되었습니다.");
 	}
 
 	// 여행 후기 상세 화면 이동
-	@GetMapping("/detail/{trevid}")
-	public String showReviewDetail(@PathVariable("boardId") String boardId, @PathVariable("trevid") int trevid,
+	@GetMapping("/detail/{trevId}")
+	public String showTourReviewDetail(@PathVariable("boardId") String boardId, @PathVariable("trevId") int trevId,
 			Model model) {
 		MemberVO member = MemberUtil.getAuthenticatedMember();
 
-		TReviewResDTO review = treviewService.getTReviewDetail(trevid);
-		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(review.getTripid());
-		List<CommentVO> comments = commentService.getCommentsByReviewId(trevid);
+		TReviewResDTO review = treviewService.getTReviewById(trevId);
+		treviewService.incrementTReviewCount(trevId);
+		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(review.getTripId());
+		List<CommentVO> comments = commentService.getCommentsByReviewId(trevId);
 
 		model.addAttribute("boardId", boardId);
 		model.addAttribute("member", member);

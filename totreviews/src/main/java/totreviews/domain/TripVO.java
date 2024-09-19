@@ -4,79 +4,80 @@ import java.sql.Timestamp;
 
 public class TripVO {
 
-	private int tripid; // 여행 아이디
-	private String memid; // 회원 아이디
-	private String areacode; // 지역코드
-	private String tripname; // 여행 이름
-	private int tramt; // 여행 예상 비용
-	private Timestamp trstadate; // 여행 시작일
-	private Timestamp trenddate; // 예상 도착일
-	private String trperiod; // 여행기간
-	private int trpeople; // 여행 인원수
-	private String trimgpath; // 여행 이미지 경로
+	private int tripId; // 여행 아이디
+	private String memId; // 회원 아이디
+	private String areaCode; // 지역 코드
+	private String tripName; // 여행 이름
+	private int trAmt; // 여행 예상 비용
+	private Timestamp trStaDate; // 여행 시작일
+	private Timestamp trEndDate; // 여행 도착일
+	private String trPeriod; // 여행 기간
+	private int trPeople; // 인원수
+	private String trImgpath; // 여행 이미지 경로
 
 	public TripVO() {
 	}
 
-	public TripVO(int tripid, String memid, String areacode, String tripname, int tramt, Timestamp trstadate,
-			Timestamp trenddate, String trperiod, int trpeople, String trimgpath) {
-		this.tripid = tripid;
-		this.memid = memid;
-		this.areacode = areacode;
-		this.tripname = tripname;
-		this.tramt = tramt;
-		this.trstadate = trstadate;
-		this.trenddate = trenddate;
-		this.trperiod = trperiod;
-		this.trpeople = trpeople;
-		this.trimgpath = trimgpath;
+	public TripVO(int tripId, String memId, String areaCode, String tripName, int trAmt, Timestamp trStaDate,
+			Timestamp trEndDate, String trPeriod, int trPeople, String trImgpath) {
+		super();
+		this.tripId = tripId;
+		this.memId = memId;
+		this.areaCode = areaCode;
+		this.tripName = tripName;
+		this.trAmt = trAmt;
+		this.trStaDate = trStaDate;
+		this.trEndDate = trEndDate;
+		this.trPeriod = trPeriod;
+		this.trPeople = trPeople;
+		this.trImgpath = trImgpath;
 	}
 
-	public int getTripid() {
-		return tripid;
+	public int getTripId() {
+		return tripId;
 	}
 
-	public String getMemid() {
-		return memid;
+	public String getMemId() {
+		return memId;
 	}
 
-	public String getAreacode() {
-		return areacode;
+	public String getAreaCode() {
+		return areaCode;
 	}
 
-	public String getTripname() {
-		return tripname;
+	public String getTripName() {
+		return tripName;
 	}
 
-	public int getTramt() {
-		return tramt;
+	public int getTrAmt() {
+		return trAmt;
 	}
 
-	public Timestamp getTrstadate() {
-		return trstadate;
+	public Timestamp getTrStaDate() {
+		return trStaDate;
 	}
 
-	public Timestamp getTrenddate() {
-		return trenddate;
+	public Timestamp getTrEndDate() {
+		return trEndDate;
 	}
 
-	public String getTrperiod() {
-		return trperiod;
+	public String getTrPeriod() {
+		return trPeriod;
 	}
 
-	public int getTrpeople() {
-		return trpeople;
+	public int getTrPeople() {
+		return trPeople;
 	}
 
-	public String getTrimgpath() {
-		return trimgpath;
+	public String getTrImgpath() {
+		return trImgpath;
 	}
 
 	@Override
 	public String toString() {
-		return "TripVO [tripid=" + tripid + ", memid=" + memid + ", areacode=" + areacode + ", tripname=" + tripname
-				+ ", tramt=" + tramt + ", trstadate=" + trstadate + ", trenddate=" + trenddate + ", trperiod="
-				+ trperiod + ", trpeople=" + trpeople + ", trimgpath=" + trimgpath + "]";
+		return "TripVO [tripId=" + tripId + ", memId=" + memId + ", areaCode=" + areaCode + ", tripName=" + tripName
+				+ ", trAmt=" + trAmt + ", trStaDate=" + trStaDate + ", trEndDate=" + trEndDate + ", trPeriod="
+				+ trPeriod + ", trPeople=" + trPeople + ", trImgpath=" + trImgpath + "]";
 	}
 
 }

@@ -4,84 +4,90 @@ import java.sql.Timestamp;
 
 public class TReviewVO {
 
-	private int trevid; // 여행후기 게시글 아이디
-	private int tripid; // 여행 아이디
-	private String memid; // 회원 아이디
-	private String trevstatus; // 게시여부코드
-	private String trevtitle; // 후기 제목
-	private String trevcontent; // 내용
-	private String trevrating; // 평점
-	private Timestamp trevregdate; // 작성일시
-	private Timestamp trevupdate; // 수정일시
-	private String trevcount; // 조회수
+	private int trevId; // 여행후기 게시글 아이디
+	private int tripId; // 여행 아이디
+	private String memId; // 회원 아이디
+	private String trevStatus; // 게시여부코드
+	private String trevTitle; // 제목
+	private String trevContent; // 내용
+	private String trevRating; // 평점
+	private Timestamp trevRegdate; // 작성일시
+	private Timestamp trevUpdate; // 수정일시
+	private String trevCount; // 조회수
 
 	public TReviewVO() {
 	}
 
-	public TReviewVO(int trevid, int tripid, String memid, String trevstatus, String trevtitle, String trevcontent,
-			String trevrating, Timestamp trevregdate, Timestamp trevupdate, String trevcount) {
-		this.trevid = trevid;
-		this.tripid = tripid;
-		this.memid = memid;
-		this.trevstatus = trevstatus;
-		this.trevtitle = trevtitle;
-		this.trevcontent = trevcontent;
-		this.trevrating = trevrating;
-		this.trevregdate = trevregdate;
-		this.trevupdate = trevupdate;
-		this.trevcount = trevcount;
+	public TReviewVO(int trevId, int tripId, String memId, String trevStatus, String trevTitle, String trevContent,
+			String trevRating, Timestamp trevRegdate, Timestamp trevUpdate, String trevCount) {
+		this.trevId = trevId;
+		this.tripId = tripId;
+		this.memId = memId;
+		this.trevStatus = trevStatus;
+		this.trevTitle = trevTitle;
+		this.trevContent = trevContent;
+		this.trevRating = trevRating;
+		this.trevRegdate = trevRegdate;
+		this.trevUpdate = trevUpdate;
+		this.trevCount = trevCount;
 	}
 
 	public static TReviewVO fromDTO(TReviewReqDTO dto) {
-		// TODO 현재 임의의 여행 번호 선언
-		return new TReviewVO(0, 1, dto.getMemid(), "CMT001", dto.getTrevtitle(), dto.getTrevcontent(), "0", null, null, "0");
+		return new TReviewVO(0, dto.getTripId(), dto.getMemId(), "CMT001", dto.getTrevTitle(), dto.getTrevContent(),
+				"0", null, null, "0");
 	}
 
-	public int getTrevid() {
-		return trevid;
+	public static TReviewVO fromDTO(TReviewReqDTO reqDto, TReviewResDTO resDto) {
+		return new TReviewVO(reqDto.getTrevId(), reqDto.getTripId(), resDto.getMemId(), resDto.getTrevStatus(),
+				reqDto.getTrevTitle(), reqDto.getTrevContent(), resDto.getTrevRating(), resDto.getTrevRegdate(), null,
+				resDto.getTrevCount());
 	}
 
-	public int getTripid() {
-		return tripid;
+	public int getTrevId() {
+		return trevId;
 	}
 
-	public String getMemid() {
-		return memid;
+	public int getTripId() {
+		return tripId;
 	}
 
-	public String getTrevstatus() {
-		return trevstatus;
+	public String getMemId() {
+		return memId;
 	}
 
-	public String getTrevtitle() {
-		return trevtitle;
+	public String getTrevStatus() {
+		return trevStatus;
 	}
 
-	public String getTrevcontent() {
-		return trevcontent;
+	public String getTrevTitle() {
+		return trevTitle;
 	}
 
-	public String getTrevrating() {
-		return trevrating;
+	public String getTrevContent() {
+		return trevContent;
 	}
 
-	public Timestamp getTrevregdate() {
-		return trevregdate;
+	public String getTrevRating() {
+		return trevRating;
 	}
 
-	public Timestamp getTrevupdate() {
-		return trevupdate;
+	public Timestamp getTrevRegdate() {
+		return trevRegdate;
 	}
 
-	public String getTrevcount() {
-		return trevcount;
+	public Timestamp getTrevUpdate() {
+		return trevUpdate;
+	}
+
+	public String getTrevCount() {
+		return trevCount;
 	}
 
 	@Override
 	public String toString() {
-		return "TReviewVO [trevid=" + trevid + ", tripid=" + tripid + ", memid=" + memid + ", trevstatus=" + trevstatus
-				+ ", trevtitle=" + trevtitle + ", trevcontent=" + trevcontent + ", trevrating=" + trevrating
-				+ ", trevregdate=" + trevregdate + ", trevupdate=" + trevupdate + ", trevcount=" + trevcount + "]";
+		return "TReviewVO [trevId=" + trevId + ", tripId=" + tripId + ", memId=" + memId + ", trevStatus=" + trevStatus
+				+ ", trevTitle=" + trevTitle + ", trevContent=" + trevContent + ", trevRating=" + trevRating
+				+ ", trevRegdate=" + trevRegdate + ", trevUpdate=" + trevUpdate + ", trevCount=" + trevCount + "]";
 	}
 
 }

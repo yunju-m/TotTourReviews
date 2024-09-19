@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import totreviews.dao.TourDAO;
-import totreviews.domain.TourResDTO;
+import totreviews.domain.TourVO;
 
 @Service
 public class TourServiceImpl implements TourService {
@@ -13,7 +13,7 @@ public class TourServiceImpl implements TourService {
 	private TourDAO tourDAO;
 
 	@Override
-	public TourResDTO getTourById(String tourId) {
+	public TourVO getTourById(String tourId) {
 		return tourDAO.getTourById(tourId);
 	}
 

@@ -10,16 +10,16 @@
             PARENTID AS parentId,
             PARENTNICKNAME AS parentNickname,
             MEMID AS memId,
-            MEMNICK AS memnick,
+            MEMNICK AS memNick,
             COMMENTSTATUS AS status,
             TREVCTEXT AS content,
             TREVDEPTH AS depth,
-            TREVCREGDATE AS regdate,
+            TREVCREGDATE AS regDate,
             TREVDUPDATE AS updates
 		FROM
 		    TREVIEWCOMMENT
 		WHERE
-		    TREVID = #{trevid}
+		    TREVID = #{trevId}
 		AND
 			COMMENTSTATUS IN ('CMT001', 'CMT003')
 		START WITH
@@ -37,11 +37,11 @@
 	        TOPPARENTID AS topParentId,
 	        PARENTID AS parentId,
 	        MEMID AS memId,
-	        MEMNICK AS memnick,
+	        MEMNICK AS memNick,
 	        COMMENTSTATUS AS status,
 	        TREVCTEXT AS content,
 	        TREVDEPTH AS depth,
-	        TREVCREGDATE AS regdate,
+	        TREVCREGDATE AS regDate,
 	        TREVDUPDATE AS updates
 	    FROM 
 	        TREVIEWCOMMENT
@@ -72,7 +72,7 @@
             #{parentId},
             #{parentNickname},
             #{memId},
-            #{memnick},
+            #{memNick},
             #{content},
             #{depth},
             CURRENT_TIMESTAMP
@@ -145,11 +145,11 @@
         <result property="parentId" column="parentId"/>
         <result property="parentNickname" column="parentNickname"/>
         <result property="memId" column="memId"/> 
-        <result property="memnick" column="memnick"/>   
+        <result property="memNick" column="memNick"/>   
         <result property="status" column="status"/>          
         <result property="content" column="content"/> 
         <result property="depth" column="depth"/>
-        <result property="regdate" column="regdate"/>    
+        <result property="regDate" column="regDate"/>    
         <result property="update" column="updates"/>      
     </resultMap>
 

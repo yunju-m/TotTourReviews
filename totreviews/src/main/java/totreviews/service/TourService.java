@@ -1,9 +1,9 @@
 package totreviews.service;
 
-import totreviews.domain.TourResDTO;
+import totreviews.domain.TourVO;
 
 public interface TourService {
 
-	TourResDTO getTourById(String tourId);
+	TourVO getTourById(String tourId);
 
 }

@@ -24,6 +24,7 @@ public class Constants {
 	// 여행 후기 페이지 및 URL
 	public static final String PAGE_TREVIEW = "treview";
 	public static final String PAGE_WRITE_TREVIEW = "treviewWrite";
+	public static final String PAGE_EDIT_TREVIEW = "treviewEdit";
 	public static final String PAGE_DETAIL_TREVIEW = "treviewDetail";
 
 	public static final String TREVIEW_BASE_URL = "/review";

@@ -324,6 +324,18 @@ input[name="reviewImage"] {
 }
 
 /* 여행 코스 후기 상세 내역 리스트  */
+.reviewEditDeleteDiv {
+	display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+.reviewEditDeleteDiv a {
+	color: black;
+	text-decoration: none;
+}
+
 .reviewCourseDetailDiv {
     display: flex;
     flex-direction: column;

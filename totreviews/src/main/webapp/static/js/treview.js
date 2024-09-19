@@ -10,6 +10,7 @@ const ERROR_MESSAGES = {
     TRIP_REQUIRED: '작성할 여행을 선택해주세요.',
     CONTENT_REQUIRED: '후기 내용을 입력해주세요.',
     AGREE_REQUIRED: '개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.',
+    FAIL_TREVIEW_DELETE: '여행 후기글 삭제를 실패했습니다.',
     FILE_UPLOAD: '파일 업로드 중 오류가 발생했습니다.',
     FAIL_GET_COURSE: '코스를 가져오는 데 실패했습니다.',
     FAIL_EDIT_COMMENT: '댓글 수정에 실패했습니다.',
@@ -20,6 +21,8 @@ const ERROR_MESSAGES = {
 let fileList = [];
 
 $(document).ready(() => {
+    // 업로드 이미지 파일 초기화
+    initFileList();
 
     // 여행 후기 종류별 활성화 기능
     let path = window.location.pathname;
@@ -59,7 +62,12 @@ $(document).ready(() => {
         }
     });
 
-    // 여행 후기 항목 유효성 검사 및 등록
+    // 이미지 미리보기 삭제 버튼 클릭시 삭제 처리
+    $(document).on('click', '#delImgBtn', function () {
+        deletePreviewImg($(this));
+    });
+
+    // 여행 후기 항목 유효성 검사 및 여행 후기 글 등록
     $('#submitButton').on('click', function (event) {
         event.preventDefault();
 
@@ -68,6 +76,38 @@ $(document).ready(() => {
             submitReview();
         } else {
             alert(validationResult.errorMessage);
+        }
+    });
+
+    // 여행 후기 항목 유효성 검사 및 여행 후기 글 수정
+    $('#editButton').on('click', function (event) {
+        event.preventDefault();
+
+        const validationResult = validate();
+        if (validationResult.isValid) {
+            editReview();
+        } else {
+            alert(validationResult.errorMessage);
+        }
+    })
+
+    // 여행 후기 글 삭제 검사 버튼 클릭 시 삭제 처리
+    $('#delTReviewBtn').on('click', function (event) {
+        event.preventDefault();
+        console.log('클릭!');
+
+        if (confirm(`해당 여행 후기글을 삭제하시겠습니까?`)) {
+            $.get({
+                url: deleteUrl,
+                success: function (response) {
+                    alert(response.message);
+                    window.location.reload();
+                },
+                error: function (error) {
+                    alert(ERROR_MESSAGES.FAIL_TREVIEW_DELETE);
+                    console.error(error);
+                }
+            });
         }
     });
 
@@ -141,7 +181,7 @@ $(document).ready(() => {
         }
 
         // 댓글의 현재 내용을 가져와서 data 속성에 저장
-        let originalText = commentText.text().trim();
+        let originalText = commentText.text().trim().replace(/\s+/g, ' ');
         commentItem.data('original-text', originalText);
 
         // 기존의 저장 및 취소 버튼이 이미 있는 경우 제거
@@ -310,48 +350,83 @@ const submitReview = () => {
         formData.append('reviewImage', file);
     });
 
-    $.ajax({
-        url: `${GET_WRITE_TREVIEW}`, // form action 경로
-        type: 'POST',
+    $.post({
+        url: `${GET_WRITE_TREVIEW}`,
         data: formData,
         contentType: false,
         processData: false,
-        success: function () {
-            alert('여행 후기가 등록되었습니다.');
+        dataType: "json",
+        success: function (response) {
+            alert(response.message);
             window.location.href = GET_ALL_TREVIEW;
         },
-        error: function (error) {
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log('에러 상태:', textStatus);
+            console.log('에러 내용:', errorThrown);
+            console.log('서버 응답:', jqXHR.responseText);
             alert(ERROR_MESSAGES.FILE_UPLOAD + " ");
         }
     });
 }
 
+// 글 수정하기 처리
+const editReview = () => {
+    const formUrl = $('#reviewForm').attr('action');
+    const formData = new FormData($('#reviewForm')[0]);
+
+    fileList.forEach(file => {
+        if (file instanceof File) {
+            // File 객체인 경우
+            formData.append('reviewImage', file);
+        } else if (typeof file === 'object' && file.url) {
+            // URL 객체인 경우
+            formData.append('existingImages', file.url);
+        }
+    });
+
+    $.post({
+        url: formUrl,
+        data: formData,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function (response) {
+            alert(response.message);
+            window.location.href = GET_ALL_TREVIEW;
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log('에러 상태:', textStatus);
+            console.log('에러 내용:', errorThrown);
+            console.log('서버 응답:', jqXHR.responseText);
+            alert(ERROR_MESSAGES.FILE_UPLOAD + " ");
+        }
+    });
+}
+
+// 이미지 파일 초기화
+const initFileList = () => {
+    const existingImages = $('.file-input-wrapper input[name="reviewImage"]').map((_, input) => $(input).val()).get();
+    // 기존 이미지 URL을 파일 객체처럼 다룰 수 있도록 객체로 변환
+    const imageObjects = existingImages.map((imgSrc) => ({
+        name: imgSrc.split('/').pop(),
+        url: imgSrc
+    }));
+
+    fileList = [...fileList, ...imageObjects];
+}
+
+// 이미지 파일 업로드 처리
 const handleFileSelect = event => {
-    const input = event.target;
-    const files = Array.from(input.files);
+    const files = Array.from(event.target.files);
     fileList = [...fileList, ...files];
 
     if (files) {
         $.each(files, (index, file) => {
             let reader = new FileReader();
+
             reader.onload = function (e) {
-                const img = $('<img>', {
-                    src: e.target.result,
-                    alt: `여행후기업로드사진미리보기${index + 1}`,
-                    name: 'reviewImage',
-                    class: 'reviewImage'
-                });
-                const imgWrapper = $('<div>', { class: 'img-wrapper' });
-
-                let hiddenImageInput = $('<input>', {
-                    type: 'hidden',
-                    name: 'trevcontent',
-                    value: 'image'
-                });
-                imgWrapper.append(img).append(hiddenImageInput);
-                $('#reviewContentAndImgDiv').append(imgWrapper);
-
-                addNewFileInput(file, imgWrapper);
+                addNewPreviewImg(index, e.target.result);
+                addNewFileInput(file);
             };
             reader.readAsDataURL(file);
         });
@@ -359,7 +434,27 @@ const handleFileSelect = event => {
     }
 }
 
-const addNewFileInput = (file, imgWrapper) => {
+// 여행 후기 내역에 이미지 미리보기 생성
+const addNewPreviewImg = (index, path) => {
+    const img = $('<img>', {
+        src: path,
+        alt: `Trip Review Image ${index + 1}`,
+        name: 'reviewImage',
+        class: 'reviewImage'
+    });
+    const imgWrapper = $('<div>', { class: 'img-wrapper' });
+
+    let hiddenImageInput = $('<input>', {
+        type: 'hidden',
+        name: 'trevContent',
+        value: 'image'
+    });
+    imgWrapper.append(img).append(hiddenImageInput);
+    $('#reviewContentAndImgDiv').append(imgWrapper);
+}
+
+// 이미지 파일 업로드 내역 생성
+const addNewFileInput = file => {
     const inputWrapper = $('<div>', {
         class: 'file-input-wrapper'
     });
@@ -373,23 +468,32 @@ const addNewFileInput = (file, imgWrapper) => {
 
     const deleteButton = $('<button>', {
         type: 'button',
+        id: 'delImgBtn',
         text: '삭제',
         class: 'initButton'
-    }).on('click', function () {
-        // 삭제 버튼 클릭 시 해당 요소 삭제
-        imgWrapper.remove();
-        inputWrapper.remove();
-        fileList = fileList.filter(f => f !== file);
     });
 
     inputWrapper.append(fileNameInput).append(deleteButton);
     $('.reviewImageDiv').append(inputWrapper);
 }
 
+// 이미지 파일 업로드 내역 및 미리보기 삭제
+const deletePreviewImg = button => {
+    const inputWrapper = button.closest('.file-input-wrapper');
+    const fileName = inputWrapper.find('input[name="reviewImage"]').val();
+    const index = $('.file-input-wrapper').index(inputWrapper);
+    const imgWrapper = $($('.img-wrapper').get(index));
+
+    imgWrapper.remove();
+    inputWrapper.remove();
+
+    fileList = fileList.filter(file => file.name !== fileName);
+};
+
 const createNewInputField = () => {
     let newInput = $('<input>', {
         class: 'reviewContent',
-        name: 'trevcontent'
+        name: 'trevContent'
     });
 
     $('#reviewContentAndImgDiv').append(newInput);

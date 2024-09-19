@@ -64,12 +64,12 @@
         <!-- 여행 후기 목록 리스트 -->
         <div class="reviewList">
             <c:forEach var="review" items="${pagination.postList}">
-                 <a href="${pageContext.request.contextPath}/review/${boardId}/detail/${review.trevid}" class="reviewItem">
+                 <a href="${pageContext.request.contextPath}/review/${boardId}/detail/${review.trevId}" class="reviewItem">
 		            <c:choose>
-		                <c:when test="${not empty review.trevimages and fn:length(review.trevimages) > 0}">
+		                <c:when test="${not empty review.trevImages and fn:length(review.trevImages) > 0}">
 		                    <c:choose>
-		                        <c:when test="${not empty review.trevimages[0].trevimgpath}">
-		                            <img src="${pageContext.request.contextPath}${review.trevimages[0].trevimgpath}" alt="Review Title Image">
+		                        <c:when test="${not empty review.trevImages[0].trevImgpath}">
+		                            <img src="${pageContext.request.contextPath}${review.trevImages[0].trevImgpath}" alt="Review Title Image">
 		                        </c:when>
 		                        <c:otherwise>
 		                            <img src="${pageContext.request.contextPath}/static/image/treviewDefaultImg.png" alt="Review Default Image">
@@ -81,10 +81,10 @@
 		                </c:otherwise>
 		            </c:choose>
                     <div class="info">
-                        <div class="title">${review.trevtitle}</div>
-                        <div class="author">${review.memid}</div>
-                        <div class="rating">평점: ${review.trevrating}</div>
-                        <div class="count">조회수: ${review.trevcount}</div>
+                        <div class="title">${review.trevTitle}</div>
+                        <div class="author">${review.memId}</div>
+                        <div class="rating">평점: ${review.trevRating}</div>
+                        <div class="count">조회수: ${review.trevCount}</div>
                     </div>
                 </a>
             </c:forEach>

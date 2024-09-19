@@ -1,9 +1,9 @@
 package totreviews.dao;
 
-import totreviews.domain.TourResDTO;
+import totreviews.domain.TourVO;
 
 public interface TourDAO {
 
-	TourResDTO getTourById(String tourId);
+	TourVO getTourById(String tourId);
 
 }

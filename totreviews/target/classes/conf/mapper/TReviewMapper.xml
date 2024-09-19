@@ -3,23 +3,42 @@
 <mapper namespace="totreviews.mapper.TReviewMapper">
 
 	<insert id="insertTReview" parameterType="TReviewVO"
-		useGeneratedKeys="true" keyProperty="trevid">
-		<selectKey keyProperty="trevid" resultType="int"
+		useGeneratedKeys="true" keyProperty="trevId">
+		<selectKey keyProperty="trevId" resultType="int"
 			order="BEFORE">
-			SELECT seq_trevid.nextval FROM dual
+			SELECT seq_trevId.nextval FROM dual
 		</selectKey>
 		INSERT INTO TREVIEW (TREVID, TRIPID, MEMID, TREVSTATUS, TREVTITLE,
 		TREVCONTENT, TREVRATING, TREVREGDATE, TREVUPDATE, TREVCOUNT)
-		VALUES (#{trevid}, #{tripid}, #{memid}, #{trevstatus}, #{trevtitle}, #{trevcontent},
-		#{trevrating}, #{trevregdate}, #{trevupdate}, #{trevcount})
+		VALUES (#{trevId}, #{tripId}, #{memId}, #{trevStatus}, #{trevTitle}, #{trevContent},
+		#{trevRating}, #{trevRegdate}, #{trevUpdate}, #{trevCount})
 	</insert>
+	
+	<update id="editTReview" parameterType="TReviewVO">
+        UPDATE TREVIEW
+        SET 
+            TRIPID = #{tripId},
+            MEMID = #{memId},
+            TREVSTATUS = #{trevStatus},
+            TREVTITLE = #{trevTitle},
+            TREVCONTENT = #{trevContent},
+            TREVRATING = #{trevRating},
+            TREVREGDATE = #{trevRegdate},
+            TREVUPDATE = #{trevUpdate},
+            TREVCOUNT = #{trevCount}
+        WHERE TREVID = #{trevId}
+    </update>
 
 	<insert id="insertTReviewImage" parameterType="TReviewImageVO">
 		INSERT INTO TREVIEWIMAGE (TREVIMGID, TREVID, MEMID, TREVIMGPATH,
 		TREVIMGREGDATE, TREVIMGUPDATE)
-		VALUES (seq_trevimgid.nextval, #{trevid}, #{memid}, #{trevimgpath},
-		#{trevimgregdate}, #{trevimgupdate})
+		VALUES (seq_trevImgId.nextval, #{trevId}, #{memId}, #{trevImgpath},
+		#{trevImgRegdate}, #{trevImgUpdate})
 	</insert>
+
+	<delete id="deleteTReviewImages" parameterType="int">
+        DELETE FROM TReviewImage WHERE TREVID = #{trevId}
+    </delete>
 
 	<select id="selectTotalTReviewCount" parameterType="PageDTO"
 		resultType="int">
@@ -103,10 +122,10 @@
 	<update id="incrementTReviewCount" parameterType="int">
 	    UPDATE TREVIEW
 	    SET TREVCOUNT = TREVCOUNT + 1
-	    WHERE TREVID = #{trevid}
+	    WHERE TREVID = #{trevId}
 	</update>
 	
-	<select id="getTReviewDetail" parameterType="int" resultMap="TReviewResDTOResultMap">
+	<select id="getTReviewById" parameterType="int" resultMap="TReviewResDTOResultMap">
 		SELECT
             r.TREVID,
             r.TRIPID,
@@ -125,28 +144,28 @@
         LEFT JOIN
             TReviewImage i ON r.TREVID = i.TREVID
         WHERE
-            r.TREVID = #{trevid}
+            r.TREVID = #{trevId}
 	</select>
 
 	<resultMap id="TReviewResDTOResultMap" type="TReviewResDTO">
-		<id property="trevid" column="TREVID" />
-		<result property="tripid" column="TRIPID" />
-		<result property="memid" column="MEMID" />
-		<result property="trevstatus" column="TREVSTATUS" />
-		<result property="trevtitle" column="TREVTITLE" />
-		<result property="trevcourse" column="TREVCOURSE" />
-		<result property="trevcontent" column="TREVCONTENT" />
-		<result property="trevrating" column="TREVRATING" />
-		<result property="trevregdate" column="TREVREGDATE" />
-		<result property="trevupdate" column="TREVUPDATE" />
-		<result property="trevcount" column="TREVCOUNT" />
-		<collection property="trevimages" ofType="TReviewImageVO">
-            <id property="trevimgid" column="TREVIMGID"/>
-            <result property="trevid" column="TREVID"/>
-            <result property="memid" column="MEMID"/>
-            <result property="trevimgpath" column="TREVIMGPATH"/>
-      	    <result property="trevimgregdate" column="TREVIMGREGDATE" />
-        	<result property="trevimgupdate" column="TREVIMGUPDATE" />
+		<id property="trevId" column="TREVID" />
+		<result property="tripId" column="TRIPID" />
+		<result property="memId" column="MEMID" />
+		<result property="trevStatus" column="TREVSTATUS" />
+		<result property="trevTitle" column="TREVTITLE" />
+		<result property="trevCourse" column="TREVCOURSE" />
+		<result property="trevContent" column="TREVCONTENT" />
+		<result property="trevRating" column="TREVRATING" />
+		<result property="trevRegdate" column="TREVREGDATE" />
+		<result property="trevUpdate" column="TREVUPDATE" />
+		<result property="trevCount" column="TREVCOUNT" />
+		<collection property="trevImages" ofType="TReviewImageVO">
+            <id property="trevImgId" column="TREVIMGID"/>
+            <result property="trevId" column="TREVID"/>
+            <result property="memId" column="MEMID"/>
+            <result property="trevImgpath" column="TREVIMGPATH"/>
+      	    <result property="trevImgRegdate" column="TREVIMGREGDATE" />
+        	<result property="trevImgUpdate" column="TREVIMGUPDATE" />
         </collection>
 	</resultMap>
 

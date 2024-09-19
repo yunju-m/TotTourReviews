@@ -4,7 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import totreviews.domain.TourResDTO;
+import totreviews.domain.TourVO;
 
 @Repository
 public class TourDAOImpl implements TourDAO {
@@ -15,7 +15,7 @@ public class TourDAOImpl implements TourDAO {
 	private static final String NAMESPACE = "totreviews.mapper.TourMapper";
 
 	@Override
-	public TourResDTO getTourById(String tourId) {
+	public TourVO getTourById(String tourId) {
 		return sqlSession.selectOne(NAMESPACE + ".getTourById", tourId);
 	}
 

@@ -46,12 +46,12 @@
 	</select>
 	
 	<resultMap id="CourseDTOMap" type="CourseDTO">
-	    <id property="courseid" column="COURID" />
-	    <result property="tripid" column="TRIPID" />
-	    <result property="areacode" column="AREACODE" />
-	    <result property="dcourse" column="DCOURSE" />
-	    <result property="courregdate" column="COURREGDATE" />
-	    <result property="courupdate" column="COURUPDATE" />
+	    <id property="courId" column="COURID" />
+	    <result property="tripId" column="TRIPID" />
+	    <result property="areaCode" column="AREACODE" />
+	    <result property="dCourse" column="DCOURSE" />
+	    <result property="courRegdate" column="COURREGDATE" />
+	    <result property="courUpdate" column="COURUPDATE" />
 	</resultMap>
 
 </mapper>

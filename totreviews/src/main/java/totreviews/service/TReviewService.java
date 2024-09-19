@@ -1,5 +1,7 @@
 package totreviews.service;
 
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import totreviews.common.page.PageReqDTO;
@@ -13,6 +15,10 @@ public interface TReviewService {
 
 	PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO dto, String boardId);
 
-	TReviewResDTO getTReviewDetail(int trevid);
+	TReviewResDTO getTReviewById(int trevId);
+
+	void incrementTReviewCount(int trevId);
+
+	void editTReview(TReviewReqDTO treviewReqDTO, MultipartFile[] imageFiles, List<String> existingImages);
 
 }

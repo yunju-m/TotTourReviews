@@ -18,8 +18,7 @@
     	<typeAlias alias="CommentReqDTO" type="totreviews.domain.CommentReqDTO"/>
     	<typeAlias alias="CourseDTO" type="totreviews.domain.CourseDTO"/>
     	<typeAlias alias="CourseResDTO" type="totreviews.domain.CourseResDTO"/>
-    	<typeAlias alias="TourReqDTO" type="totreviews.domain.TourReqDTO"/>
-    	<typeAlias alias="TourResDTO" type="totreviews.domain.TourResDTO"/>
+    	<typeAlias alias="TourVO" type="totreviews.domain.TourVO"/>
     	<typeAlias alias="PageDTO" type="totreviews.common.page.PageDTO"/>
     	<typeAlias alias="PageReqDTO" type="totreviews.common.page.PageReqDTO"/>
     	<typeAlias alias="PageResDTO" type="totreviews.common.page.PageResDTO"/>

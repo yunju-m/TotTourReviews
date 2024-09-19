@@ -5,142 +5,141 @@ import java.util.List;
 
 public class TReviewResDTO {
 
-	private int trevid; // 여행후기 게시글 아이디
-	private int tripid; // 여행 아이디
-	private String memid; // 회원 아이디
-	private String trevstatus; // 게시여부코드
-	private String trevtitle; // 후기 제목
-	private String trevcourse; // 코스
-	private String trevcontent; // 내용
-	private String trevrating; // 평점
-	private Timestamp trevregdate; // 작성일시
-	private Timestamp trevupdate; // 수정일시
-	private String trevcount; // 조회수
-	private List<TReviewImageVO> trevimages; // 이미지 경로
+	private int trevId; // 여행후기 게시글 아이디
+	private int tripId; // 여행 아이디
+	private String memId; // 회원 아이디
+	private String trevStatus; // 게시여부코드
+	private String trevTitle; // 후기 제목
+	private String trevCourse; // 코스
+	private String trevContent; // 내용
+	private String trevRating; // 평점
+	private Timestamp trevRegdate; // 작성일시
+	private Timestamp trevUpdate; // 수정일시
+	private String trevCount; // 조회수
+	private List<TReviewImageVO> trevImages; // 이미지 경로
 
 	public TReviewResDTO() {
 	}
 
-	public TReviewResDTO(int trevid, int tripid, String memid, String trevstatus, String trevtitle, String trevcourse,
-			String trevcontent, String trevrating, Timestamp trevregdate, Timestamp trevupdate, String trevcount,
-			List<TReviewImageVO> trevimages) {
-		super();
-		this.trevid = trevid;
-		this.tripid = tripid;
-		this.memid = memid;
-		this.trevstatus = trevstatus;
-		this.trevtitle = trevtitle;
-		this.trevcourse = trevcourse;
-		this.trevcontent = trevcontent;
-		this.trevrating = trevrating;
-		this.trevregdate = trevregdate;
-		this.trevupdate = trevupdate;
-		this.trevcount = trevcount;
-		this.trevimages = trevimages;
+	public TReviewResDTO(int trevId, int tripId, String memId, String trevStatus, String trevTitle, String trevCourse,
+			String trevContent, String trevRating, Timestamp trevRegdate, Timestamp trevUpdate, String trevCount,
+			List<TReviewImageVO> trevImages) {
+		this.trevId = trevId;
+		this.tripId = tripId;
+		this.memId = memId;
+		this.trevStatus = trevStatus;
+		this.trevTitle = trevTitle;
+		this.trevCourse = trevCourse;
+		this.trevContent = trevContent;
+		this.trevRating = trevRating;
+		this.trevRegdate = trevRegdate;
+		this.trevUpdate = trevUpdate;
+		this.trevCount = trevCount;
+		this.trevImages = trevImages;
 	}
 
-	public int getTrevid() {
-		return trevid;
+	public int getTrevId() {
+		return trevId;
 	}
 
-	public int getTripid() {
-		return tripid;
+	public int getTripId() {
+		return tripId;
 	}
 
-	public String getMemid() {
-		return memid;
+	public String getMemId() {
+		return memId;
 	}
 
-	public String getTrevstatus() {
-		return trevstatus;
+	public String getTrevStatus() {
+		return trevStatus;
 	}
 
-	public String getTrevtitle() {
-		return trevtitle;
+	public String getTrevTitle() {
+		return trevTitle;
 	}
 
-	public String getTrevcourse() {
-		return trevcourse;
+	public String getTrevCourse() {
+		return trevCourse;
 	}
 
-	public String getTrevcontent() {
-		return trevcontent;
+	public String getTrevContent() {
+		return trevContent;
 	}
 
-	public String getTrevrating() {
-		return trevrating;
+	public String getTrevRating() {
+		return trevRating;
 	}
 
-	public Timestamp getTrevregdate() {
-		return trevregdate;
+	public Timestamp getTrevRegdate() {
+		return trevRegdate;
 	}
 
-	public Timestamp getTrevupdate() {
-		return trevupdate;
+	public Timestamp getTrevUpdate() {
+		return trevUpdate;
 	}
 
-	public String getTrevcount() {
-		return trevcount;
+	public String getTrevCount() {
+		return trevCount;
 	}
 
-	public List<TReviewImageVO> getTrevimages() {
-		return trevimages;
+	public List<TReviewImageVO> getTrevImages() {
+		return trevImages;
 	}
 
-	public void setTrevid(int trevid) {
-		this.trevid = trevid;
+	public void setTrevId(int trevId) {
+		this.trevId = trevId;
 	}
 
-	public void setTripid(int tripid) {
-		this.tripid = tripid;
+	public void setTripId(int tripId) {
+		this.tripId = tripId;
 	}
 
-	public void setMemid(String memid) {
-		this.memid = memid;
+	public void setMemId(String memId) {
+		this.memId = memId;
 	}
 
-	public void setTrevstatus(String trevstatus) {
-		this.trevstatus = trevstatus;
+	public void setTrevStatus(String trevStatus) {
+		this.trevStatus = trevStatus;
 	}
 
-	public void setTrevtitle(String trevtitle) {
-		this.trevtitle = trevtitle;
+	public void setTrevTitle(String trevTitle) {
+		this.trevTitle = trevTitle;
 	}
 
-	public void setTrevcourse(String trevcourse) {
-		this.trevcourse = trevcourse;
+	public void setTrevCourse(String trevCourse) {
+		this.trevCourse = trevCourse;
 	}
 
-	public void setTrevcontent(String trevcontent) {
-		this.trevcontent = trevcontent;
+	public void setTrevContent(String trevContent) {
+		this.trevContent = trevContent;
 	}
 
-	public void setTrevrating(String trevrating) {
-		this.trevrating = trevrating;
+	public void setTrevRating(String trevRating) {
+		this.trevRating = trevRating;
 	}
 
-	public void setTrevregdate(Timestamp trevregdate) {
-		this.trevregdate = trevregdate;
+	public void setTrevRegdate(Timestamp trevRegdate) {
+		this.trevRegdate = trevRegdate;
 	}
 
-	public void setTrevupdate(Timestamp trevupdate) {
-		this.trevupdate = trevupdate;
+	public void setTrevUpdate(Timestamp trevUpdate) {
+		this.trevUpdate = trevUpdate;
 	}
 
-	public void setTrevcount(String trevcount) {
-		this.trevcount = trevcount;
+	public void setTrevCount(String trevCount) {
+		this.trevCount = trevCount;
 	}
 
-	public void setTrevimages(List<TReviewImageVO> trevimages) {
-		this.trevimages = trevimages;
+	public void setTrevImages(List<TReviewImageVO> trevImages) {
+		this.trevImages = trevImages;
 	}
 
 	@Override
 	public String toString() {
-		return "TReviewResDTO [trevid=" + trevid + ", tripid=" + tripid + ", memid=" + memid + ", trevstatus="
-				+ trevstatus + ", trevtitle=" + trevtitle + ", trevcourse=" + trevcourse + ", trevcontent="
-				+ trevcontent + ", trevrating=" + trevrating + ", trevregdate=" + trevregdate + ", trevupdate="
-				+ trevupdate + ", trevcount=" + trevcount + ", trevimages=" + trevimages + "]";
+		return "TReviewResDTO [trevId=" + trevId + ", tripId=" + tripId + ", memId=" + memId + ", trevStatus="
+				+ trevStatus + ", trevTitle=" + trevTitle + ", trevCourse=" + trevCourse + ", trevContent="
+				+ trevContent + ", trevRating=" + trevRating + ", trevRegdate=" + trevRegdate + ", trevUpdate="
+				+ trevUpdate + ", trevCount=" + trevCount + ", trevImages=" + trevImages + "]";
 	}
 
 }

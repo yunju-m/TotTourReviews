@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import totreviews.domain.TourResDTO;
+import totreviews.domain.TourVO;
 import totreviews.service.TourService;
 
 @RestController
@@ -17,7 +17,7 @@ public class TourRestController {
 	private TourService tourService;
 
 	@GetMapping("/{tourId}")
-	public TourResDTO getTourById(@PathVariable("tourId") String tourId) {
+	public TourVO getTourById(@PathVariable("tourId") String tourId) {
 		return tourService.getTourById(tourId);
 	}
 

@@ -20,7 +20,7 @@
         <div class="reviewIntroDiv">
             <div>나의 여행 후기글을 작성해보세요!</div>
         </div>
-        <!-- 여행 후기 작섬 폼 -->
+        <!-- 여행 후기 작성 폼 -->
         <div class="reviewForm">
             <form id="reviewForm" action="${pageContext.request.contextPath}/review/all/add" method="post"
                 enctype="multipart/form-data">
@@ -28,16 +28,16 @@
                 <!-- 1. 여행 후기 제목 입력 -->
                 <div class="formGroup">
                     <label for="reviewTitle">제목</label>
-                    <input id="reviewTitle" type="text" class="titleInput" name="trevtitle">
+                    <input id="reviewTitle" type="text" class="titleInput" name="trevTitle">
                 </div>
 
                 <!-- 2.1 여행 항목 선택 -->
                 <div class="formGroup">
                 	<label for="trip">여행 항목</label>
-                	<select id="travelTrip" class="tripSelect" name="tripid">
+                	<select id="travelTrip" class="tripSelect" name="tripId">
                 		<option value="" disabled selected>여행을 선택하세요</option>
                 		<c:forEach var="trip" items="${trips}">
-				            <option value="${trip.tripid}">${trip.tripname}</option>
+				            <option value="${trip.tripId}">${trip.tripName}</option>
 				        </c:forEach>
                 	</select>
                 </div>
@@ -64,7 +64,7 @@
                 <div class="reviewContentDiv">
                     <label for="reviewContent">후기 내용</label>
                     <div id="reviewContentAndImgDiv" class="reviewContentAndImgDiv">
-                        <input class="reviewContent" name="trevcontent" />
+                        <input class="reviewContent" name="trevContent" />
                     </div>
                 </div>
                 

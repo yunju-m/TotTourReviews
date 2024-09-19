@@ -20,8 +20,8 @@ public class CommentDAOImpl implements CommentDAO {
 	private static final String NAMESPACE = "totreviews.mapper.CommentMapper";
 
 	@Override
-	public List<CommentVO> getCommentsByReviewId(int trevid) {
-		return sqlSession.selectList(NAMESPACE + ".getCommentsByReviewId", trevid);
+	public List<CommentVO> getCommentsByReviewId(int trevId) {
+		return sqlSession.selectList(NAMESPACE + ".getCommentsByReviewId", trevId);
 	}
 
 	@Override

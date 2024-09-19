@@ -5,90 +5,89 @@ import java.util.List;
 
 public class CourseDTO {
 
-	private String courseid; // 코스 아이디
-	private int tripid; // 여행 아이디
-	private String areacode; // 지역 코드
-	private String dcourse; // 하루 여행 코스
+	private int courId; // 코스 아이디
+	private int tripId; // 여행 아이디
+	private String areaCode; // 지역 코드
+	private String dCourse; // 하루 코스 설명
 	private List<CourseResDTO> courseDetail; // 하루 여행 상세 코스
-	private Timestamp courregdate; // 등록일시
-	private Timestamp courupdate; // 수정일시
+	private Timestamp courRegdate; // 등록 일시
+	private Timestamp courUpdate; // 수정 일시
 
 	public CourseDTO() {
 	}
 
-	public CourseDTO(String courseid, int tripid, String areacode, String dcourse, List<CourseResDTO> courseDetail,
-			Timestamp courregdate, Timestamp courupdate) {
-		super();
-		this.courseid = courseid;
-		this.tripid = tripid;
-		this.areacode = areacode;
-		this.dcourse = dcourse;
+	public CourseDTO(int courId, int tripId, String areaCode, String dCourse, List<CourseResDTO> courseDetail,
+			Timestamp courRegdate, Timestamp courUpdate) {
+		this.courId = courId;
+		this.tripId = tripId;
+		this.areaCode = areaCode;
+		this.dCourse = dCourse;
 		this.courseDetail = courseDetail;
-		this.courregdate = courregdate;
-		this.courupdate = courupdate;
+		this.courRegdate = courRegdate;
+		this.courUpdate = courUpdate;
 	}
 
-	public String getCourseid() {
-		return courseid;
+	public int getCourId() {
+		return courId;
 	}
 
-	public int getTripid() {
-		return tripid;
+	public int getTripId() {
+		return tripId;
 	}
 
-	public String getAreacode() {
-		return areacode;
+	public String getAreaCode() {
+		return areaCode;
 	}
 
-	public String getDcourse() {
-		return dcourse;
+	public String getdCourse() {
+		return dCourse;
 	}
 
 	public List<CourseResDTO> getCourseDetail() {
 		return courseDetail;
 	}
 
-	public Timestamp getCourregdate() {
-		return courregdate;
+	public Timestamp getCourRegdate() {
+		return courRegdate;
 	}
 
-	public Timestamp getCourupdate() {
-		return courupdate;
+	public Timestamp getCourUpdate() {
+		return courUpdate;
 	}
 
-	public void setCourseid(String courseid) {
-		this.courseid = courseid;
+	public void setCourId(int courId) {
+		this.courId = courId;
 	}
 
-	public void setTripid(int tripid) {
-		this.tripid = tripid;
+	public void setTripId(int tripId) {
+		this.tripId = tripId;
 	}
 
-	public void setAreacode(String areacode) {
-		this.areacode = areacode;
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
 	}
 
-	public void setDcourse(String dcourse) {
-		this.dcourse = dcourse;
+	public void setdCourse(String dCourse) {
+		this.dCourse = dCourse;
 	}
 
 	public void setCourseDetail(List<CourseResDTO> courseDetail) {
 		this.courseDetail = courseDetail;
 	}
 
-	public void setCourregdate(Timestamp courregdate) {
-		this.courregdate = courregdate;
+	public void setCourRegdate(Timestamp courRegdate) {
+		this.courRegdate = courRegdate;
 	}
 
-	public void setCourupdate(Timestamp courupdate) {
-		this.courupdate = courupdate;
+	public void setCourUpdate(Timestamp courUpdate) {
+		this.courUpdate = courUpdate;
 	}
 
 	@Override
 	public String toString() {
-		return "CourseDTO [courseid=" + courseid + ", tripid=" + tripid + ", areacode=" + areacode + ", dcourse="
-				+ dcourse + ", courseDetail=" + courseDetail + ", courregdate=" + courregdate + ", courupdate="
-				+ courupdate + "]";
+		return "CourseDTO [courId=" + courId + ", tripId=" + tripId + ", areaCode=" + areaCode + ", dCourse=" + dCourse
+				+ ", courseDetail=" + courseDetail + ", courRegdate=" + courRegdate + ", courUpdate=" + courUpdate
+				+ "]";
 	}
 
 }
