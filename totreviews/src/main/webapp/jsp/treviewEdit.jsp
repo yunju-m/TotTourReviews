@@ -61,8 +61,24 @@
 				        </c:forEach>
 				    </div>
 				</div>
+				
+				<!-- 3. 평점 입력 -->
+				<div class="formGroup">
+				    <div id="reviewRating" class="ratingDiv">
+				        <input type="radio" id="rating1" name="trevRating" value="1" <c:if test="${review.trevRating == 1}">checked</c:if> />
+				        <label for="rating1">⭐</label>
+				        <input type="radio" id="rating2" name="trevRating" value="2" <c:if test="${review.trevRating == 2}">checked</c:if> />
+				        <label for="rating2">⭐⭐</label>
+				        <input type="radio" id="rating3" name="trevRating" value="3" <c:if test="${review.trevRating == 3}">checked</c:if> />
+				        <label for="rating3">⭐⭐⭐</label>
+				        <input type="radio" id="rating4" name="trevRating" value="4" <c:if test="${review.trevRating == 4}">checked</c:if> />
+				        <label for="rating4">⭐⭐⭐⭐</label>
+				        <input type="radio" id="rating5" name="trevRating" value="5" <c:if test="${review.trevRating == 5}">checked</c:if> />
+				        <label for="rating5">⭐⭐⭐⭐⭐</label>
+				    </div>
+				</div>
                 
-                <!-- 3. 여행 후기 내용 입력 -->
+                <!-- 4. 여행 후기 내용 입력 -->
 				<div class="reviewContentDiv">
 				    <label for="reviewContent">후기 내용</label>
 				    <div id="reviewContentAndImgDiv" class="reviewContentAndImgDiv">
@@ -97,7 +113,7 @@
 				    </div>
 				</div>
 				
-				<!-- 4. 이미지 파일 업로드 -->
+				<!-- 5. 이미지 파일 업로드 -->
 				<div class="formGroup">
 				    <label for="reviewImage">이미지 업로드</label>
 				    <div class="reviewImageDiv">
@@ -111,7 +127,7 @@
 				    </div>
 				</div>
                 
-                <!-- 5. 이용 약관 동의 -->
+                <!-- 6. 이용 약관 동의 -->
                 <div class="formGroup">
                     <fieldset class="termsFieldset">
                         <legend>개인정보 수집 및 이용 동의</legend>

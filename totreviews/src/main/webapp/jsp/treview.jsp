@@ -83,7 +83,21 @@
                     <div class="info">
                         <div class="title">${review.trevTitle}</div>
                         <div class="author">${review.memId}</div>
-                        <div class="rating">평점: ${review.trevRating}</div>
+                        <div class="rating">
+		                    평점: 
+		                    <c:if test="${not empty review.trevRating}">
+					            <c:forEach var="i" begin="1" end="5">
+					                <c:choose>
+					                    <c:when test="${i <= review.trevRating}">
+					                        <span class="star filled">⭐</span>
+					                    </c:when>
+					                    <c:otherwise>
+					                        <span class="star">☆</span>
+					                    </c:otherwise>
+					                </c:choose>
+					            </c:forEach>
+					        </c:if>
+		                </div>
                         <div class="count">조회수: ${review.trevCount}</div>
                     </div>
                 </a>

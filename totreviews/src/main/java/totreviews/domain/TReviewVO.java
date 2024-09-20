@@ -36,12 +36,12 @@ public class TReviewVO {
 
 	public static TReviewVO fromDTO(TReviewReqDTO dto) {
 		return new TReviewVO(0, dto.getTripId(), dto.getMemId(), Flag.CMT001, dto.getTrevTitle(), dto.getTrevContent(),
-				"0", null, null, "0");
+				dto.getTrevRating(), null, null, "0");
 	}
 
 	public static TReviewVO fromDTO(TReviewReqDTO reqDto, TReviewResDTO resDto) {
 		return new TReviewVO(reqDto.getTrevId(), reqDto.getTripId(), resDto.getMemId(), resDto.getTrevStatus(),
-				reqDto.getTrevTitle(), reqDto.getTrevContent(), resDto.getTrevRating(), resDto.getTrevRegdate(), null,
+				reqDto.getTrevTitle(), reqDto.getTrevContent(), reqDto.getTrevRating(), resDto.getTrevRegdate(), null,
 				resDto.getTrevCount());
 	}
 

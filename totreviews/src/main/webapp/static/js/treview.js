@@ -10,6 +10,7 @@ const WRITE_TREVIEW_URL = `${BASE_TREVIEW_URL}/all/add`; // 후기 작성 URL
 const ERROR_MESSAGES = {
     TITLE_REQUIRED: '제목을 입력해주세요.',
     TRIP_REQUIRED: '작성할 여행을 선택해주세요.',
+    RATING_REQUIRED: '후기 평점을 선택해주세요.',
     CONTENT_REQUIRED: '후기 내용을 입력해주세요.',
     LOGIN_REQUIRED: '회원 정보가 없습니다. 로그인 화면으로 이동합니다.',
     FAIL_LOGIN_CONFIRM: '로그인 상태 확인 중 오류 발생',
@@ -587,6 +588,11 @@ const checkField = (selector, errorMessage) => {
     return value === '' ? errorMessage : '';
 };
 
+// 후기 평점 유효성 검사
+const checkRating = (errorMessage) => {
+    return $('input[name="trevRating"]:checked').length === 0 ? errorMessage : '';
+};
+
 const validate = () => {
     const validations = [
         { selector: '#reviewTitle', errorMessage: ERROR_MESSAGES.TITLE_REQUIRED },
@@ -600,6 +606,12 @@ const validate = () => {
         if (message) {
             return { isValid: false, errorMessage: message };
         }
+    }
+
+	// 평점 유효성 검사
+    const ratingMessage = checkRating(ERROR_MESSAGES.RATING_REQUIRED);
+    if (ratingMessage) {
+        return { isValid: false, errorMessage: ratingMessage };
     }
 
     // 체크박스 유효성 검사

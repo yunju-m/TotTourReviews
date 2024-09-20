@@ -11,7 +11,8 @@ public enum ErrorCode {
 	TITLE_TOO_LONG(HttpStatus.BAD_REQUEST, "PR004", "제목은 200자를 초과할 수 없습니다."),
 	CONTENT_TOO_LONG(HttpStatus.BAD_REQUEST, "PR005", "내용은 1000자를 초과할 수 없습니다."),
 	NOT_FOUND_TREVAGREE(HttpStatus.BAD_REQUEST, "PR006", "개인정보 수집 및 이용동의를 체크해주세요."),
-	NOT_CHECK_TREVAGREE(HttpStatus.BAD_REQUEST, "PR007", "개인정보 수집 및 이용동의를 체크해주세요.");
+	NOT_CHECK_TREVAGREE(HttpStatus.BAD_REQUEST, "PR007", "개인정보 수집 및 이용동의를 체크해주세요."),
+	NOT_CHECK_TREVRATING(HttpStatus.BAD_REQUEST, "PR008", "여행 후기 평점을 체크해주세요.");
 
 	private final HttpStatus httpStatus;
 	private final String code;
