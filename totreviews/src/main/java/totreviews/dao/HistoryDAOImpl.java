@@ -19,4 +19,9 @@ public class HistoryDAOImpl implements HistoryDAO {
 		sqlSession.insert(NAMESPACE + ".insertTReviewHistory", historyVO);
 	}
 
+	@Override
+	public void insertCommentHistory(HistoryVO historyVO) {
+		sqlSession.insert(NAMESPACE + ".insertCommentHistory", historyVO);
+	}
+
 }

@@ -7,4 +7,9 @@
         VALUES (SEQ_HISTORYID.NEXTVAL, #{trevId}, #{memId}, #{memNick}, #{action}, #{content}, CURRENT_TIMESTAMP, #{status})
     </insert>
     
+    <insert id="insertCommentHistory">
+        INSERT INTO HISTORY (HISTORYID, TREVCID, MEMID, MEMNICK, ACTION, CONTENT, ACTIONDATE, STATUS)
+        VALUES (SEQ_HISTORYID.NEXTVAL, #{trevcId}, #{memId}, #{memNick}, #{action}, #{content}, CURRENT_TIMESTAMP, #{status})
+    </insert>
+    
 </mapper>

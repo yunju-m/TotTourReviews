@@ -7,7 +7,7 @@ import totreviews.common.enums.Flag;
 public class HistoryVO {
 
 	private int historyId; // 히스토리 아이디
-	private int trevId; // 여행 후기 아이디
+	private Integer trevId; // 여행 후기 아이디
 	private Integer trevcId; // 댓글 아이디
 	private String memId; // 신고자 아이디
 	private String memNick; // 신고자 닉네임
@@ -19,13 +19,25 @@ public class HistoryVO {
 	public HistoryVO() {
 	}
 
-	public HistoryVO(int trevId, String memId, String memNick, String action, String content, Flag status) {
+	public HistoryVO(Integer trevId, Integer trevcId, String memId, String memNick, String action, String content,
+			Flag status) {
 		this.trevId = trevId;
+		this.trevcId = trevcId;
 		this.memId = memId;
 		this.memNick = memNick;
 		this.action = action;
 		this.content = content;
 		this.status = status;
+	}
+
+	public static HistoryVO fromTReviewHistoryVO(int trevId, String memId, String memNick, String action,
+			String content, Flag status) {
+		return new HistoryVO(trevId, null, memId, memNick, action, content, status);
+	}
+
+	public static HistoryVO fromCommentHistoryVO(int trevcId, String memId, String memNick, String action,
+			String content, Flag status) {
+		return new HistoryVO(null, trevcId, memId, memNick, action, content, status);
 	}
 
 	public HistoryVO(int historyId, int trevId, Integer trevcId, String memId, String memNick, String action,

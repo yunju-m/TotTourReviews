@@ -19,7 +19,16 @@ public class HistoryServiceImpl implements HistoryService {
 		try {
 			historyDAO.insertTReviewHistory(historyVO);
 		} catch (DataAccessException e) {
-			throw new ServerException("여행 후기 댓글 목록 가져오던 중 오류 발생", e);
+			throw new ServerException("여행 후기 글 기록 중 오류 발생", e);
+		}
+	}
+
+	@Override
+	public void insertCommentHistory(HistoryVO historyVO) {
+		try {
+			historyDAO.insertCommentHistory(historyVO);
+		} catch (DataAccessException e) {
+			throw new ServerException("여행 후기 댓글 기록 중 오류 발생", e);
 		}
 	}
 

@@ -202,8 +202,8 @@ public class TReviewServiceImpl implements TReviewService {
 	 * 여행 후기글 등록, 수정, 삭제, 신고 내역 기록 메소드
 	 */
 	private void saveHistory(int trevId, String memId, String memNick, String action, String content, Flag status) {
-		HistoryVO historyVO = new HistoryVO(trevId, memId, memNick, action, content, status);
-		System.out.println(historyVO);
+		HistoryVO historyVO = HistoryVO.fromTReviewHistoryVO(trevId, memId, memNick, action, content, status);
+
 		historyService.insertTReviewHistory(historyVO);
 	}
 
