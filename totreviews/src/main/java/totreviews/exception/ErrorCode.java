@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
 
-	NOT_FOUND_MEMBERID(HttpStatus.BAD_REQUEST, "M01", "회원 정보를 찾을 수 없습니다."),
+	NOT_FOUND_MEMBERID(HttpStatus.FORBIDDEN, "M01", "회원 정보를 찾을 수 없습니다."),
 	NOT_FOUND_TREVTITLE(HttpStatus.BAD_REQUEST, "PR001", "제목을 입력해주세요."),
 	NOT_FOUND_TRIPID(HttpStatus.BAD_REQUEST, "PR002", "여행을 선택해주세요."),
     NOT_FOUND_TREVCONTENT(HttpStatus.BAD_REQUEST, "PR003", "내용을 입력해주세요."),

@@ -17,6 +17,9 @@ public class Constants {
 	// 로그인 페이지 및 URL
 	public static final String PAGE_LOGIN = "login";
 	public static final String URL_LOGIN = BASIC_URL + "/login";
+	
+	// 회원 페이지 및 URL
+	public static final String URL_MEMBER_CHECKLOGIN = BASIC_URL + "/member/checkLogin";
 
 	// 여행 코스 페이지
 	public static final String PAGE_TRIP = "trip";

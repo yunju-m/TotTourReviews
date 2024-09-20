@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import totreviews.common.page.PageDTO;
+import totreviews.domain.ReportVO;
 import totreviews.domain.TReviewImageVO;
 import totreviews.domain.TReviewResDTO;
 import totreviews.domain.TReviewVO;
@@ -62,6 +63,16 @@ public class TReviewDAOImpl implements TReviewDAO {
 	@Override
 	public void deleteTReview(int trevId) {
 		sqlSession.update(NAMESPACE + ".deleteTReview", trevId);
+	}
+
+	@Override
+	public void insertReportTReview(ReportVO reportVO) {
+		sqlSession.insert(NAMESPACE + ".insertReportTReview", reportVO);
+	}
+
+	@Override
+	public void reportTReview(int trevId) {
+		sqlSession.update(NAMESPACE + ".reportTReview", trevId);
 	}
 
 }

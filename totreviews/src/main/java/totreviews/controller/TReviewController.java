@@ -116,7 +116,7 @@ public class TReviewController {
 	}
 
 	// 여행 후기 수정 처리
-	@PostMapping(value = "/edit/{trevId}")
+	@PostMapping("/edit/{trevId}")
 	@ResponseBody
 	public ResponseEntity<Map<String, String>> editTourReview(@PathVariable int trevId,
 			@ModelAttribute TReviewReqDTO tReviewReqDTO,
@@ -130,13 +130,24 @@ public class TReviewController {
 		return ResponseUtil.createTReviewResponse("여행 후기 글 수정이 완료되었습니다.");
 	}
 
-	// 여행 후기 수정 화면 이동
+	// 여행 후기 삭제 처리
 	@GetMapping("/delete/{trevId}")
 	@ResponseBody
 	public ResponseEntity<Map<String, String>> deleteTourReview(@PathVariable int trevId) {
 		treviewService.deleteTReview(trevId);
 
 		return ResponseUtil.createTReviewResponse("여행 후기 글 삭제가 완료되었습니다.");
+	}
+
+	// 여행 후기 신고 처리
+	@PostMapping("/report/{trevId}")
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> reportTourReview(@PathVariable int trevId,
+			@RequestParam("reportedContentType") String reportedContentType,
+			@RequestParam("reportReason") String reportReason) {
+		treviewService.reportTReview(trevId, reportedContentType, reportReason);
+
+		return ResponseUtil.createTReviewResponse("여행 후기 글 신고가 접수되었습니다.");
 	}
 
 	// 여행 후기 상세 화면 이동

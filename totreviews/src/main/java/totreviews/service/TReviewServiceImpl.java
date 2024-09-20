@@ -18,12 +18,16 @@ import totreviews.common.page.PageReqDTO;
 import totreviews.common.page.PageResDTO;
 import totreviews.dao.TReviewDAO;
 import totreviews.domain.DelegatingMultipartFile;
+import totreviews.domain.MemberVO;
+import totreviews.domain.ReportTReviewDTO;
+import totreviews.domain.ReportVO;
 import totreviews.domain.TReviewImageVO;
 import totreviews.domain.TReviewReqDTO;
 import totreviews.domain.TReviewResDTO;
 import totreviews.domain.TReviewVO;
 import totreviews.exception.ServerException;
 import totreviews.util.FileUtil;
+import totreviews.util.MemberUtil;
 
 @Service
 public class TReviewServiceImpl implements TReviewService {
@@ -150,6 +154,22 @@ public class TReviewServiceImpl implements TReviewService {
 			treviewDAO.deleteTReview(trevId);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 글 삭제 중 데이터베이스 오류 발생", e);
+		}
+	}
+
+	@Override
+	public void reportTReview(int trevId, String reportedContentType, String reportReason) {
+		try {
+			MemberVO member = MemberUtil.isAuthenticatedMember();
+
+			ReportTReviewDTO reportTReviewDTO = new ReportTReviewDTO(member.getMemId(), trevId, reportedContentType,
+					reportReason);
+			ReportVO reportVO = new ReportVO(reportTReviewDTO);
+
+			treviewDAO.reportTReview(trevId);
+			treviewDAO.insertReportTReview(reportVO);
+		} catch (DataAccessException e) {
+			throw new ServerException("여행 후기 글 신고 중 데이터베이스 오류 발생", e);
 		}
 	}
 

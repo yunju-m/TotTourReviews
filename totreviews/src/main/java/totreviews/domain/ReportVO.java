@@ -38,6 +38,14 @@ public class ReportVO {
 		this.reportReason = dto.getReportReason();
 		this.reportStatus = "Reported"; // 접수완료
 	}
+	
+	public ReportVO(ReportTReviewDTO dto) {
+		this.reporterId = dto.getReporterId();
+		this.reportedTrevId = dto.getReportedTrevId();
+		this.reportedContentType = dto.getReportedContentType();
+		this.reportReason = dto.getReportReason();
+		this.reportStatus = "Reported"; // 접수완료
+	}
 
 	public int getReportId() {
 		return reportId;

@@ -28,6 +28,7 @@ public class MemberUtil {
 		return member;
 	}
 
+	// 인증된 회원이 존재하지 않으면 예외를 던지는 메서드
 	public static MemberVO isAuthenticatedMember() {
 		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
 		HttpSession session = attr.getRequest().getSession();
@@ -39,6 +40,19 @@ public class MemberUtil {
 		}
 
 		return member;
+	}
+
+	// 인증된 회원이 존재하는지 여부를 boolean으로 반환하는 메서드
+	public static boolean isMemberLoggedIn() {
+		ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+		HttpSession session = attr.getRequest().getSession();
+
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		if (member == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

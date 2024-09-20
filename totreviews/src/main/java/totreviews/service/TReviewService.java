@@ -22,4 +22,6 @@ public interface TReviewService {
 	void editTReview(TReviewReqDTO treviewReqDTO, MultipartFile[] imageFiles, List<String> existingImages);
 
 	void deleteTReview(int trevId);
+
+	void reportTReview(int commentId, String reportedContentType, String reportReason);
 }

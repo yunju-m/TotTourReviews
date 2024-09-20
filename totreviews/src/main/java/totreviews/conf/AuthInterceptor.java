@@ -19,7 +19,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 	// 일반 URL 경로
 	private static final List<String> EXCLUDED_PATHS = Arrays.asList(BASIC_URL, URL_MAIN, URL_LOGIN,
-			BASIC_URL + URL_ALL_TREVIEW);
+			BASIC_URL + URL_ALL_TREVIEW, URL_MEMBER_CHECKLOGIN);
 
 	// ID값을 갖는 경로
 	private static final List<Pattern> EXCLUDED_PATTERNS = Arrays.asList(PATTERN_ALL_TREVIEW,

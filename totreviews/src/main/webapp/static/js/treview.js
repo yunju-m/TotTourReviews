@@ -1,41 +1,46 @@
 //  URL 선언
-const BASE_TREVIEW_URL = '/totreviews/review';
-const GET_ALL_TREVIEW = `${BASE_TREVIEW_URL}/all/1`;
-const GET_MY_TREVIEW = `${BASE_TREVIEW_URL}/my/1`;
-const GET_WRITE_TREVIEW = `${BASE_TREVIEW_URL}/all/add`;
+const IS_MEMBER_LOGIN_URL = '/totreviews/member/checkLogin'; // 사용자 로그인 여부 확인 URL
+const LOGIN_URL = '/totreviews/login'; // 로그인 URL
+const BASE_TREVIEW_URL = '/totreviews/review'; // 여행 후기 기본 URL
+const ALL_TREVIEW_URL = `${BASE_TREVIEW_URL}/all/1`; // 전체 후기 조회 URL
+const MY_TREVIEW_URL = `${BASE_TREVIEW_URL}/my/1`; // 나의 후기 조회 URL
+const WRITE_TREVIEW_URL = `${BASE_TREVIEW_URL}/all/add`; // 후기 작성 URL
 
 // 에러 메시지 선언
 const ERROR_MESSAGES = {
     TITLE_REQUIRED: '제목을 입력해주세요.',
     TRIP_REQUIRED: '작성할 여행을 선택해주세요.',
     CONTENT_REQUIRED: '후기 내용을 입력해주세요.',
+    LOGIN_REQUIRED: '회원 정보가 없습니다. 로그인 화면으로 이동합니다.',
+    FAIL_LOGIN_CONFIRM: '로그인 상태 확인 중 오류 발생',
     AGREE_REQUIRED: '개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.',
     FAIL_TREVIEW_DELETE: '여행 후기글 삭제를 실패했습니다.',
     FILE_UPLOAD: '파일 업로드 중 오류가 발생했습니다.',
     FAIL_GET_COURSE: '코스를 가져오는 데 실패했습니다.',
     FAIL_EDIT_COMMENT: '댓글 수정에 실패했습니다.',
     FAIL_DELETE_COMMENT: '댓글 삭제를 실패했습니다.',
-    FAIL_REPORT_COMMENT: '댓글 신고를 실패했습니다.'
+    FAIL_REPORT_TREVIEW: '여행 후기 신고 접수를 실패했습니다.',
+    FAIL_TOTAL: '신고 중 오류가 발생했습니다. 관리자에게 문의하세요.'
 };
 
-let fileList = [];
+let fileList = [];  // 업로드 파일 리스트 초기화
 
 $(document).ready(() => {
     // 업로드 이미지 파일 초기화
     initFileList();
 
-    // 여행 후기 종류별 활성화 기능
+    // 현재 경로에 따라 버튼 활성화
     let path = window.location.pathname;
-
-    if (path.includes(GET_ALL_TREVIEW)) {
+    
+    if (path.includes(ALL_TREVIEW_URL)) {
         $('#TotalReviewsBtn').addClass('active');
         $('#myReviewsBtn').removeClass('active');
-    } else if (path.includes(GET_MY_TREVIEW)) {
+    } else if (path.includes(MY_TREVIEW_URL)) {
         $('#myReviewsBtn').addClass('active');
         $('#TotalReviewsBtn').removeClass('active');
     }
 
-    // 여행 후기의 여행을 선택하는 경우
+    // 여행 선택 시 코스 로드
     $('#travelTrip').on('change', function () {
         var tripId = $(this).val();
 
@@ -46,7 +51,7 @@ $(document).ready(() => {
 
     // 글쓰기 버튼 클릭 시 이동
     $('#writeReviewBtn').on('click', function () {
-        window.location.href = GET_WRITE_TREVIEW;
+        window.location.href = WRITE_TREVIEW_URL;
     });
 
     // 이미지 업로드시 미리보기 생성
@@ -67,11 +72,12 @@ $(document).ready(() => {
         deletePreviewImg($(this));
     });
 
-    // 여행 후기 항목 유효성 검사 및 여행 후기 글 등록
+    // 여행 후기 등록 버튼 클릭 시 유효성 검사 후 등록
     $('#submitButton').on('click', function (event) {
         event.preventDefault();
 
         const validationResult = validate();
+        
         if (validationResult.isValid) {
             submitReview();
         } else {
@@ -79,7 +85,7 @@ $(document).ready(() => {
         }
     });
 
-    // 여행 후기 항목 유효성 검사 및 여행 후기 글 수정
+    // 여행 후기 수정 버튼 클릭 시 유효성 검사 후 수정
     $('#editButton').on('click', function (event) {
         event.preventDefault();
 
@@ -91,10 +97,10 @@ $(document).ready(() => {
         }
     })
 
-    // 여행 후기 글 삭제 검사 버튼 클릭 시 삭제 처리
+    // 여행 후기 삭제 버튼 클릭 시 삭제 확인 및 처리
     $('#delTReviewBtn').on('click', function (event) {
         event.preventDefault();
-        
+
         const reviewTitle = $(this).data('title');
         const deleteUrl = $(this).data('delete-url');
 
@@ -103,7 +109,7 @@ $(document).ready(() => {
                 url: deleteUrl,
                 success: function (response) {
                     alert(response.message);
-                    window.location.href = GET_MY_TREVIEW;
+                    window.location.href = MY_TREVIEW_URL;
                 },
                 error: function (error) {
                     alert(ERROR_MESSAGES.FAIL_TREVIEW_DELETE);
@@ -113,14 +119,31 @@ $(document).ready(() => {
         }
     });
 
-    // 전체 여행 후기 버튼 클릭 시 전체 여행 후기 리스트 출력
-    $('#TotalReviewsBtn').on('click', () => {
-        window.location.href = GET_ALL_TREVIEW;
+    // 여행 후기 글 신고 버튼 클릭 시 신고 모달 창 띄우기
+    $('#reportTReviewBtn').on('click', async function (event) {
+        event.preventDefault();
+        
+		const isLoggedIn = await checkLoginStatus();
+		
+        const reviewTitle = $(this).data('title');
+        const reportUrl = $(this).data('report-url');
+        const reportedContentType = 'Treview';
+
+        $('#reportCommentText').text(`여행 후기 제목 : "${reviewTitle}"`);
+        $('#reportForm').attr('action', reportUrl);
+        $('#reportForm').find('input[name="reportedContentType"]').val(reportedContentType);
+
+        $('#reportModal').show();
     });
 
-    // 나의 여행 후기 버튼 클릭 시 내가 작성한 여행 후기 리스트 출력
+    // 전체 여행 후기 버튼 클릭 시 전체 여행 후기 페이지 이동
+    $('#TotalReviewsBtn').on('click', () => {
+        window.location.href = ALL_TREVIEW_URL;
+    });
+
+    // 나의 여행 후기 버튼 클릭 시 나의 여행 후기 페이지 이동
     $('#myReviewsBtn').on('click', () => {
-        window.location.href = GET_MY_TREVIEW;
+        window.location.href = MY_TREVIEW_URL;
     });
 
     // 취소하기 버튼 클릭 시 목록 페이지로 이동
@@ -130,7 +153,7 @@ $(document).ready(() => {
 
     // 나의 여행 상세 후기 목록 버튼 클릭 시 뒤로가기
     $('#reviewListBtn').on('click', () => {
-        window.location.href = GET_ALL_TREVIEW;
+        window.location.href = ALL_TREVIEW_URL;
     });
 
     // 여행 상세 후기 댓글 취소 버튼 클릭 시 내용 삭제
@@ -268,10 +291,13 @@ $(document).ready(() => {
         e.preventDefault();
 
         let commentText = $(this).closest('.commentItem').find('.commentText').text().trim();
-        let reportUrl = $(this).data('url'); // 신고 URL 가져오기
+        let reportUrl = $(this).data('url');
+        let reportedContentType = 'Treview comment';
 
         $('#reportCommentText').text(`댓글 내용: "${commentText}"`);
         $('#reportForm').attr('action', reportUrl);
+        $('#reportForm').find('input[name="reportedContentType"]').val(reportedContentType);
+
         $('#reportModal').show();
     });
 
@@ -286,22 +312,38 @@ $(document).ready(() => {
 
         let reportReason = $('#reportReason').val();
         let formAction = $(this).attr('action');
+        let reportType = $('#reportForm').find('input[name="reportedContentType"]').val();
 
-        $.post({
+        $.ajax({
             url: formAction,
+            method: 'POST',
             dataType: 'json',
             data: {
-                reportedContentType: 'Treview comment',
+                reportedContentType: reportType,
                 reportReason: reportReason,
-
             },
             success: function (response) {
                 alert(response.message);
                 $('#reportModal').hide();
+                $('#reportReason').val(''); // 신고 사유 텍스트 영역 비우기
+            	$('#reportCommentText').text(''); // 신고 내용 텍스트 비우기
             },
-            error: function (error) {
-                alert(ERROR_MESSAGES.FAIL_REPORT_COMMENT);
-                console.error(error);
+            error: function (xhr, jqXHR, textStatus, errorThrown) {
+                console.log(xhr.status);
+                console.log('에러 상태:', textStatus);
+                console.log('에러 내용:', errorThrown);
+                console.log('서버 응답:', xhr.responseText);
+                if (xhr.status === 403) {
+                    errorMessage = ERROR_MESSAGES.LOGIN_REQUIRED;
+                } else if (xhr.status === 302) {
+                    let redirectUrl = xhr.getResponseHeader('Location');
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl;
+                    }
+                } else {
+                    errorMessage = ERROR_MESSAGES.FAIL_TOTAL;
+                }
+                alert(errorMessage);
             }
         });
     });
@@ -327,7 +369,7 @@ $(document).ready(() => {
 // 여행 선택 시 이벤트 처리
 const handleCourseSelect = tripId => {
     $.ajax({
-        url: `${GET_WRITE_TREVIEW}/${tripId}`,
+        url: `${WRITE_TREVIEW_URL}/${tripId}`,
         type: 'GET',
         data: { tripId: tripId },
         success: function (courses) {
@@ -353,14 +395,14 @@ const submitReview = () => {
     });
 
     $.post({
-        url: `${GET_WRITE_TREVIEW}`,
+        url: `${WRITE_TREVIEW_URL}`,
         data: formData,
         contentType: false,
         processData: false,
         dataType: "json",
         success: function (response) {
             alert(response.message);
-            window.location.href = GET_ALL_TREVIEW;
+            window.location.href = ALL_TREVIEW_URL;
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log('에러 상태:', textStatus);
@@ -394,7 +436,7 @@ const editReview = () => {
         dataType: "json",
         success: function (response) {
             alert(response.message);
-            window.location.href = GET_ALL_TREVIEW;
+            window.location.href = ALL_TREVIEW_URL;
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log('에러 상태:', textStatus);
@@ -516,6 +558,28 @@ const handleBackspace = event => {
         }
     }
 }
+
+// 로그인 여부 유효성 검사
+const checkLoginStatus = () => {
+    return $.ajax({
+        url: IS_MEMBER_LOGIN_URL,
+        type: 'GET',
+        dataType: 'json'
+    }).done((response) => {
+        if (response.loggedIn) {
+            return true; // 로그인된 경우
+        } else {
+            alert(ERROR_MESSAGES.LOGIN_REQUIRED);
+            window.location.href = LOGIN_URL;
+            return false; // 로그인되지 않은 경우
+        }
+    }).fail((jqXHR, textStatus, errorThrown) => {
+        console.log(textStatus, errorThrown); 
+        alert(ERROR_MESSAGES.FAIL_LOGIN_CONFIRM);
+        window.location.href = LOGIN_URL;
+        return false;
+    });
+};
 
 // 공백 여부 유효성 검사
 const checkField = (selector, errorMessage) => {

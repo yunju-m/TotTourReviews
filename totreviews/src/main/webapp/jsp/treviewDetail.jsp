@@ -24,12 +24,17 @@
                 <fmt:formatDate value="${review.trevRegdate}" pattern="yyyy년 MM월 dd일" />
             </div>
         </div>
-        <c:if test="${review.memId == member.memId}">
-		    <div class="reviewEditDeleteDiv">
-		        <a href="${pageContext.request.contextPath}/review/${boardId}/edit/${review.trevId}" class="initButton">수정</a>
-		        <button id="delTReviewBtn" class="initButton" data-title="${review.trevTitle}" data-delete-url="${pageContext.request.contextPath}/review/${boardId}/delete/${review.trevId}">삭제</button>
-		    </div>
-		</c:if>
+        <div class="reviewFuncDiv">
+	        <c:choose>
+		        <c:when test="${review.memId == member.memId}">
+		            <a href="${pageContext.request.contextPath}/review/${boardId}/edit/${review.trevId}" class="initButton">수정</a>
+		            <button id="delTReviewBtn" class="initButton" data-title="${review.trevTitle}" data-delete-url="${pageContext.request.contextPath}/review/${boardId}/delete/${review.trevId}">삭제</button>
+		        </c:when>
+		        <c:otherwise>
+		            <button id="reportTReviewBtn" class="initButton" data-title="${review.trevTitle}" data-report-url="${pageContext.request.contextPath}/review/${boardId}/report/${review.trevId}">신고</button>
+		        </c:otherwise>
+	    	</c:choose>
+    	</div>
         <!-- 여행 코스 내용 -->
         <div class="reviewCourseDiv">
             <!-- 여행 코스 이미지 -->
@@ -147,21 +152,6 @@
 			                        	class="reportComment">신고</a>
 			                    </div>
 			                </c:if>
-			                
-			                <!-- 댓글 신고 모달 폼 -->
-	                        <div id="reportModal" class="modal">
-							    <div class="modal-content">
-							        <span class="close-button">&times;</span>
-							        <h2>댓글 신고</h2>
-							        <p id="reportCommentText"></p>
-							        <form id="reportForm" method="post">
-							            <label for="reportReason">신고 사유:</label>
-							            <textarea id="reportReason" name="reportReason" required></textarea>
-							            <button class="initButton active" type="submit">신고하기</button>
-							        </form>
-							    </div>
-							</div>
-							<!-- 댓글 신고 모달 폼 끝 -->
 			            </div>
 
 			            <div class="commentReply" data-comment-id="${comment.commentId}">댓글 작성</div>
@@ -258,5 +248,22 @@
         </div>
         <!-- 댓글 작성 및 목록 끝 -->
     </div>
+    <!-- 신고 모달 폼 -->
+    <div id="reportModal" class="modal">
+	    <div class="modal-content">
+	        <span class="close-button">&times;</span>
+	        <h2>📢 신고</h2>
+	        <p id="reportCommentText"></p>
+	        <form id="reportForm" method="post">
+	        	<input type="hidden" name="reportedContentType" value="">
+	            <label for="reportReason">신고 사유:</label>
+	            <textarea id="reportReason" name="reportReason" required></textarea>
+	            <div class="reportButtonDiv">
+	            	<button class="initButton active" type="submit">신고하기</button>
+	        	</div>
+	        </form>
+	    </div>
+	</div>
+	<!-- 신고 모달 폼 끝 -->
 </body>
 </html>

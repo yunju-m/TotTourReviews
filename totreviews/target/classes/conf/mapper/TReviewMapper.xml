@@ -47,7 +47,7 @@
 		LEFT JOIN
 		TReviewImage i
 		ON r.TREVID = i.TREVID
-		WHERE r.TREVSTATUS = 'CMT001'
+		WHERE r.TREVSTATUS IN ('CMT001', 'CMT003')
 
 		<choose>
 			<when test="boardId == 'all'">
@@ -90,7 +90,7 @@
 	                   </choose>
 	               ) AS rn
 	        FROM TREVIEW r
-	        WHERE r.TREVSTATUS = 'CMT001'
+	        WHERE r.TREVSTATUS IN ('CMT001', 'CMT003')
 	        
 	        <choose>
 	            <when test="boardId == 'all'">
@@ -150,6 +150,33 @@
 	<update id="deleteTReview" parameterType="int">
 		UPDATE TREVIEW
 		SET TREVSTATUS = 'CMT002', TREVUPDATE = CURRENT_TIMESTAMP
+		WHERE TREVID = #{trevId}
+	</update>
+	
+	<insert id="insertReportTReview" parameterType="ReportVO">
+		INSERT INTO REPORT(
+			REPORTID,
+			REPORTERID,
+			REPORTEDTREVID,
+			REPORTEDCONTENTTYPE,
+			REPORTREASON,
+			REPORTDATE,
+			REPORTSTATUS
+		)
+		VALUES(
+			SEQ_REPORTID.NEXTVAL,
+			#{reporterId},
+			#{reportedTrevId},
+			#{reportedContentType},
+			#{reportReason},
+			CURRENT_TIMESTAMP,
+			#{reportStatus}
+		)
+	</insert>
+	
+	<update id="reportTReview" parameterType="int">
+		UPDATE TREVIEW
+		SET TREVSTATUS = 'CMT003'
 		WHERE TREVID = #{trevId}
 	</update>
 
