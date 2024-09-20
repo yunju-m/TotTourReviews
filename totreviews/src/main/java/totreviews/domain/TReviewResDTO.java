@@ -3,12 +3,14 @@ package totreviews.domain;
 import java.sql.Timestamp;
 import java.util.List;
 
+import totreviews.common.enums.Flag;
+
 public class TReviewResDTO {
 
 	private int trevId; // 여행후기 게시글 아이디
 	private int tripId; // 여행 아이디
 	private String memId; // 회원 아이디
-	private String trevStatus; // 게시여부코드
+	private Flag trevStatus; // 게시여부코드
 	private String trevTitle; // 후기 제목
 	private String trevCourse; // 코스
 	private String trevContent; // 내용
@@ -21,7 +23,7 @@ public class TReviewResDTO {
 	public TReviewResDTO() {
 	}
 
-	public TReviewResDTO(int trevId, int tripId, String memId, String trevStatus, String trevTitle, String trevCourse,
+	public TReviewResDTO(int trevId, int tripId, String memId, Flag trevStatus, String trevTitle, String trevCourse,
 			String trevContent, String trevRating, Timestamp trevRegdate, Timestamp trevUpdate, String trevCount,
 			List<TReviewImageVO> trevImages) {
 		this.trevId = trevId;
@@ -50,7 +52,7 @@ public class TReviewResDTO {
 		return memId;
 	}
 
-	public String getTrevStatus() {
+	public Flag getTrevStatus() {
 		return trevStatus;
 	}
 
@@ -98,7 +100,7 @@ public class TReviewResDTO {
 		this.memId = memId;
 	}
 
-	public void setTrevStatus(String trevStatus) {
+	public void setTrevStatus(Flag trevStatus) {
 		this.trevStatus = trevStatus;
 	}
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="totreviews.mapper.HistoryMapper">
+
+    <insert id="insertTReviewHistory">
+        INSERT INTO HISTORY (HISTORYID, TREVID, MEMID, MEMNICK, ACTION, CONTENT, ACTIONDATE, STATUS)
+        VALUES (SEQ_HISTORYID.NEXTVAL, #{trevId}, #{memId}, #{memNick}, #{action}, #{content}, CURRENT_TIMESTAMP, #{status})
+    </insert>
+    
+</mapper>

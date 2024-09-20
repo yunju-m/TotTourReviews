@@ -24,6 +24,7 @@
     	<typeAlias alias="PageResDTO" type="totreviews.common.page.PageResDTO"/>
     	<typeAlias alias="ReportVO" type="totreviews.domain.ReportVO"/>
     	<typeAlias alias="ReportCommentDTO" type="totreviews.domain.ReportCommentDTO"/>
+    	<typeAlias alias="HistoryVO" type="totreviews.domain.HistoryVO"/>
     </typeAliases>
     
     <mappers>
@@ -32,6 +33,7 @@
         <mapper resource="conf/mapper/TourMapper.xml"/>
         <mapper resource="conf/mapper/TripMapper.xml"/>
         <mapper resource="conf/mapper/CommentMapper.xml"/>
+        <mapper resource="conf/mapper/HistoryMapper.xml"/>
     </mappers>
     
 </configuration>

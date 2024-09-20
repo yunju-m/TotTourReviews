@@ -2,12 +2,14 @@ package totreviews.domain;
 
 import java.sql.Timestamp;
 
+import totreviews.common.enums.Flag;
+
 public class TReviewVO {
 
 	private int trevId; // 여행후기 게시글 아이디
 	private int tripId; // 여행 아이디
 	private String memId; // 회원 아이디
-	private String trevStatus; // 게시여부코드
+	private Flag trevStatus; // 게시여부코드
 	private String trevTitle; // 제목
 	private String trevContent; // 내용
 	private String trevRating; // 평점
@@ -18,7 +20,7 @@ public class TReviewVO {
 	public TReviewVO() {
 	}
 
-	public TReviewVO(int trevId, int tripId, String memId, String trevStatus, String trevTitle, String trevContent,
+	public TReviewVO(int trevId, int tripId, String memId, Flag trevStatus, String trevTitle, String trevContent,
 			String trevRating, Timestamp trevRegdate, Timestamp trevUpdate, String trevCount) {
 		this.trevId = trevId;
 		this.tripId = tripId;
@@ -33,7 +35,7 @@ public class TReviewVO {
 	}
 
 	public static TReviewVO fromDTO(TReviewReqDTO dto) {
-		return new TReviewVO(0, dto.getTripId(), dto.getMemId(), "CMT001", dto.getTrevTitle(), dto.getTrevContent(),
+		return new TReviewVO(0, dto.getTripId(), dto.getMemId(), Flag.CMT001, dto.getTrevTitle(), dto.getTrevContent(),
 				"0", null, null, "0");
 	}
 
@@ -55,7 +57,7 @@ public class TReviewVO {
 		return memId;
 	}
 
-	public String getTrevStatus() {
+	public Flag getTrevStatus() {
 		return trevStatus;
 	}
 

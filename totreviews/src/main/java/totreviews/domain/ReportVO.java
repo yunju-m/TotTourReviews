@@ -2,6 +2,8 @@ package totreviews.domain;
 
 import java.sql.Timestamp;
 
+import totreviews.common.enums.Flag;
+
 public class ReportVO {
 
 	private int reportId; // 신고 아이디
@@ -12,14 +14,14 @@ public class ReportVO {
 	private String reportReason; // 신고 사유
 	private Timestamp reportDate; // 신고 날짜
 	private Timestamp processDate; // 신고 처리 날짜
-	private String reportStatus; // 신고 처리 상태
+	private Flag reportStatus; // 신고 처리 상태
 
 	public ReportVO() {
 	}
 
 	public ReportVO(int reportId, String reporterId, int reportedTrevId, int reportedTrevcId,
 			String reportedContentType, String reportReason, Timestamp reportDate, Timestamp processDate,
-			String reportStatus) {
+			Flag reportStatus) {
 		this.reportId = reportId;
 		this.reporterId = reporterId;
 		this.reportedTrevId = reportedTrevId;
@@ -36,15 +38,15 @@ public class ReportVO {
 		this.reportedTrevcId = dto.getReportedTrevcId();
 		this.reportedContentType = dto.getReportedContentType();
 		this.reportReason = dto.getReportReason();
-		this.reportStatus = "Reported"; // 접수완료
+		this.reportStatus = Flag.CMT004;
 	}
-	
+
 	public ReportVO(ReportTReviewDTO dto) {
 		this.reporterId = dto.getReporterId();
 		this.reportedTrevId = dto.getReportedTrevId();
 		this.reportedContentType = dto.getReportedContentType();
 		this.reportReason = dto.getReportReason();
-		this.reportStatus = "Reported"; // 접수완료
+		this.reportStatus = Flag.CMT004;
 	}
 
 	public int getReportId() {
@@ -79,7 +81,7 @@ public class ReportVO {
 		return processDate;
 	}
 
-	public String getReportStatus() {
+	public Flag getReportStatus() {
 		return reportStatus;
 	}
 
