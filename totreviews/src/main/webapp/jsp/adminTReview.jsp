@@ -21,8 +21,9 @@
             <div class="bigTitle">게시물 관리</div>
         </div>
         <div class="reviewIntroDiv">
+        	<div>[게시물 관리 설명]</div><hr />
             <div>이 페이지는 작성된 여행 후기를 관리하는 곳입니다. 작성된 후기를 조회하고, 수정, 삭제하거나 상태를 변경할 수 있습니다.</div>
-            <div>상단의 검색 및 필터 옵션을 사용해 제목, 작성자, 작성 날짜별로 쉽게 후기를 찾아보세요.</div>
+            <div>상단의 검색 옵션을 사용해 제목, 내용 및 작성 날짜별로 쉽게 후기를 확인할 수 있습니다.</div>
 			<div>후기는 '승인', '대기', '비공개' 상태로 나뉩니다. 각 상태에 따라 후기를 관리하고, 부적절한 내용이 포함된 후기는 삭제하거나 수정하세요.</div>
 			<div>정기적으로 후기를 검토하여 커뮤니티의 품질을 유지하세요.</div>
         </div>
@@ -58,6 +59,7 @@
             <table class="adminTable">
                 <thead>
                     <tr>
+                    	<th><input type="checkbox" id="selectAll"></th>
                         <th>번호</th>
                         <th>제목</th>
                         <th>작성자</th>
@@ -70,9 +72,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="review" items="${pagination.postList}">
+                    <c:forEach var="review" items="${pagination.postList}" varStatus="status">
 					    <tr>
-					        <td>${review.trevId}</td>
+					    	<td><input type="checkbox" name="reviewSelect" value="${review.trevId}"></td>
+					        <td>${status.index + 1}</td>
 					        <td><a href="${pageContext.request.contextPath}/review/all/detail/${review.trevId}">${review.trevTitle}</a></td>
 					        <td>${review.memId}</td>
 					        <td>${review.trevRegdate}</td>
@@ -101,8 +104,7 @@
 					            </c:forEach>
 					        </td>
 					        <td>
-					            <a href="${pageContext.request.contextPath}/review/edit/${review.trevId}" class="editButton">수정</a>
-					        	<a href="${pageContext.request.contextPath}/review/delete/${review.trevId}" class="deleteButton" onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+					            <a href="${pageContext.request.contextPath}/admin/review/active/${review.trevId}" class="activeButton">비활성화</a>
 					        </td>
 					    </tr>
 					</c:forEach>

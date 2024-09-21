@@ -4,6 +4,7 @@
 	border: solid 1px #ccc;
 	padding: 30px;
 	text-align: start;
+	background-color: lightgray;
 }
 
 /* 게시물 관리 테이블 */
@@ -80,4 +81,10 @@
 .star {
     font-size: 20px;
     color: #ffc107;
+}
+
+/* 게시물 수정 관리 */
+.reviewStatusDiv {
+	display: flex;
+	width: 100%;
 }

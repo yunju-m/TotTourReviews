@@ -45,6 +45,12 @@ public class TReviewVO {
 				resDto.getTrevCount());
 	}
 
+	public static TReviewVO fromDTO(TReviewReqDTO reqDto, TReviewResDTO resDto, Flag trevStatus) {
+		return new TReviewVO(reqDto.getTrevId(), reqDto.getTripId(), resDto.getMemId(), trevStatus,
+				reqDto.getTrevTitle(), reqDto.getTrevContent(), reqDto.getTrevRating(), resDto.getTrevRegdate(), null,
+				resDto.getTrevCount());
+	}
+
 	public int getTrevId() {
 		return trevId;
 	}

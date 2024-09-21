@@ -34,7 +34,7 @@
                 <!-- 2.1 여행 항목 선택 -->
                 <div class="formGroup">
                 	<label for="trip">여행 항목</label>
-                	<select id="travelTrip" class="tripSelect" name="tripId">
+                	<select id="travelTrip" class="treviewSelect" name="tripId">
                 		<option value="" disabled selected>여행을 선택하세요</option>
                 		<c:forEach var="trip" items="${trips}">
 				            <option value="${trip.tripId}">${trip.tripName}</option>
@@ -63,16 +63,19 @@
                 <!-- 3. 평점 입력 -->
 				<div class="formGroup">
 				    <div id="reviewRating" class="ratingDiv">
-				        <input type="radio" id="rating1" name="trevRating" value="1" />
-				        <label for="rating1">⭐</label>
-				        <input type="radio" id="rating2" name="trevRating" value="2" />
-				        <label for="rating2">⭐⭐</label>
-				        <input type="radio" id="rating3" name="trevRating" value="3" />
-				        <label for="rating3">⭐⭐⭐</label>
-				        <input type="radio" id="rating4" name="trevRating" value="4" />
-				        <label for="rating4">⭐⭐⭐⭐</label>
-				        <input type="radio" id="rating5" name="trevRating" value="5" />
-				        <label for="rating5">⭐⭐⭐⭐⭐</label>
+				    	<label>평점</label>
+				        <div class="ratingOptions">
+					        <input type="radio" id="rating1" name="trevRating" value="1" <c:if test="${review.trevRating == 1}">checked</c:if> />
+					        <label for="rating1">⭐</label>
+					        <input type="radio" id="rating2" name="trevRating" value="2" <c:if test="${review.trevRating == 2}">checked</c:if> />
+					        <label for="rating2">⭐⭐</label>
+					        <input type="radio" id="rating3" name="trevRating" value="3" <c:if test="${review.trevRating == 3}">checked</c:if> />
+					        <label for="rating3">⭐⭐⭐</label>
+					        <input type="radio" id="rating4" name="trevRating" value="4" <c:if test="${review.trevRating == 4}">checked</c:if> />
+					        <label for="rating4">⭐⭐⭐⭐</label>
+					        <input type="radio" id="rating5" name="trevRating" value="5" <c:if test="${review.trevRating == 5}">checked</c:if> />
+					        <label for="rating5">⭐⭐⭐⭐⭐</label>
+				        </div>
 				    </div>
 				</div>
                 

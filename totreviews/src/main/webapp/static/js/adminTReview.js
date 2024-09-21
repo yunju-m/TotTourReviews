@@ -1,10 +1,9 @@
 //  URL 선언
 const IS_MEMBER_LOGIN_URL = '/totreviews/member/checkLogin'; // 사용자 로그인 여부 확인 URL
 const LOGIN_URL = '/totreviews/login'; // 로그인 URL
-const BASE_TREVIEW_URL = '/totreviews/review'; // 여행 후기 기본 URL
-const ALL_TREVIEW_URL = `${BASE_TREVIEW_URL}/all/1`; // 전체 후기 조회 URL
-const MY_TREVIEW_URL = `${BASE_TREVIEW_URL}/my/1`; // 나의 후기 조회 URL
-const WRITE_TREVIEW_URL = `${BASE_TREVIEW_URL}/all/add`; // 후기 작성 URL
+const BASE_TREVIEW_URL = '/totreviews/admin/review'; // 여행 후기 기본 URL
+const ALL_ADMIN_TREVIEW_URL = `${BASE_TREVIEW_URL}/1`; // 전체 후기 조회 URL
+const WRITE_TREVIEW_URL = `${BASE_TREVIEW_URL}/add`; // 후기 작성 URL
 
 // 에러 메시지 선언
 const ERROR_MESSAGES = {
@@ -30,16 +29,27 @@ $(document).ready(() => {
     // 업로드 이미지 파일 초기화
     initFileList();
 
-    // 현재 경로에 따라 버튼 활성화
-    let path = window.location.pathname;
+    // 게시물 관리 전체 선택 및 해제
+    $("#selectAll").change(function() {
+        $("input[name='reviewSelect']").prop("checked", this.checked);
+    });
     
-    if (path.includes(ALL_TREVIEW_URL)) {
-        $('#TotalReviewsBtn').addClass('active');
-        $('#myReviewsBtn').removeClass('active');
-    } else if (path.includes(MY_TREVIEW_URL)) {
-        $('#myReviewsBtn').addClass('active');
-        $('#TotalReviewsBtn').removeClass('active');
-    }
+    // 게시물 비활성화 처리
+    $('.activeButton').on('click', function(e) {
+        e.preventDefault(); // 링크 클릭 기본 동작 방지
+        const url = $(this).attr('href'); // 버튼의 href 값 가져오기
+
+        $.get({
+	        url: url,
+	        success: function(response) {
+	            alert(response.message);
+	            location.reload();
+	        },
+	        error: function(xhr, status, error) {
+	            alert('비활성화 중 오류가 발생했습니다: ' + error);
+	        }
+	    });
+    });
 
     // 여행 선택 시 코스 로드
     $('#travelTrip').on('change', function () {
@@ -370,9 +380,8 @@ $(document).ready(() => {
 // 여행 선택 시 이벤트 처리
 const handleCourseSelect = tripId => {
     $.ajax({
-        url: `${WRITE_TREVIEW_URL}/${tripId}`,
+        url: `${BASE_TREVIEW_URL}/course/${tripId}`,
         type: 'GET',
-        data: { tripId: tripId },
         success: function (courses) {
             let courseHtml = '';
             courses.forEach((course, index) => {
@@ -437,7 +446,7 @@ const editReview = () => {
         dataType: "json",
         success: function (response) {
             alert(response.message);
-            window.location.href = ALL_TREVIEW_URL;
+            window.location.href = ALL_ADMIN_TREVIEW_URL;
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log('에러 상태:', textStatus);
@@ -612,11 +621,6 @@ const validate = () => {
     const ratingMessage = checkRating(ERROR_MESSAGES.RATING_REQUIRED);
     if (ratingMessage) {
         return { isValid: false, errorMessage: ratingMessage };
-    }
-
-    // 체크박스 유효성 검사
-    if (!$('#agreeRadio').is(':checked')) {
-        return { isValid: false, errorMessage: ERROR_MESSAGES.AGREE_REQUIRED };
     }
 
     return { isValid: true, errorMessage: '' };
