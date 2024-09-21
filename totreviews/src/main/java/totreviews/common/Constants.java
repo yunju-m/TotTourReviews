@@ -17,7 +17,7 @@ public class Constants {
 	// 로그인 페이지 및 URL
 	public static final String PAGE_LOGIN = "login";
 	public static final String URL_LOGIN = BASIC_URL + "/login";
-	
+
 	// 회원 페이지 및 URL
 	public static final String URL_MEMBER_CHECKLOGIN = BASIC_URL + "/member/checkLogin";
 
@@ -37,6 +37,11 @@ public class Constants {
 	public static final Pattern PATTERN_ALL_TREVIEW = Pattern.compile("^" + BASIC_URL + "/review/all/\\d+$");
 	public static final Pattern PATTERN_ALL_DETAIL_TREVIEW = Pattern
 			.compile("^" + BASIC_URL + "/review/all/detail/\\d+$");
+
+	// 관리자 페이지
+
+	// 관리자 여행 후기 페이지 및 URL
+	public static final String PAGE_ADMIN_TREVIEW = "adminTReview";
 
 	// 생성자를 private으로 설정하여 인스턴스화 방지
 	private Constants() {

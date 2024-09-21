@@ -34,6 +34,8 @@
         <mapper resource="conf/mapper/TripMapper.xml"/>
         <mapper resource="conf/mapper/CommentMapper.xml"/>
         <mapper resource="conf/mapper/HistoryMapper.xml"/>
+        
+        <mapper resource="conf/mapper/AdminTReviewMapper.xml"/>
     </mappers>
     
 </configuration>

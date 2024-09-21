@@ -1,0 +1,83 @@
+/* 게시물 관리 설명란 */
+.reviewIntroDiv {
+	margin-bottom: 50px;
+	border: solid 1px #ccc;
+	padding: 30px;
+	text-align: start;
+}
+
+/* 게시물 관리 테이블 */
+/* 테이블 스타일 */
+.adminTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: center;
+}
+
+.adminTable thead th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: bold;
+    padding: 12px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.adminTable tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+.adminTable tbody td a {
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.adminTable tbody td a:hover {
+    text-decoration: underline;
+}
+
+.adminTable tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.adminTable tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* 관리 버튼 스타일 */
+.editButton, .deleteButton {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-right: 5px;
+    color: white !important;
+    font-weight: normal !important;
+}
+
+.editButton {
+    background-color: #28a745;
+}
+
+.editButton:hover {
+    background-color: #218838;
+}
+
+.deleteButton {
+    background-color: #dc3545;
+}
+
+.deleteButton:hover {
+    background-color: #c82333;
+}
+
+/* 별점 스타일 */
+.star {
+    font-size: 20px;
+    color: #ffc107;
+}

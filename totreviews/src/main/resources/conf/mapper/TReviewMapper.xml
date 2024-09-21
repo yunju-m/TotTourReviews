@@ -80,15 +80,15 @@
 	        SELECT r.TREVID, r.TRIPID, r.MEMID, r.TREVSTATUS, r.TREVTITLE, r.TREVCONTENT,
 	               r.TREVRATING, r.TREVREGDATE, r.TREVUPDATE, r.TREVCOUNT,
 	               ROW_NUMBER() OVER(
-	                   ORDER BY 
-	                   <choose>
-	                       <when test="dto.sortType.name() == 'LATEST'">r.TREVREGDATE DESC</when>
-	                       <when test="dto.sortType.name() == 'OLDEST'">r.TREVREGDATE ASC</when>
-	                       <when test="dto.sortType.name() == 'VIEWS'">r.TREVCOUNT DESC</when>
-	                       <when test="dto.sortType.name() == 'RATING'">r.TREVRATING DESC</when>
-	                       <otherwise>r.TREVREGDATE DESC</otherwise>
-	                   </choose>
-	               ) AS rn
+                   ORDER BY 
+                   <choose>
+                       <when test="dto.sortType.name() == 'LATEST'">r.TREVREGDATE DESC</when>
+                       <when test="dto.sortType.name() == 'OLDEST'">r.TREVREGDATE ASC</when>
+                       <when test="dto.sortType.name() == 'VIEWS'">r.TREVCOUNT DESC</when>
+                       <when test="dto.sortType.name() == 'RATING'">r.TREVRATING DESC</when>
+                       <otherwise>r.TREVREGDATE DESC</otherwise>
+                   </choose>
+               ) AS rn
 	        FROM TREVIEW r
 	        WHERE r.TREVSTATUS IN ('CMT001', 'CMT003')
 	        
@@ -117,6 +117,14 @@
 	    ) r
 	    LEFT JOIN TReviewImage i ON r.TREVID = i.TREVID
 	    WHERE r.rn BETWEEN #{offset} + 1 AND #{offset} + #{pageRowCount}
+	    ORDER BY 
+        <choose>
+            <when test="dto.sortType.name() == 'LATEST'">r.TREVREGDATE DESC</when>
+            <when test="dto.sortType.name() == 'OLDEST'">r.TREVREGDATE ASC</when>
+            <when test="dto.sortType.name() == 'VIEWS'">r.TREVCOUNT DESC</when>
+            <when test="dto.sortType.name() == 'RATING'">r.TREVRATING DESC</when>
+            <otherwise>r.TREVREGDATE DESC</otherwise>
+        </choose>
 	</select>
 	
 	<update id="incrementTReviewCount" parameterType="int">
