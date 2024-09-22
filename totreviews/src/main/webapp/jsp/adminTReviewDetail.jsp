@@ -254,7 +254,7 @@
 		                <th>번호</th>
 		                <th>작성자</th>
 		                <th>내용</th>
-		                <th>수정 일시</th>
+		                <th>일시</th>
 		                <th>활동</th>
 		            </tr>
 		        </thead>

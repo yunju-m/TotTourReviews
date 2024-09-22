@@ -24,7 +24,7 @@
             TREVCONTENT = #{trevContent},
             TREVRATING = #{trevRating},
             TREVREGDATE = #{trevRegdate},
-            TREVUPDATE = #{trevUpdate},
+            TREVUPDATE = sysdate,
             TREVCOUNT = #{trevCount}
         WHERE TREVID = #{trevId}
     </update>
