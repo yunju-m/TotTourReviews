@@ -229,7 +229,16 @@
 		                                </c:choose>
 		                            </td>
 		                            <td>
-		                                <button class="initButton" onclick="toggleComment(${comment.commentId})">비활성화</button>
+		                            	<div class="activeButtonDiv" data-trevid="${comment.commentId}">
+								        	<c:choose>
+									            <c:when test="${comment.status == 'CMT001' || comment.status == 'CMT003' || comment.status == 'CMT005'}">
+									                <button class="initButton active" data-url="${pageContext.request.contextPath}/admin/comment/${boardId}/deactive">활성화</button>
+									            </c:when>
+									            <c:when test="${comment.status == 'CMT002' || comment.status == 'CMT004'}">
+									                <button class="initButton" data-url="${pageContext.request.contextPath}/admin/comment/${boardId}/active">비활성화</button>
+									            </c:when>
+									        </c:choose>
+								        </div>
 		                            </td>
 		                        </tr>
 		                    </c:forEach>

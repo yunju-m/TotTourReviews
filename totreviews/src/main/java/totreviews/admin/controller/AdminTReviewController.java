@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import totreviews.admin.service.AdminCommentService;
 import totreviews.admin.service.AdminTReviewService;
 import totreviews.common.page.PageReqDTO;
 import totreviews.common.page.PageResDTO;
@@ -25,7 +26,6 @@ import totreviews.domain.CourseDTO;
 import totreviews.domain.HistoryVO;
 import totreviews.domain.MemberVO;
 import totreviews.domain.TReviewResDTO;
-import totreviews.service.CommentService;
 import totreviews.service.CourseService;
 import totreviews.service.HistoryService;
 import totreviews.util.MemberUtil;
@@ -42,7 +42,7 @@ public class AdminTReviewController {
 	private CourseService courseService;
 
 	@Autowired
-	private CommentService commentService;
+	private AdminCommentService adminCommentService;
 
 	@Autowired
 	private HistoryService historyService;
@@ -75,7 +75,7 @@ public class AdminTReviewController {
 
 		TReviewResDTO review = adminTreviewService.getTReviewById(trevId);
 		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(review.getTripId());
-		List<CommentVO> comments = commentService.getCommentsByReviewId(trevId);
+		List<CommentVO> comments = adminCommentService.getCommentsByReviewId(trevId);
 		List<HistoryVO> historys = historyService.getTReviewHistorysById(trevId);
 
 		model.addAttribute("boardId", boardId);

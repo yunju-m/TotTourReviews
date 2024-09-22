@@ -6,7 +6,7 @@ const ALL_ADMIN_DEACTIVE_TREVIEW_URL = `${BASE_TREVIEW_URL}/2/1`; // 비활성�
 // 에러 메시지 선언
 const ERROR_MESSAGES = {
     NOT_SELECT_TREVIEW: '하나 이상의 후기 게시물을 선택해야 합니다.',
-    FAIL_UPDATE_TREVSTATUS: '상태 변경 중 오류가 발생했습니다'
+    FAIL_UPDATE_STATUS: '상태 변경 중 오류가 발생했습니다'
 };
 
 $(document).ready(() => {
@@ -62,7 +62,7 @@ $(document).ready(() => {
     $('.activeButtonDiv button').on('click', function () {
         const button = $(this);
         const action = button.text() === '활성화' ? '비활성화' : '활성화';
-        const trevId = $('.activeButtonDiv').data('trevid');
+        const trevId = button.closest('.activeButtonDiv').data('trevid');
 
         if (confirm(`${action} 하시겠습니까?`)) {
             const url = button.data('url');
@@ -83,10 +83,10 @@ $(document).ready(() => {
 	    modalImg.attr('src', $(this).attr('src')); // 클릭한 이미지의 src 설정
 	    captionText.text($(this).attr('alt')); // 이미지 설명 추가
     });
-
+	
 });
 
-// 게시물 활성화, 비활성화 처리 함수
+// 활성화, 비활성화 처리 함수
 const handleActiveStatus = (url, data) => {
     $.ajax({
         type: 'POST',
@@ -97,9 +97,14 @@ const handleActiveStatus = (url, data) => {
             alert(response.message);
             location.reload();
         },
-        error: function (error) {
-            alert(ERROR_MESSAGES.FAIL_UPDATE_TREVSTATUS);
-            console.log(error);
+        error: function (xhr) {
+            // 서버에서 전달한 오류 메시지를 확인
+            const errorResponse = xhr.responseJSON;
+            if (errorResponse && errorResponse.message) {
+                alert(errorResponse.message);
+            } else {
+                alert(ERROR_MESSAGES.FAIL_UPDATE_STATUS);
+            }
         }
     });
 }

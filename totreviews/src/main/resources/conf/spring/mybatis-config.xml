@@ -36,6 +36,7 @@
         <mapper resource="conf/mapper/HistoryMapper.xml"/>
         
         <mapper resource="conf/mapper/AdminTReviewMapper.xml"/>
+        <mapper resource="conf/mapper/AdminCommentMapper.xml"/>
     </mappers>
     
 </configuration>
