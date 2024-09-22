@@ -56,7 +56,7 @@
         
         <!-- 활성화, 비활성화 목록 버튼 -->
         <div class="activeButtonDiv">
-        	 <div class="initButton active" id="activeBtn">활성화</div>
+        	<div class="initButton active" id="activeBtn">활성화</div>
             <div class="initButton" id="deactiveBtn">비활성화</div>
         </div>
 

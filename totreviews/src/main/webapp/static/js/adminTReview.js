@@ -35,8 +35,8 @@ $(document).ready(() => {
     $("#selectAll").change(function (e) {
         $("input[name='reviewSelect']").prop("checked", this.checked);
     });
-    
-    // 게시물 활성화, 비활성화 처리
+
+    // 게시물 목록에서 체크한 게시물들에 대한 활성화, 비활성화 처리
     $('.activeButton').on('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -50,27 +50,44 @@ $(document).ready(() => {
             return;
         }
 
-        const url = $(this).attr('href');
-
-        $.ajax({
-            type: 'POST',
-            url: url,
-            contentType: 'application/json',
-            data: JSON.stringify(selectedReviews),
-            success: function (response) {
-                alert(response.message);
-                location.reload();
-            },
-            error: function (xhr, status, error) {
-                alert(ERROR_MESSAGES.FAIL_UPDATE_TREVSTATUS);
-                console.log(error);
-            }
-        });
+        handleActiveStatus($(this).attr('href'), JSON.stringify(selectedReviews));
     });
 
     // 뒤로가기 버튼 클릭 시 뒤로 이동
     $('.backBtn').on('click', function () {
-        window.history.back();
+        window.location.href = ALL_ADMIN_ACTIVE_TREVIEW_URL;
+    });
+
+    // 게시물 상세 관리에서 활성화, 비활성화 처리
+    $('.activeButtonDiv button').on('click', function () {
+        const button = $(this);
+        const action = button.text() === '활성화' ? '비활성화' : '활성화';
+        const trevId = $('.activeButtonDiv').data('trevid');
+
+        if (confirm(`${action} 하시겠습니까?`)) {
+            const url = button.data('url');
+            const data = JSON.stringify([trevId]);
+
+            handleActiveStatus(url, data);
+        }
     });
 
 });
+
+// 게시물 활성화, 비활성화 처리 함수
+const handleActiveStatus = (url, data) => {
+    $.ajax({
+        type: 'POST',
+        url: url,
+        contentType: 'application/json',
+        data: data,
+        success: function (response) {
+            alert(response.message);
+            location.reload();
+        },
+        error: function (error) {
+            alert(ERROR_MESSAGES.FAIL_UPDATE_TREVSTATUS);
+            console.log(error);
+        }
+    });
+}

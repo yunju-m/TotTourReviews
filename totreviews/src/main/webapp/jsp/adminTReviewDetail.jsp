@@ -19,6 +19,16 @@
         		<button aria-label="뒤로가기">&#128281;</button>
        		</div>
             <div class="bigTitle">게시물 상세 관리</div>
+	        <div class="activeButtonDiv" data-trevid="${review.trevId}">
+	        	<c:choose>
+		            <c:when test="${review.trevStatus == 'CMT001' || review.trevStatus == 'CMT003' || review.trevStatus == 'CMT005'}">
+		                <button class="initButton active" data-url="${pageContext.request.contextPath}/admin/review/${boardId}/deactive">활성화</button>
+		            </c:when>
+		            <c:when test="${review.trevStatus == 'CMT002' || review.trevStatus == 'CMT004'}">
+		                <button class="initButton" data-url="${pageContext.request.contextPath}/admin/review/${boardId}/active">비활성화</button>
+		            </c:when>
+		        </c:choose>
+	        </div>
         </div>
         
         <!-- 1. 상세 정보 내역 -->
