@@ -96,7 +96,10 @@
 	            TREVSTATUS = 'CMT004'
 	        </if>
 	    </set>
-		WHERE TREVID = #{trevId}
+		WHERE TREVID IN 
+	    <foreach item="trevId" collection="trevIds" open="(" separator="," close=")">
+	        #{trevId}
+	    </foreach>
 	</update>
 
 	<resultMap id="TReviewResDTOResultMap" type="TReviewResDTO">

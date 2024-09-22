@@ -30,10 +30,10 @@ public class AdminTReviewDAOImpl implements AdminTReviewDAO {
 	}
 
 	@Override
-	public void updateTReviewStatus(String status, int trevId) {
+	public void updateTReviewStatus(String status, List<Integer> trevIds) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("status", status);
-		params.put("trevId", trevId);
+		params.put("trevIds", trevIds);
 
 		sqlSession.update(NAMESPACE + ".updateTReviewStatus", params);
 	}

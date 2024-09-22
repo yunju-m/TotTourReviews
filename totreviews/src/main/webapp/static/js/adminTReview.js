@@ -21,7 +21,9 @@ const ERROR_MESSAGES = {
     FAIL_EDIT_COMMENT: '댓글 수정에 실패했습니다.',
     FAIL_DELETE_COMMENT: '댓글 삭제를 실패했습니다.',
     FAIL_REPORT_TREVIEW: '여행 후기 신고 접수를 실패했습니다.',
-    FAIL_TOTAL: '신고 중 오류가 발생했습니다. 관리자에게 문의하세요.'
+    FAIL_TOTAL: '신고 중 오류가 발생했습니다. 관리자에게 문의하세요.',
+    NOT_SELECT_TREVIEW: '하나 이상의 후기 게시물을 선택해야 합니다.',
+    FAIL_UPDATE_TREVSTATUS: '상태 변경 중 오류가 발생했습니다'
 };
 
 let fileList = [];  // 업로드 파일 리스트 초기화
@@ -57,21 +59,35 @@ $(document).ready(() => {
     });
     
     // 게시물 활성화, 비활성화 처리
-    $('.activeButton').on('click', function(e) {
-        e.preventDefault(); // 링크 클릭 기본 동작 방지
-        const url = $(this).attr('href'); // 버튼의 href 값 가져오기
-
-        $.get({
+	$('.activeButton').on('click', function(e) {
+	    e.preventDefault();
+	    
+	    const selectedReviews = $("input[name='reviewSelect']:checked").map(function() {
+	        return $(this).val();
+	    }).get();
+	
+	    if (selectedReviews.length === 0) {
+	        alert(ERROR_MESSAGES.NOT_SELECT_TREVIEW);
+	        return;
+	    }
+	
+	    const url = $(this).attr('href');
+	    
+	    $.ajax({
+	        type: 'POST',
 	        url: url,
+	        contentType: 'application/json',
+	        data: JSON.stringify(selectedReviews),
 	        success: function(response) {
 	            alert(response.message);
 	            location.reload();
 	        },
 	        error: function(xhr, status, error) {
-	            alert('비활성화 중 오류가 발생했습니다: ' + error);
+	            alert(ERROR_MESSAGES.FAIL_UPDATE_TREVSTATUS);
+	            console.log(error);
 	        }
 	    });
-    });
+	});
 
     // 여행 선택 시 코스 로드
     $('#travelTrip').on('change', function () {

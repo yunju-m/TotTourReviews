@@ -112,10 +112,10 @@
 					        <td>
 					            <c:choose>
 							        <c:when test="${boardId == 1}">
-							            <a href="${pageContext.request.contextPath}/admin/review/${boardId}/deactive/${review.trevId}" class="activeButton">비활성화</a>
+							            <a href="${pageContext.request.contextPath}/admin/review/${boardId}/deactive" class="activeButton">비활성화</a>
 							        </c:when>
 							        <c:when test="${boardId == 2}">
-							            <a href="${pageContext.request.contextPath}/admin/review/${boardId}/active/${review.trevId}" class="activeButton">활성화</a>
+							            <a href="${pageContext.request.contextPath}/admin/review/${boardId}/active" class="activeButton">활성화</a>
 							        </c:when>
 						    </c:choose>
 					        </td>
