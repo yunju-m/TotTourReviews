@@ -5,16 +5,27 @@
 	<select id="selectTotalTReviewCount" parameterType="PageDTO" resultType="int">
 	    SELECT COUNT(DISTINCT r.TREVID) AS total_count
 	    FROM TREVIEW r
+	    WHERE 1=1
+	    
+	    <choose>
+			<when test="boardId == 1">
+				AND r.TREVSTATUS IN ('CMT001', 'CMT003', 'CMT005')
+			</when>
+			<when test="boardId == 2">
+				AND r.TREVSTATUS IN ('CMT002', 'CMT004')
+			</when>
+		</choose>
+	    
 	    <if test="dto.search != null and dto.search != ''">
 	        <choose>
 	            <when test="dto.searchType.name() == 'TITLE'">
-	                WHERE r.TREVTITLE LIKE '%' || #{dto.search} || '%'
+	                AND r.TREVTITLE LIKE '%' || #{dto.search} || '%'
 	            </when>
 	            <when test="dto.searchType.name() == 'CONTENT'">
-	                WHERE r.TREVCONTENT LIKE '%' || #{dto.search} || '%'
+	                AND r.TREVCONTENT LIKE '%' || #{dto.search} || '%'
 	            </when>
 	            <when test="dto.searchType.name() == 'ALL'">
-	                WHERE (r.TREVTITLE LIKE '%' || #{dto.search} || '%'
+	                AND (r.TREVTITLE LIKE '%' || #{dto.search} || '%'
 	                    OR r.TREVCONTENT LIKE '%' || #{dto.search} || '%')
 	            </when>
 	        </choose>
@@ -37,16 +48,27 @@
 	                   </choose>
 	               ) AS rn
 	        FROM TREVIEW r
+	        WHERE 1=1
+	        
+	        <choose>
+				<when test="boardId == 1">
+					AND r.TREVSTATUS IN ('CMT001', 'CMT003', 'CMT005')
+				</when>
+				<when test="boardId == 2">
+					AND r.TREVSTATUS IN ('CMT002', 'CMT004')
+				</when>
+			</choose>
+	        
 	        <if test="dto.search != null and dto.search != ''">
 	            <choose>
 	                <when test="dto.searchType.name() == 'TITLE'">
-	                    WHERE r.TREVTITLE LIKE '%' || #{dto.search} || '%'
+	                    AND r.TREVTITLE LIKE '%' || #{dto.search} || '%'
 	                </when>
 	                <when test="dto.searchType.name() == 'CONTENT'">
-	                    WHERE r.TREVCONTENT LIKE '%' || #{dto.search} || '%'
+	                    AND r.TREVCONTENT LIKE '%' || #{dto.search} || '%'
 	                </when>
 	                <when test="dto.searchType.name() == 'ALL'">
-	                    WHERE (r.TREVTITLE LIKE '%' || #{dto.search} || '%'
+	                    AND (r.TREVTITLE LIKE '%' || #{dto.search} || '%'
 	                        OR r.TREVCONTENT LIKE '%' || #{dto.search} || '%')
 	                </when>
 	            </choose>
@@ -64,9 +86,16 @@
 	    </choose>
 	</select>
 	
-	<update id="updateTReviewStatus" parameterType="int">
+	<update id="updateTReviewStatus">
 		UPDATE TREVIEW
-		SET TREVSTATUS = 'CMT004'
+		<set>
+	        <if test="status == 'active'">
+	            TREVSTATUS = 'CMT001'
+	        </if>
+	        <if test="status == 'deactive'">
+	            TREVSTATUS = 'CMT004'
+	        </if>
+	    </set>
 		WHERE TREVID = #{trevId}
 	</update>
 

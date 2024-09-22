@@ -8,6 +8,6 @@ public interface AdminTReviewService {
 
 	PageResDTO<TReviewResDTO> findTReviewListWithPaging(PageReqDTO dto, String boardId);
 
-	void updateTReviewStatus(int trevId);
+	void updateTReviewStatus(String status, int trevId);
 
 }

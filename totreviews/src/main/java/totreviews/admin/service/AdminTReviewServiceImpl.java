@@ -25,6 +25,7 @@ public class AdminTReviewServiceImpl implements AdminTReviewService {
 			PageDTO pageDTO = new PageDTO(pageReqDTO, boardId);
 
 			int totalTReviewCount = adminTReviewDAO.selectTotalTReviewCount(pageDTO);
+			System.out.println(totalTReviewCount);
 
 			List<TReviewResDTO> postList = adminTReviewDAO.selectTReviewListWithPaging(pageDTO);
 			return new PageResDTO<>(totalTReviewCount, pageReqDTO.getPage(), postList);
@@ -34,9 +35,9 @@ public class AdminTReviewServiceImpl implements AdminTReviewService {
 	}
 
 	@Override
-	public void updateTReviewStatus(int trevId) {
+	public void updateTReviewStatus(String status, int trevId) {
 		try {
-			adminTReviewDAO.updateTReviewStatus(trevId);
+			adminTReviewDAO.updateTReviewStatus(status, trevId);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 게시물 상태 업데이트 중 오류 발생", e);
 		}

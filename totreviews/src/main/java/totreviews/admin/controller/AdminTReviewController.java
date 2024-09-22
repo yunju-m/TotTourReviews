@@ -20,28 +20,28 @@ import totreviews.domain.TReviewResDTO;
 import totreviews.util.ResponseUtil;
 
 @Controller
-@RequestMapping("/admin/review")
+@RequestMapping("/admin/review/{boardId}")
 public class AdminTReviewController {
 
 	@Autowired
 	private AdminTReviewService adminTreviewService;
 
 	@GetMapping("/{page}")
-	public String showAdminTReview(@ModelAttribute PageReqDTO pageReqDTO, Model model) {
-		PageResDTO<TReviewResDTO> pagination = adminTreviewService.findTReviewListWithPaging(pageReqDTO, "all");
+	public String showAdminTReview(@PathVariable String boardId, @ModelAttribute PageReqDTO pageReqDTO, Model model) {
+		PageResDTO<TReviewResDTO> pagination = adminTreviewService.findTReviewListWithPaging(pageReqDTO, boardId);
 
+		model.addAttribute("boardId", boardId);
 		model.addAttribute("pagination", pagination);
 
 		return PAGE_ADMIN_TREVIEW;
 	}
 
-	@GetMapping("/active/{trevId}")
-	public ResponseEntity<Map<String, String>> updateTReviewStatus(@PathVariable int trevId) {
-		System.out.println(trevId);
-		adminTreviewService.updateTReviewStatus(trevId);
-		
-		
-		return ResponseUtil.createTReviewResponse("게시물이 비활성화되었습니다.");
+	@GetMapping("/{status}/{trevId}")
+	public ResponseEntity<Map<String, String>> updateTReviewStatus(@PathVariable String status,
+			@PathVariable int trevId) {
+		adminTreviewService.updateTReviewStatus(status, trevId);
+
+		return ResponseUtil.createTReviewResponse("게시물 상태가 업데이트되었습니다.");
 	}
 
 }

@@ -11,6 +11,6 @@ public interface AdminTReviewDAO {
 
 	List<TReviewResDTO> selectTReviewListWithPaging(PageDTO pageDTO);
 
-	void updateTReviewStatus(int trevId);
+	void updateTReviewStatus(String status, int trevId);
 
 }

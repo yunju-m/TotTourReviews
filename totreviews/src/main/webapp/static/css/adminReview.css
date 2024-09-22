@@ -7,6 +7,17 @@
 	background-color: lightgray;
 }
 
+/* 게시물 검색 및 활성화 목록 버튼 */
+.searchAndWriteDiv {
+	justify-content: center;
+}
+
+.activeButtonDiv {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 10px;
+}
+
 /* 게시물 관리 테이블 */
 /* 테이블 스타일 */
 .adminTable {

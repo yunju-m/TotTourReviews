@@ -1,6 +1,8 @@
 package totreviews.admin.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +30,12 @@ public class AdminTReviewDAOImpl implements AdminTReviewDAO {
 	}
 
 	@Override
-	public void updateTReviewStatus(int trevId) {
-		sqlSession.update(NAMESPACE + ".updateTReviewStatus", trevId);
+	public void updateTReviewStatus(String status, int trevId) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("status", status);
+		params.put("trevId", trevId);
+
+		sqlSession.update(NAMESPACE + ".updateTReviewStatus", params);
 	}
 
 }

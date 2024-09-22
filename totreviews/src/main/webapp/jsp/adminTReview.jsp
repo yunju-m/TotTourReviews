@@ -30,7 +30,7 @@
         
         <div class="searchAndWriteDiv">
         	<!-- 여행 후기 검색 및 정렬 폼 -->
-        	<form id="searchForm" action="${pageContext.request.contextPath}/admin/review/1" method="get">
+        	<form id="searchForm" action="${pageContext.request.contextPath}/admin/review/${boardId}/1" method="get">
 	            <div class="searchDiv">
 	            	<!-- 여행 후기 정렬  -->
 	            	<select name="sortType" aria-label="sortType select" class="select">
@@ -52,6 +52,12 @@
 	            </div>
 	        </form>
 	        <!-- 여행 후기 검색 및 정렬 폼 끝 -->
+        </div>
+        
+        <!-- 활성화, 비활성화 목록 버튼 -->
+        <div class="activeButtonDiv">
+        	 <div class="initButton active" id="activeBtn">활성화</div>
+            <div class="initButton" id="deactiveBtn">비활성화</div>
         </div>
 
         <!-- 게시물 테이블 시작 -->
@@ -76,7 +82,7 @@
 					    <tr>
 					    	<td><input type="checkbox" name="reviewSelect" value="${review.trevId}"></td>
 					        <td>${status.index + 1}</td>
-					        <td><a href="${pageContext.request.contextPath}/review/all/detail/${review.trevId}">${review.trevTitle}</a></td>
+					        <td><a href="${pageContext.request.contextPath}/review/${boardId}/detail/${review.trevId}">${review.trevTitle}</a></td>
 					        <td>${review.memId}</td>
 					        <td>${review.trevRegdate}</td>
 					        <td>${review.trevUpdate}</td>
@@ -104,7 +110,14 @@
 					            </c:forEach>
 					        </td>
 					        <td>
-					            <a href="${pageContext.request.contextPath}/admin/review/active/${review.trevId}" class="activeButton">비활성화</a>
+					            <c:choose>
+							        <c:when test="${boardId == 1}">
+							            <a href="${pageContext.request.contextPath}/admin/review/${boardId}/deactive/${review.trevId}" class="activeButton">비활성화</a>
+							        </c:when>
+							        <c:when test="${boardId == 2}">
+							            <a href="${pageContext.request.contextPath}/admin/review/${boardId}/active/${review.trevId}" class="activeButton">활성화</a>
+							        </c:when>
+						    </c:choose>
 					        </td>
 					    </tr>
 					</c:forEach>
@@ -118,13 +131,13 @@
 		    <ul class="paginationList">
 		        <!-- 처음 페이지로 이동하는 버튼 -->
 	            <li class="paginationItem">
-	                <a href="${pageContext.request.contextPath}/admin/review/${pagination.startBlockPage}" class="paginationLink">&laquo;</a>
+	                <a href="${pageContext.request.contextPath}/admin/review/${boardId}/${pagination.startBlockPage}" class="paginationLink">&laquo;</a>
 	            </li>
 		
 		        <!-- 이전 페이지 버튼 -->
 		        <c:if test="${pagination.isPrev}">
 		            <li class="paginationItem">
-		                <a href="${pageContext.request.contextPath}/admin/review/${pagination.currentPage - 1}" class="paginationLink">이전</a>
+		                <a href="${pageContext.request.contextPath}/admin/review/${boardId}/${pagination.currentPage - 1}" class="paginationLink">이전</a>
 		            </li>
 		        </c:if>
 		
@@ -138,7 +151,7 @@
 		                </c:when>
 		                <c:otherwise>
 		                    <li class="paginationItem">
-		                        <a href="${pageContext.request.contextPath}/admin/review/${pageNum}" class="paginationLink">${pageNum}</a>
+		                        <a href="${pageContext.request.contextPath}/admin/review/${boardId}/${pageNum}" class="paginationLink">${pageNum}</a>
 		                    </li>
 		                </c:otherwise>
 		            </c:choose>
@@ -147,13 +160,13 @@
 		        <!-- 다음 페이지 버튼 -->
 		        <c:if test="${pagination.isNext}">
 		            <li class="paginationItem">
-		                <a href="${pageContext.request.contextPath}/admin/review/${pagination.currentPage + 1}" class="paginationLink">다음</a>
+		                <a href="${pageContext.request.contextPath}/admin/review/${boardId}/${pagination.currentPage + 1}" class="paginationLink">다음</a>
 		            </li>
 		        </c:if>
 		
 		        <!-- 맨 끝으로 버튼 -->
 	            <li class="paginationItem">
-	                <a href="${pageContext.request.contextPath}/admin/review/${pagination.endBlockPage}" class="paginationLink">&raquo;</a>
+	                <a href="${pageContext.request.contextPath}/admin/review/${boardId}/${pagination.endBlockPage}" class="paginationLink">&raquo;</a>
 	            </li>
 		    </ul>
 		</nav>

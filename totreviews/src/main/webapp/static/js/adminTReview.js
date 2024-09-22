@@ -2,7 +2,8 @@
 const IS_MEMBER_LOGIN_URL = '/totreviews/member/checkLogin'; // 사용자 로그인 여부 확인 URL
 const LOGIN_URL = '/totreviews/login'; // 로그인 URL
 const BASE_TREVIEW_URL = '/totreviews/admin/review'; // 여행 후기 기본 URL
-const ALL_ADMIN_TREVIEW_URL = `${BASE_TREVIEW_URL}/1`; // 전체 후기 조회 URL
+const ALL_ADMIN_ACTIVE_TREVIEW_URL = `${BASE_TREVIEW_URL}/1/1`; // 활성화 게시물 조회 URL
+const ALL_ADMIN_DEACTIVE_TREVIEW_URL = `${BASE_TREVIEW_URL}/2/1`; // 비활성화 게시물 조회 URL
 const WRITE_TREVIEW_URL = `${BASE_TREVIEW_URL}/add`; // 후기 작성 URL
 
 // 에러 메시지 선언
@@ -29,12 +30,33 @@ $(document).ready(() => {
     // 업로드 이미지 파일 초기화
     initFileList();
 
+	// 현재 경로에 따라 버튼 활성화
+    let path = window.location.pathname;
+    
+    if (path.includes(ALL_ADMIN_ACTIVE_TREVIEW_URL)) {
+        $('#activeBtn').addClass('active');
+        $('#deactiveBtn').removeClass('active');
+    } else if (path.includes(ALL_ADMIN_DEACTIVE_TREVIEW_URL)) {
+        $('#deactiveBtn').addClass('active');
+        $('#activeBtn').removeClass('active');
+    }
+    
+    // 활성화 버튼 클릭 시 활성화 게시물 목록 처리
+    $('#activeBtn').on('click', () => {
+        window.location.href = ALL_ADMIN_ACTIVE_TREVIEW_URL;
+    });
+
+    // 비활성화 버튼 클릭 시 비활성화 게시물 목록 처리
+    $('#deactiveBtn').on('click', () => {
+        window.location.href = ALL_ADMIN_DEACTIVE_TREVIEW_URL;
+    });
+
     // 게시물 관리 전체 선택 및 해제
     $("#selectAll").change(function() {
         $("input[name='reviewSelect']").prop("checked", this.checked);
     });
     
-    // 게시물 비활성화 처리
+    // 게시물 활성화, 비활성화 처리
     $('.activeButton').on('click', function(e) {
         e.preventDefault(); // 링크 클릭 기본 동작 방지
         const url = $(this).attr('href'); // 버튼의 href 값 가져오기
