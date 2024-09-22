@@ -108,7 +108,7 @@ public class TReviewServiceImpl implements TReviewService {
 		try {
 			return treviewDAO.getTReviewById(trevId);
 		} catch (DataAccessException e) {
-			throw new ServerException("여행 후기 상세 정보 정보 가져오던 중 오류 발생", e);
+			throw new ServerException("여행 후기 상세 정보 가져오던 중 오류 발생", e);
 		}
 	}
 

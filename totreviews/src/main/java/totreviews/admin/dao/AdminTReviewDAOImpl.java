@@ -38,4 +38,9 @@ public class AdminTReviewDAOImpl implements AdminTReviewDAO {
 		sqlSession.update(NAMESPACE + ".updateTReviewStatus", params);
 	}
 
+	@Override
+	public TReviewResDTO getTReviewById(int trevId) {
+		return sqlSession.selectOne(NAMESPACE + ".getTReviewById", trevId);
+	}
+
 }

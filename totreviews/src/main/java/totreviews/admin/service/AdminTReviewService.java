@@ -12,4 +12,6 @@ public interface AdminTReviewService {
 
 	void updateTReviewStatus(String status, List<Integer> trevIds);
 
+	TReviewResDTO getTReviewById(int trevId);
+
 }

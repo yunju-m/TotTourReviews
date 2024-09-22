@@ -1,5 +1,6 @@
 package totreviews.admin.controller;
 
+import static totreviews.common.Constants.PAGE_ADMIN_DETAIL_TREVIEW;
 import static totreviews.common.Constants.PAGE_ADMIN_TREVIEW;
 
 import java.util.List;
@@ -19,7 +20,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import totreviews.admin.service.AdminTReviewService;
 import totreviews.common.page.PageReqDTO;
 import totreviews.common.page.PageResDTO;
+import totreviews.domain.CommentVO;
+import totreviews.domain.CourseDTO;
+import totreviews.domain.HistoryVO;
+import totreviews.domain.MemberVO;
 import totreviews.domain.TReviewResDTO;
+import totreviews.service.CommentService;
+import totreviews.service.CourseService;
+import totreviews.service.HistoryService;
+import totreviews.util.MemberUtil;
 import totreviews.util.ResponseUtil;
 
 @Controller
@@ -29,6 +38,16 @@ public class AdminTReviewController {
 	@Autowired
 	private AdminTReviewService adminTreviewService;
 
+	@Autowired
+	private CourseService courseService;
+
+	@Autowired
+	private CommentService commentService;
+
+	@Autowired
+	private HistoryService historyService;
+
+	// 게시물 관리 화면 이동
 	@GetMapping("/{page}")
 	public String showAdminTReview(@PathVariable String boardId, @ModelAttribute PageReqDTO pageReqDTO, Model model) {
 		PageResDTO<TReviewResDTO> pagination = adminTreviewService.findTReviewListWithPaging(pageReqDTO, boardId);
@@ -39,12 +58,35 @@ public class AdminTReviewController {
 		return PAGE_ADMIN_TREVIEW;
 	}
 
+	// 게시물 상태 업데이트 처리
 	@PostMapping("/{status}")
 	public ResponseEntity<Map<String, String>> updateTReviewStatus(@PathVariable String status,
 			@RequestBody List<Integer> trevIds) {
 		adminTreviewService.updateTReviewStatus(status, trevIds);
 
 		return ResponseUtil.createTReviewResponse("게시물 상태가 업데이트되었습니다.");
+	}
+
+	// 게시물 상세 화면 이동
+	@GetMapping("/detail/{trevId}")
+	public String showTourReviewDetail(@PathVariable("boardId") String boardId, @PathVariable("trevId") int trevId,
+			Model model) {
+		MemberVO member = MemberUtil.getAuthenticatedMember();
+
+		TReviewResDTO review = adminTreviewService.getTReviewById(trevId);
+		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(review.getTripId());
+		List<CommentVO> comments = commentService.getCommentsByReviewId(trevId);
+		List<HistoryVO> historys = historyService.getTReviewHistorysById(trevId);
+
+		model.addAttribute("boardId", boardId);
+		model.addAttribute("member", member);
+		model.addAttribute("review", review);
+		model.addAttribute("courses", courses);
+		model.addAttribute("comments", comments);
+		model.addAttribute("historys", historys);
+		model.addAttribute("historyCount", historys.size());
+
+		return PAGE_ADMIN_DETAIL_TREVIEW;
 	}
 
 }

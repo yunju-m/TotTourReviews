@@ -101,6 +101,28 @@
 	        #{trevId}
 	    </foreach>
 	</update>
+	
+	<select id="getTReviewById" parameterType="int" resultMap="TReviewResDTOResultMap">
+		SELECT
+            r.TREVID,
+            r.TRIPID,
+            r.MEMID,
+            r.TREVSTATUS,
+            r.TREVTITLE,
+            r.TREVCONTENT,
+            r.TREVRATING,
+            r.TREVREGDATE,
+            r.TREVUPDATE,
+            r.TREVCOUNT,
+            i.TREVIMGID,
+            i.TREVIMGPATH
+        FROM
+            TREVIEW r
+        LEFT JOIN
+            TReviewImage i ON r.TREVID = i.TREVID
+        WHERE
+            r.TREVID = #{trevId}
+	</select>
 
 	<resultMap id="TReviewResDTOResultMap" type="TReviewResDTO">
 		<id property="trevId" column="TREVID" />

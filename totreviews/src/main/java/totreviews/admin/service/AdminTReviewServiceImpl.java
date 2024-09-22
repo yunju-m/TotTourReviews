@@ -29,7 +29,7 @@ public class AdminTReviewServiceImpl implements AdminTReviewService {
 			List<TReviewResDTO> postList = adminTReviewDAO.selectTReviewListWithPaging(pageDTO);
 			return new PageResDTO<>(totalTReviewCount, pageReqDTO.getPage(), postList);
 		} catch (DataAccessException e) {
-			throw new ServerException("여행 후기 목록 데이터 가져오던 중 데이터베이스 오류 발생", e);
+			throw new ServerException("여행 게시물 목록 정보 가져오던 중 데이터베이스 오류 발생", e);
 		}
 	}
 
@@ -39,6 +39,15 @@ public class AdminTReviewServiceImpl implements AdminTReviewService {
 			adminTReviewDAO.updateTReviewStatus(status, trevIds);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 게시물 상태 업데이트 중 오류 발생", e);
+		}
+	}
+
+	@Override
+	public TReviewResDTO getTReviewById(int trevId) {
+		try {
+			return adminTReviewDAO.getTReviewById(trevId);
+		} catch (DataAccessException e) {
+			throw new ServerException("여행 게시물 상세 정보 가져오던 중 오류 발생", e);
 		}
 	}
 

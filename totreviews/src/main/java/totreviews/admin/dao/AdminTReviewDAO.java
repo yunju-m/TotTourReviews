@@ -13,4 +13,6 @@ public interface AdminTReviewDAO {
 
 	void updateTReviewStatus(String status, List<Integer> trevIds);
 
+	TReviewResDTO getTReviewById(int trevId);
+
 }
