@@ -114,6 +114,12 @@
     color: #555;
 }
 
+/* 별점 스타일 */
+.star {
+    font-size: 20px;
+    color: #ffc107;
+}
+
 /* 여행 후기 페이지 번호 */
 /* 네비게이션 컨테이너 */
 .paginationNav {

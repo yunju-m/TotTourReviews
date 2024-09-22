@@ -158,7 +158,7 @@
 		                <c:forEach var="image" items="${review.trevImages}">
 		                    <img src="${pageContext.request.contextPath}${image.trevImgpath}" 
 		                         alt="여행 후기 이미지 ${image.trevImgId}" 
-		                         class="thumbnail">
+		                         class="uploadTRevImg">
 		                </c:forEach>
 		            </c:when>
 		            <c:otherwise>
@@ -273,5 +273,12 @@
 		</div>
 		<!-- 게시물 이력 내역 끝 -->
     </div>
+    
+    <!-- 이미지 모달 구조 -->
+	<div id="imageModal" class="modal" onclick="closeModal()">
+	    <span class="close" onclick="closeModal()">&times;</span>
+	    <img class="modal-content" id="modalImage">
+	    <div id="caption"></div>
+	</div>
 </body>
 </html>

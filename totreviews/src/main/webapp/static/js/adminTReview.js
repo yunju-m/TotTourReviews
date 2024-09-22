@@ -32,7 +32,7 @@ $(document).ready(() => {
     });
 
     // 게시물 관리 전체 선택 및 해제
-    $("#selectAll").change(function (e) {
+    $("#selectAll").change(function () {
         $("input[name='reviewSelect']").prop("checked", this.checked);
     });
 
@@ -72,6 +72,18 @@ $(document).ready(() => {
         }
     });
 
+    // 이미지 클릭 시 모달 창 토글
+    $('.uploadTRevImg').on('click', function () {
+		const modal = $('#imageModal');
+	    const modalImg = $('#modalImage');
+	    const captionText = $('#caption');
+	
+	    // 모달 열기
+	    modal.show();
+	    modalImg.attr('src', $(this).attr('src')); // 클릭한 이미지의 src 설정
+	    captionText.text($(this).attr('alt')); // 이미지 설명 추가
+    });
+
 });
 
 // 게시물 활성화, 비활성화 처리 함수
@@ -90,4 +102,9 @@ const handleActiveStatus = (url, data) => {
             console.log(error);
         }
     });
+}
+
+// 이미지 모달 창 닫기
+const closeModal = () => {
+    $('#imageModal').hide();
 }
