@@ -13,7 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import totreviews.common.enums.Flag;
+import totreviews.common.enums.ProcessStatus;
 import totreviews.common.page.PageDTO;
 import totreviews.common.page.PageReqDTO;
 import totreviews.common.page.PageResDTO;
@@ -73,7 +73,7 @@ public class TReviewServiceImpl implements TReviewService {
 			}
 
 			saveHistory(tReviewVO.getTrevId(), tReviewVO.getMemId(), member.getMemNick(), "등록",
-					tReviewVO.getTrevContent(), Flag.CMT001);
+					tReviewVO.getTrevContent(), null);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 데이터 삽입 중 데이터베이스 오류 발생", e);
 		}
@@ -156,7 +156,7 @@ public class TReviewServiceImpl implements TReviewService {
 			}
 
 			saveHistory(tReviewVO.getTrevId(), tReviewVO.getMemId(), member.getMemNick(), "수정",
-					tReviewVO.getTrevContent(), Flag.CMT005);
+					tReviewVO.getTrevContent(), null);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 글 수정 중 데이터베이스 오류 발생", e);
 		}
@@ -174,7 +174,7 @@ public class TReviewServiceImpl implements TReviewService {
 			treviewDAO.deleteTReview(trevId);
 
 			saveHistory(trevId, MemberUtil.isAuthenticatedMember().getMemId(), member.getMemNick(), "삭제", trevContent,
-					Flag.CMT002);
+					null);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 글 삭제 중 데이터베이스 오류 발생", e);
 		}
@@ -192,7 +192,7 @@ public class TReviewServiceImpl implements TReviewService {
 			treviewDAO.reportTReview(trevId);
 			treviewDAO.insertReportTReview(reportVO);
 
-			saveHistory(trevId, member.getMemId(), member.getMemNick(), "신고", reportReason, Flag.CMT004);
+			saveHistory(trevId, member.getMemId(), member.getMemNick(), "신고", reportReason, ProcessStatus.RECEIVED);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 글 신고 중 데이터베이스 오류 발생", e);
 		}
@@ -201,7 +201,8 @@ public class TReviewServiceImpl implements TReviewService {
 	/*
 	 * 여행 후기글 등록, 수정, 삭제, 신고 내역 기록 메소드
 	 */
-	private void saveHistory(int trevId, String memId, String memNick, String action, String content, Flag status) {
+	private void saveHistory(int trevId, String memId, String memNick, String action, String content,
+			ProcessStatus status) {
 		HistoryVO historyVO = HistoryVO.fromTReviewHistoryVO(trevId, memId, memNick, action, content, status);
 
 		historyService.insertTReviewHistory(historyVO);

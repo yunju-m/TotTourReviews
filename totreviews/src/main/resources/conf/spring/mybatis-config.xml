@@ -23,7 +23,9 @@
     	<typeAlias alias="PageReqDTO" type="totreviews.common.page.PageReqDTO"/>
     	<typeAlias alias="PageResDTO" type="totreviews.common.page.PageResDTO"/>
     	<typeAlias alias="ReportVO" type="totreviews.domain.ReportVO"/>
+    	<typeAlias alias="ReportDTO" type="totreviews.domain.ReportDTO"/>
     	<typeAlias alias="ReportCommentDTO" type="totreviews.domain.ReportCommentDTO"/>
+    	<typeAlias alias="ReportTReviewDTO" type="totreviews.domain.ReportTReviewDTO"/>
     	<typeAlias alias="HistoryVO" type="totreviews.domain.HistoryVO"/>
     </typeAliases>
     
@@ -37,6 +39,7 @@
         
         <mapper resource="conf/mapper/AdminTReviewMapper.xml"/>
         <mapper resource="conf/mapper/AdminCommentMapper.xml"/>
+        <mapper resource="conf/mapper/AdminReportMapper.xml"/>
     </mappers>
     
 </configuration>

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import totreviews.common.enums.Flag;
+import totreviews.common.enums.ProcessStatus;
 import totreviews.dao.CommentDAO;
 import totreviews.domain.CommentReqDTO;
 import totreviews.domain.CommentVO;
@@ -38,8 +38,8 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	/*
-	 * 댓글 정보 처리
-	 * 최상위 댓글 ID, 댓글 depth 저장
+	 * 댓글 정보 처리 
+	 * 최상위 댓글 ID, 댓글 depth 저장 
 	 * 최상위 댓글일 경우, 자신의 commentId를 topParentId로 설정
 	 */
 	@Override
@@ -59,15 +59,14 @@ public class CommentServiceImpl implements CommentService {
 				updateTopParentId(commentVO);
 			}
 
-			saveHistory(insertedCommentId, member.getMemId(), member.getMemNick(), "등록", commentReqDTO.getContent(),
-					Flag.CMT001);
+			saveHistory(insertedCommentId, member.getMemId(), member.getMemNick(), "등록", commentReqDTO.getContent(), null);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 댓글 작성 등록 중 오류 발생", e);
 		}
 	}
 
 	/*
-	 * 댓글 수정 처리
+	 * 댓글 수정 처리 
 	 * 새로운 댓글 내용으로 업데이트
 	 */
 	@Override
@@ -77,14 +76,14 @@ public class CommentServiceImpl implements CommentService {
 
 			commentDAO.editComment(commentId, content);
 
-			saveHistory(commentId, member.getMemId(), member.getMemNick(), "수정", content, Flag.CMT005);
+			saveHistory(commentId, member.getMemId(), member.getMemNick(), "수정", content, null);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 댓글 수정 중 오류 발생", e);
 		}
 	}
 
 	/*
-	 * 댓글 삭제 처리
+	 * 댓글 삭제 처리 
 	 * 해당 댓글 삭제 상태 업데이트
 	 */
 	@Override
@@ -96,8 +95,7 @@ public class CommentServiceImpl implements CommentService {
 				
 				commentDAO.deleteComment(commentId);
 				
-				saveHistory(commentId, member.getMemId(), member.getMemNick(), "삭제", existingComment.getContent(),
-						Flag.CMT002);
+				saveHistory(commentId, member.getMemId(), member.getMemNick(), "삭제", existingComment.getContent(), null);
 			}
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 댓글 삭제 중 오류 발생", e);
@@ -119,8 +117,8 @@ public class CommentServiceImpl implements CommentService {
 
 			commentDAO.updateCommentStatus(commentId);
 			commentDAO.insertReportComment(reportVO);
-			
-			saveHistory(commentId, member.getMemId(), member.getMemNick(), "신고", reportReason, Flag.CMT004);
+
+			saveHistory(commentId, member.getMemId(), member.getMemNick(), "신고", reportReason, ProcessStatus.RECEIVED);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 후기 댓글 신고 중 오류 발생", e);
 		}
@@ -140,7 +138,7 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	/*
-	 * 추가되는 댓글에 대한 최상위 부모 댓글 ID, depth 설정
+	 * 추가되는 댓글에 대한 최상위 부모 댓글 ID, depth 설정 
 	 * 부모 댓글 ID가 있을 경우, 대댓글로 간주
 	 */
 	private void handleSetCommentInfo(CommentVO vo, int postId) {
@@ -165,7 +163,8 @@ public class CommentServiceImpl implements CommentService {
 	/*
 	 * 여행 후기글 등록, 수정, 삭제, 신고 내역 기록 메소드
 	 */
-	private void saveHistory(int trevcId, String memId, String memNick, String action, String content, Flag status) {
+	private void saveHistory(int trevcId, String memId, String memNick, String action, String content,
+			ProcessStatus status) {
 		HistoryVO historyVO = HistoryVO.fromCommentHistoryVO(trevcId, memId, memNick, action, content, status);
 
 		historyService.insertCommentHistory(historyVO);

@@ -2,7 +2,7 @@ package totreviews.domain;
 
 import java.sql.Timestamp;
 
-import totreviews.common.enums.Flag;
+import totreviews.common.enums.ProcessStatus;
 
 public class HistoryVO {
 
@@ -14,13 +14,13 @@ public class HistoryVO {
 	private String action; // 수행된 액션
 	private Timestamp actionDate; // 액션 일시
 	private String content; // 신고 내용 또는 게시글/댓글 내용
-	private Flag status; // 게시글/댓글의 상태
+	private ProcessStatus status; // 게시글/댓글의 상태
 
 	public HistoryVO() {
 	}
 
 	public HistoryVO(Integer trevId, Integer trevcId, String memId, String memNick, String action, String content,
-			Flag status) {
+			ProcessStatus status) {
 		this.trevId = trevId;
 		this.trevcId = trevcId;
 		this.memId = memId;
@@ -31,17 +31,17 @@ public class HistoryVO {
 	}
 
 	public static HistoryVO fromTReviewHistoryVO(int trevId, String memId, String memNick, String action,
-			String content, Flag status) {
+			String content, ProcessStatus status) {
 		return new HistoryVO(trevId, null, memId, memNick, action, content, status);
 	}
 
 	public static HistoryVO fromCommentHistoryVO(int trevcId, String memId, String memNick, String action,
-			String content, Flag status) {
+			String content, ProcessStatus status) {
 		return new HistoryVO(null, trevcId, memId, memNick, action, content, status);
 	}
 
 	public HistoryVO(int historyId, int trevId, Integer trevcId, String memId, String memNick, String action,
-			Timestamp actionDate, String content, Flag status) {
+			Timestamp actionDate, String content, ProcessStatus status) {
 		this.historyId = historyId;
 		this.trevId = trevId;
 		this.trevcId = trevcId;
@@ -85,7 +85,7 @@ public class HistoryVO {
 		return content;
 	}
 
-	public Flag getStatus() {
+	public ProcessStatus getStatus() {
 		return status;
 	}
 

@@ -1,7 +1,5 @@
 <%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="totreviews.domain.MemberVO"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -42,8 +40,8 @@
 	                <select name="searchType" aria-label="searchType select" class="select">
 	                    <option value="ALL" ${page.searchType == 'ALL' ? 'selected' : ''}>전체</option>
 	                    <option value="CONTENT" ${page.searchType == 'CONTENT' ? 'selected' : ''}>내용</option>
-	                    <option value="POST" ${page.sortType == 'POST' ? 'selected' : ''}>게시물</option>
-			            <option value="MEMBER" ${page.sortType == 'MEMBER' ? 'selected' : ''}>사용자</option>
+	                    <option value="POST" ${page.searchType == 'POST' ? 'selected' : ''}>게시물</option>
+			            <option value="MEMBER" ${page.searchType == 'MEMBER' ? 'selected' : ''}>사용자</option>
                 	</select>
 	                <input name="search" class="searchInput" value="${page.search}" type="text" placeholder="검색어를 입력하세요.">
 	                <!-- 댓글 검색 끝 -->
