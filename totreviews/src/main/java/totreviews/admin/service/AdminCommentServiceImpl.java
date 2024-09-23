@@ -50,9 +50,9 @@ public class AdminCommentServiceImpl implements AdminCommentService {
 	}
 
 	@Override
-	public PageResDTO<CommentVO> findCommentListWithPaging(PageReqDTO pageReqDTO) {
+	public PageResDTO<CommentVO> findCommentListWithPaging(PageReqDTO pageReqDTO, String boardId) {
 		try {
-			PageDTO pageDTO = new PageDTO(pageReqDTO);
+			PageDTO pageDTO = new PageDTO(pageReqDTO, boardId);
 			int totalTReviewCount = adminCommentDAO.selectTotalCommentCount(pageDTO);
 
 			List<CommentVO> commentList = adminCommentDAO.selectCommentListWithPaging(pageDTO);

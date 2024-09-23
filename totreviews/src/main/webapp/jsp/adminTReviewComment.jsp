@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/adminReview.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/static/js/adminTReviewComment.js"></script>
-    <title>게시물 관리</title>
+    <title>댓글 관리</title>
 </head>
 <body>
     <div class="mainDiv">
@@ -29,7 +29,7 @@
         
         <div class="searchAndWriteDiv">
         	<!-- 댓글 검색 및 정렬 폼 -->
-        	<form id="searchForm" action="${pageContext.request.contextPath}/admin/comment/1" method="get">
+        	<form id="searchForm" action="${pageContext.request.contextPath}/admin/comment/${boardId}/1" method="get">
 	            <div class="searchDiv">
 	            	<!-- 댓글 정렬  -->
 	            	<select name="sortType" aria-label="sortType select" class="select">
@@ -83,7 +83,11 @@
 					        <td>${status.index+1}</td>
 					        <td>${comment.postId}</td>
 					        <td>${comment.memNick}</td>
-					        <td>${comment.content}</td>
+					        <td>
+						        <div class="comment-content">
+	                            	${comment.content}
+	                            </div>
+					        </td>
 					        <td>${comment.regDate}</td>
 					        <td>${comment.update}</td>
 					        <td>
@@ -108,10 +112,10 @@
 					        <td>
 					        	<c:choose>
 							        <c:when test="${comment.status == 'CMT001' || comment.status == 'CMT003' || comment.status == 'CMT005'}">
-						                <a href="${pageContext.request.contextPath}/admin/comment/deactive" class="activeButton">비활성화</a>
+						                <a href="${pageContext.request.contextPath}/admin/comment/${boardId}/deactive" class="activeButton">비활성화</a>
 						            </c:when>
 						            <c:when test="${comment.status == 'CMT002' || comment.status == 'CMT004'}">
-						                <a href="${pageContext.request.contextPath}/admin/comment/active" class="activeButton">활성화</a>
+						                <a href="${pageContext.request.contextPath}/admin/comment/${boardId}/active" class="activeButton">활성화</a>
 						            </c:when>
 						    	</c:choose>
 					        </td>
@@ -127,13 +131,13 @@
 		    <ul class="paginationList">
 		        <!-- 처음 페이지로 이동하는 버튼 -->
 	            <li class="paginationItem">
-	                <a href="${pageContext.request.contextPath}/admin/comment/${pagination.startBlockPage}" class="paginationLink">&laquo;</a>
+	                <a href="${pageContext.request.contextPath}/admin/comment/${boardId}/${pagination.startBlockPage}" class="paginationLink">&laquo;</a>
 	            </li>
 		
 		        <!-- 이전 페이지 버튼 -->
 		        <c:if test="${pagination.isPrev}">
 		            <li class="paginationItem">
-		                <a href="${pageContext.request.contextPath}/admin/comment/${pagination.currentPage - 1}" class="paginationLink">이전</a>
+		                <a href="${pageContext.request.contextPath}/admin/comment/${boardId}/${pagination.currentPage - 1}" class="paginationLink">이전</a>
 		            </li>
 		        </c:if>
 		
@@ -147,7 +151,7 @@
 		                </c:when>
 		                <c:otherwise>
 		                    <li class="paginationItem">
-		                        <a href="${pageContext.request.contextPath}/admin/comment/${pageNum}" class="paginationLink">${pageNum}</a>
+		                        <a href="${pageContext.request.contextPath}/admin/comment/${boardId}/${pageNum}" class="paginationLink">${pageNum}</a>
 		                    </li>
 		                </c:otherwise>
 		            </c:choose>
@@ -156,13 +160,13 @@
 		        <!-- 다음 페이지 버튼 -->
 		        <c:if test="${pagination.isNext}">
 		            <li class="paginationItem">
-		                <a href="${pageContext.request.contextPath}/admin/comment/${pagination.currentPage + 1}" class="paginationLink">다음</a>
+		                <a href="${pageContext.request.contextPath}/admin/comment/${boardId}/${pagination.currentPage + 1}" class="paginationLink">다음</a>
 		            </li>
 		        </c:if>
 		
 		        <!-- 맨 끝으로 버튼 -->
 	            <li class="paginationItem">
-	                <a href="${pageContext.request.contextPath}/admin/comment/${pagination.endBlockPage}" class="paginationLink">&raquo;</a>
+	                <a href="${pageContext.request.contextPath}/admin/comment/${boardId}/${pagination.endBlockPage}" class="paginationLink">&raquo;</a>
 	            </li>
 		    </ul>
 		</nav>

@@ -72,6 +72,15 @@
 		SELECT COUNT(DISTINCT c.TREVCID) AS total_count
 	    FROM TREVIEWCOMMENT c
 	    WHERE 1=1
+	    
+	    <choose>
+			<when test="boardId == 1">
+				AND c.COMMENTSTATUS IN ('CMT001', 'CMT003', 'CMT005')
+			</when>
+			<when test="boardId == 2">
+				AND c.COMMENTSTATUS IN ('CMT002', 'CMT004')
+			</when>
+		</choose>
 
 		<if test="dto.search != null and dto.search != ''">
 			<choose>
@@ -120,7 +129,15 @@
 	        FROM TREVIEWCOMMENT c
 	        WHERE 1=1
 	        
-	        <!-- 검색 조건 -->
+	        <choose>
+				<when test="boardId == 1">
+					AND c.COMMENTSTATUS IN ('CMT001', 'CMT003', 'CMT005')
+				</when>
+				<when test="boardId == 2">
+					AND c.COMMENTSTATUS IN ('CMT002', 'CMT004')
+				</when>
+			</choose>
+	        
 	        <if test="dto.search != null and dto.search != ''">
 	            <choose>
 	                <when test="dto.searchType.name() == 'CONTENT'">

@@ -23,7 +23,7 @@ import totreviews.domain.CommentVO;
 import totreviews.util.ResponseUtil;
 
 @Controller
-@RequestMapping("/admin/comment")
+@RequestMapping("/admin/comment/{boardId}")
 public class AdminCommentController {
 
 	@Autowired
@@ -31,16 +31,17 @@ public class AdminCommentController {
 
 	// 게시물 관리 화면 이동
 	@GetMapping("/{page}")
-	public String showAdminComment(@ModelAttribute PageReqDTO pageReqDTO, Model model) {
-		PageResDTO<CommentVO> pagination = adminCommentService.findCommentListWithPaging(pageReqDTO);
+	public String showAdminComment(@PathVariable String boardId, @ModelAttribute PageReqDTO pageReqDTO, Model model) {
+		PageResDTO<CommentVO> pagination = adminCommentService.findCommentListWithPaging(pageReqDTO, boardId);
 
+		model.addAttribute("boardId", boardId);
 		model.addAttribute("pagination", pagination);
 
 		return PAGE_ADMIN_TREVIEW_COMMENT;
 	}
 
 	// 댓글 상태 업데이트 처리
-	@PostMapping("/{boardId}/{status}")
+	@PostMapping("/{status}")
 	public ResponseEntity<Map<String, String>> updateCommentStatus(@PathVariable String status,
 			@RequestBody List<Integer> trevcIds) {
 		try {
