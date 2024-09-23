@@ -55,7 +55,7 @@ $(document).ready(() => {
 
     // 뒤로가기 버튼 클릭 시 뒤로 이동
     $('.backBtn').on('click', function () {
-        window.location.href = ALL_ADMIN_ACTIVE_TREVIEW_URL;
+        window.history.back();
     });
 
     // 게시물 상세 관리에서 활성화, 비활성화 처리

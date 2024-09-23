@@ -52,10 +52,17 @@ $(document).ready(() => {
 
         handleActiveStatus($(this).attr('href'), JSON.stringify(selectedReviews));
     });
-
-    // 뒤로가기 버튼 클릭 시 뒤로 이동
-    $('.backBtn').on('click', function () {
-        window.location.href = ALL_ADMIN_ACTIVE_TREVIEW_COMMENT_URL;
+    
+    // 행 전체 클릭 시 체크박스 선택
+    $('tbody tr').on('click', function() {
+        const checkbox = $(this).find('input[name="commentSelect"]');
+        checkbox.prop('checked', !checkbox.prop('checked'));
+    });
+    
+    // 체크박스를 클릭시 체크박스 선택
+    $('input[name="commentSelect"]').on('click', function(event) {
+        const checkbox = $(this);
+        checkbox.prop('checked', !checkbox.prop('checked'));
     });
 
     // 댓글 상세 관리에서 활성화, 비활성화 처리
@@ -74,6 +81,25 @@ $(document).ready(() => {
 
 	// 댓글 내용 최대 길이 조정
     handleCommentMaxLength();
+    
+    // 댓글 내용을 클릭했을 때 모달 열기 
+    $('.comment-content').on('click', function() {
+        const commentText = $(this).data('full-text');
+        $('#modalCommentContent').text(commentText);
+        $('#commentModal').show();
+    });
+
+    // 모달 닫기 버튼 클릭 시 모달 닫기
+    $('.close2').on('click', function() {
+        $('#commentModal').hide(); // 모달 닫기
+    });
+
+    // 모달 외부 클릭 시 모달 닫기
+    $(window).on('click', function(event) {
+        if ($(event.target).is('#commentModal')) {
+            $('#commentModal').hide();
+        }
+    });
 });
 
 // 활성화, 비활성화 처리 함수
@@ -101,13 +127,15 @@ const handleActiveStatus = (url, data) => {
 
 // 댓글 내용 최대 길이 조정 함수
 const handleCommentMaxLength = () => {
-	const maxLength = 40; // 최대 글자 수
+	const maxLength = 20; // 최대 글자 수
 
     $('.comment-content').each(function() {
-        const content = $(this).text();
+        const content = $(this).text().trim();
 
         if (content.length > maxLength) {
             $(this).text(content.slice(0, maxLength) + '...');
+        } else {
+            $(this).text(content);
         }
     });
 }

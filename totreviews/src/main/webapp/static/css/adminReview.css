@@ -86,6 +86,20 @@
     background-color: #e9ecef;
 }
 
+/* 댓글 테이블 */
+.comment-table td {
+    white-space: nowrap;
+    overflow: hidden;  
+    text-overflow: ellipsis; 
+}
+
+.comment-table td div {
+    max-width: 200px;
+    overflow: hidden; 
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 /* 관리 버튼 스타일 */
 .editButton, .deleteButton {
     display: inline-block;
@@ -194,7 +208,7 @@ th {
     flex-wrap: wrap;
 }
 
-/* 이미지 모달 */
+/* 모달창(이미지, 댓글내용) */
 .modal {
     display: none; /* 기본적으로 숨김 */
     position: fixed;
@@ -224,11 +238,13 @@ th {
     cursor: pointer;
 }
 
-
-/* 이전, 다음 버튼 */
-.navigation {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+.close2 {
+	position: absolute;
+    top: 15px;
+    right: 25px;
+    color: black;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
 }
 

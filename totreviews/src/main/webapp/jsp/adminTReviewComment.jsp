@@ -66,7 +66,7 @@
                     <tr>
                     	<th><input type="checkbox" id="selectAll"></th>
                         <th>번호</th>
-                		<th>게시글 종류</th>
+                		<th>게시글</th>
                         <th>작성자</th>
                         <th>내용</th>
                         <th>작성일</th>
@@ -81,10 +81,14 @@
 					    <tr>
 					    	<td><input type="checkbox" name="commentSelect" value="${comment.commentId}"></td>
 					        <td>${status.index+1}</td>
-					        <td>${comment.postId}</td>
+					        <td>
+						        <a href="${pageContext.request.contextPath}/admin/review/${boardId}/detail/${comment.postId}">
+						        	${comment.postId}
+						        </a>
+					        </td>
 					        <td>${comment.memNick}</td>
 					        <td>
-						        <div class="comment-content">
+						        <div class="comment-content" data-full-text="${comment.content}">
 	                            	${comment.content}
 	                            </div>
 					        </td>
@@ -172,5 +176,14 @@
 		</nav>
 		<!-- 페이징 버튼 끝 -->
     </div>
+    
+    <!-- 댓글 전체 내용 모달 -->
+    <div id="commentModal" class="modal">
+    <div class="modal-content">
+        <span class="close2">&times;</span>
+        <h2>댓글 내용</h2>
+        <div id="modalCommentContent"></div>
+    </div>
+</div>
 </body>
 </html>
