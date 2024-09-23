@@ -148,10 +148,16 @@
 			                            class="editComment">수정</a>
 			                        <a href="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/delete/${comment.commentId}"
 			                            class="deleteComment">삭제</a>
-			                        <a data-url="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/report/${comment.commentId}"
+			                        <a href="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/report/${comment.commentId}"
 			                        	class="reportComment">신고</a>
 			                    </div>
 			                </c:if>
+			                <c:if test="${member.memId != comment.memId}">
+							    <div class="commentOptionsMenu" style="display: none;">
+							        <a href="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/report/${comment.commentId}"
+							        	class="reportComment">신고</a>
+							    </div>
+							</c:if>
 			            </div>
 
 			            <div class="commentReply" data-comment-id="${comment.commentId}">댓글 작성</div>
@@ -215,10 +221,16 @@
 			                                        class="editComment">수정</a>
 			                                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/delete/${reply.commentId}"
 			                                        class="deleteComment">삭제</a>
-			                                    <a data-url="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/report/${reply.commentId}"
+			                                    <a href="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/report/${reply.commentId}"
 			                                    	class="reportComment">신고</a>
 			                                </div>
 			                            </c:if>
+			                            <c:if test="${member.memId != reply.memId}">
+										    <div class="commentOptionsMenu" style="display: none;">
+										        <a href="${pageContext.request.contextPath}/${boardId}/${review.trevId}/comment/report/${reply.commentId}"
+										        	class="reportComment">신고</a>
+										    </div>
+										</c:if>
 			                        </div>
 			                       			                        
 			                        <div class="commentReply">댓글 작성</div>

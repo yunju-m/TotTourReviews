@@ -127,14 +127,14 @@ $(document).ready(() => {
 		const isLoggedIn = await checkLoginStatus();
 		
         const reviewTitle = $(this).data('title');
-        const reportUrl = $(this).data('report-url');
+        const reportUrl = $(this).data('url');
         const reportedContentType = 'Treview';
 
         $('#reportCommentText').text(`여행 후기 제목 : "${reviewTitle}"`);
         $('#reportForm').attr('action', reportUrl);
         $('#reportForm').find('input[name="reportedContentType"]').val(reportedContentType);
 
-        $('#reportModal').show();
+        //$('#reportModal').show();
     });
 
     // 전체 여행 후기 버튼 클릭 시 전체 여행 후기 페이지 이동
@@ -288,13 +288,14 @@ $(document).ready(() => {
     });
 
     // 댓글 신고 버튼 클릭 시 신고 모달 창 띄우기
-    $(document).on('click', '.reportComment', function (e) {
+    $(document).on('click', '.reportComment', async function (e) {
         e.preventDefault();
-
+		const isLoggedIn = await checkLoginStatus();
+		
         let commentText = $(this).closest('.commentItem').find('.commentText').text().trim();
-        let reportUrl = $(this).data('url');
-        let reportedContentType = 'Treview comment';
-
+        let reportUrl = $(this).attr('href');
+        let reportedContentType = 'Treview Comment';
+        
         $('#reportCommentText').text(`댓글 내용: "${commentText}"`);
         $('#reportForm').attr('action', reportUrl);
         $('#reportForm').find('input[name="reportedContentType"]').val(reportedContentType);
