@@ -43,9 +43,9 @@ public class AdminReportController {
 	// 신고 상태 업데이트 처리
 	@PostMapping("/{status}")
 	public ResponseEntity<Map<String, String>> updateReportStatus(@PathVariable String status,
-			@RequestBody List<Integer> trevcIds) {
+			@RequestBody List<Integer> reportIds) {
 		try {
-			adminReportService.updateReportStatus(status, trevcIds);
+			adminReportService.updateReportStatus(status, reportIds);
 
 			return ResponseUtil.createTReviewResponse("신고가 처리되었습니다.");
 		} catch (IllegalStateException e) {

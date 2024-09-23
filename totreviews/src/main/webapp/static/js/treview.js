@@ -32,7 +32,7 @@ $(document).ready(() => {
 
     // 현재 경로에 따라 버튼 활성화
     let path = window.location.pathname;
-    
+
     if (path.includes(ALL_TREVIEW_URL)) {
         $('#TotalReviewsBtn').addClass('active');
         $('#myReviewsBtn').removeClass('active');
@@ -78,7 +78,7 @@ $(document).ready(() => {
         event.preventDefault();
 
         const validationResult = validate();
-        
+
         if (validationResult.isValid) {
             submitReview();
         } else {
@@ -123,18 +123,18 @@ $(document).ready(() => {
     // 여행 후기 글 신고 버튼 클릭 시 신고 모달 창 띄우기
     $('#reportTReviewBtn').on('click', async function (event) {
         event.preventDefault();
-        
-		const isLoggedIn = await checkLoginStatus();
-		
+
+        const isLoggedIn = await checkLoginStatus();
+
         const reviewTitle = $(this).data('title');
-        const reportUrl = $(this).data('url');
+        const reportUrl = $(this).data('report-url');
         const reportedContentType = 'Treview';
 
         $('#reportCommentText').text(`여행 후기 제목 : "${reviewTitle}"`);
         $('#reportForm').attr('action', reportUrl);
         $('#reportForm').find('input[name="reportedContentType"]').val(reportedContentType);
 
-        //$('#reportModal').show();
+        $('#reportModal').show();
     });
 
     // 전체 여행 후기 버튼 클릭 시 전체 여행 후기 페이지 이동
@@ -290,12 +290,12 @@ $(document).ready(() => {
     // 댓글 신고 버튼 클릭 시 신고 모달 창 띄우기
     $(document).on('click', '.reportComment', async function (e) {
         e.preventDefault();
-		const isLoggedIn = await checkLoginStatus();
-		
+        const isLoggedIn = await checkLoginStatus();
+
         let commentText = $(this).closest('.commentItem').find('.commentText').text().trim();
         let reportUrl = $(this).attr('href');
         let reportedContentType = 'Treview Comment';
-        
+
         $('#reportCommentText').text(`댓글 내용: "${commentText}"`);
         $('#reportForm').attr('action', reportUrl);
         $('#reportForm').find('input[name="reportedContentType"]').val(reportedContentType);
@@ -328,7 +328,7 @@ $(document).ready(() => {
                 alert(response.message);
                 $('#reportModal').hide();
                 $('#reportReason').val(''); // 신고 사유 텍스트 영역 비우기
-            	$('#reportCommentText').text(''); // 신고 내용 텍스트 비우기
+                $('#reportCommentText').text(''); // 신고 내용 텍스트 비우기
             },
             error: function (xhr, jqXHR, textStatus, errorThrown) {
                 console.log(xhr.status);
@@ -576,7 +576,7 @@ const checkLoginStatus = () => {
             return false; // 로그인되지 않은 경우
         }
     }).fail((jqXHR, textStatus, errorThrown) => {
-        console.log(textStatus, errorThrown); 
+        console.log(textStatus, errorThrown);
         alert(ERROR_MESSAGES.FAIL_LOGIN_CONFIRM);
         window.location.href = LOGIN_URL;
         return false;
@@ -609,7 +609,7 @@ const validate = () => {
         }
     }
 
-	// 평점 유효성 검사
+    // 평점 유효성 검사
     const ratingMessage = checkRating(ERROR_MESSAGES.RATING_REQUIRED);
     if (ratingMessage) {
         return { isValid: false, errorMessage: ratingMessage };

@@ -20,6 +20,10 @@
         </div>
         <div class="reviewIntroDiv">
         	<div>[신고 내역 관리 설명]</div><hr />
+        	<div>이 페이지는 사용자들이 신고한 게시물이나 댓글에 대한 정보를 관리자가 확인하고 처리할 수 있도록 돕습니다.</div>
+		    <div>검색 및 정렬 기능을 통해 원하는 신고를 빠르게 찾을 수 있으며, 각 신고에 대한 처리 상태를 변경하여 관리할 수 있습니다.</div>
+		    <div>관리자는 신고된 게시물 또는 댓글의 세부 정보를 확인하고, 적절한 조치를 취할 수 있습니다.</div>
+		    <div>신고 항목은 접수, 처리중, 완료, 기각 상태로 구분되며, 선택적으로 상태를 변경할 수 있습니다.</div>
         </div>
         
         <div class="searchAndWriteDiv">
@@ -74,7 +78,7 @@
                 <tbody>
                     <c:forEach var="report" items="${pagination.postList}" varStatus="status">
 					    <tr>
-					    	<td><input type="checkbox" name="commentSelect" value="${report.reportId}"></td>
+					    	<td><input type="checkbox" name="reportSelect" value="${report.reportId}"></td>
 					        <td>${status.index+1}</td>
 					        <td>
 					        	<c:choose>
@@ -84,7 +88,7 @@
 								        </a>
 						        	</c:when>
 	                                <c:when test="${report.reportedContentType == 'Treview Comment'}">
-	                                	<a href="${pageContext.request.contextPath}/admin/comment/${boardId}/detail/${report.reportedTrevcId}">
+	                                	<a href="${pageContext.request.contextPath}/admin/comment/${boardId}/1">
 							        		${report.commentContent}
 							        	</a>
 	                                </c:when>
@@ -111,7 +115,7 @@
                                 </c:choose>
                             </td>
 					        <td>
-					        	<a href="${pageContext.request.contextPath}/admin/comment/${boardId}/active" class="activeButton">처리</a>
+					        	<a href="${pageContext.request.contextPath}/admin/report/${boardId}/{status}" class="activeButton">처리</a>
 					        </td>
 					    </tr>
 					</c:forEach>
@@ -165,6 +169,22 @@
 		    </ul>
 		</nav>
 		<!-- 페이징 버튼 끝 -->
+    </div>
+    
+    <!-- 신고 처리 모달 -->
+    <div id="statusModal" class="modal">
+    <div class="modal-content">
+        <span class="close2">&times;</span>
+        <h2>신고 처리 상태 변경</h2>
+        <p>선택된 신고의 상태를 변경합니다.</p>
+        <label for="reportStatus">상태 선택:</label>
+        <select id="reportStatus">
+            <option value="RECEIVED">접수</option>
+            <option value="INPROGRESS">처리중</option>
+            <option value="COMPLETED">완료</option>
+            <option value="REJECTED">기각</option>
+        </select>
+        <button id="confirmUpdateBtn" class="initButton active">확인</button>
     </div>
 </div>
 </body>

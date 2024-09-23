@@ -34,9 +34,9 @@ public class AdminReportServiceImpl implements AdminReportService {
 	}
 
 	@Override
-	public void updateReportStatus(String status, List<Integer> trevcIds) {
+	public void updateReportStatus(String status, List<Integer> reportIds) {
 		try {
-			adminReportDAO.updateReportStatus(status, trevcIds);
+			adminReportDAO.updateReportStatus(status, reportIds);
 		} catch (DataAccessException e) {
 			throw new ServerException("여행 신고 상태 업데이트 중 오류 발생", e);
 		}

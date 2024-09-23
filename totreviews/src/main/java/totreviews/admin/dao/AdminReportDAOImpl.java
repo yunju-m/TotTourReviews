@@ -30,10 +30,10 @@ public class AdminReportDAOImpl implements AdminReportDAO {
 	}
 
 	@Override
-	public void updateReportStatus(String status, List<Integer> trevcIds) {
+	public void updateReportStatus(String status, List<Integer> reportIds) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("status", status);
-		params.put("trevcIds", trevcIds);
+		params.put("reportIds", reportIds);
 
 		sqlSession.update(NAMESPACE + ".updateReportStatus", params);
 	}

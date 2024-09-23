@@ -3,27 +3,13 @@
 <mapper namespace="totreviews.mapper.AdminReportMapper">
 
 	<update id="updateReportStatus">
-		UPDATE TREVIEWCOMMENT
-    	<set> 
-    		<if test="status == 'active'">
-	            COMMENTSTATUS = 'CMT001',
-	        </if>
-	        <if test="status == 'deactive'">
-	            COMMENTSTATUS = 'CMT004',
-	        </if>
-        </set>
-		WHERE TREVCID IN (
-	        SELECT TREVCID
-	        FROM (
-	            SELECT TREVCID
-	            FROM TREVIEWCOMMENT
-	            START WITH TREVCID IN
-	            <foreach item="trevcId" collection="trevcIds" open="(" separator="," close=")">
-	                #{trevcId}
-	            </foreach>
-	            CONNECT BY PRIOR TREVCID = PARENTID
-	        )
-	    )
+		UPDATE REPORT
+	    SET REPORTSTATUS = #{status}, 
+	        PROCESSDATE = CURRENT_TIMESTAMP
+	    WHERE REPORTID IN 
+	    <foreach item="id" collection="reportIds" open="(" separator="," close=")">
+	        #{id}
+	    </foreach>
 	</update>
 	
 	<select id="selectTotalReportCount" parameterType="PageDTO"

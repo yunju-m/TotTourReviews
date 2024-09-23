@@ -11,6 +11,6 @@ public interface AdminReportDAO {
 
 	List<ReportDTO> findReportListWithPaging(PageDTO pageDTO);
 
-	void updateReportStatus(String status, List<Integer> trevcIds);
+	void updateReportStatus(String status, List<Integer> reportIds);
 
 }
