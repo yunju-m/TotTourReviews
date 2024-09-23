@@ -7,6 +7,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import totreviews.admin.dao.AdminCommentDAO;
+import totreviews.common.page.PageDTO;
+import totreviews.common.page.PageReqDTO;
+import totreviews.common.page.PageResDTO;
 import totreviews.domain.CommentVO;
 import totreviews.exception.ServerException;
 
@@ -44,6 +47,20 @@ public class AdminCommentServiceImpl implements AdminCommentService {
 			throw new ServerException("여행 댓글 상태 업데이트 중 오류 발생", e);
 		}
 
+	}
+
+	@Override
+	public PageResDTO<CommentVO> findCommentListWithPaging(PageReqDTO pageReqDTO) {
+		try {
+			PageDTO pageDTO = new PageDTO(pageReqDTO);
+			int totalTReviewCount = adminCommentDAO.selectTotalCommentCount(pageDTO);
+
+			List<CommentVO> commentList = adminCommentDAO.selectCommentListWithPaging(pageDTO);
+
+			return new PageResDTO<>(totalTReviewCount, pageReqDTO.getPage(), commentList);
+		} catch (DataAccessException e) {
+			throw new ServerException("여행 게시물 목록 정보 가져오던 중 데이터베이스 오류 발생", e);
+		}
 	}
 
 }

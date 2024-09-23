@@ -117,7 +117,7 @@
 							        <c:when test="${boardId == 2}">
 							            <a href="${pageContext.request.contextPath}/admin/review/${boardId}/active" class="activeButton">활성화</a>
 							        </c:when>
-						    </c:choose>
+						    	</c:choose>
 					        </td>
 					    </tr>
 					</c:forEach>

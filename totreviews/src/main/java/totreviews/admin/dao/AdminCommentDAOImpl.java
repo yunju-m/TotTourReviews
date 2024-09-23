@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import totreviews.common.page.PageDTO;
 import totreviews.domain.CommentVO;
 
 @Repository
@@ -22,10 +23,10 @@ public class AdminCommentDAOImpl implements AdminCommentDAO {
 	public List<CommentVO> getCommentsByReviewId(int trevId) {
 		return sqlSession.selectList(NAMESPACE + ".getCommentsByReviewId", trevId);
 	}
-	
+
 	@Override
 	public List<String> findInactiveParentComments(List<Integer> trevcIds) {
-	    return sqlSession.selectList(NAMESPACE + ".findInactiveParentComments", trevcIds);
+		return sqlSession.selectList(NAMESPACE + ".findInactiveParentComments", trevcIds);
 	}
 
 	@Override
@@ -35,6 +36,16 @@ public class AdminCommentDAOImpl implements AdminCommentDAO {
 		params.put("trevcIds", trevcIds);
 
 		sqlSession.update(NAMESPACE + ".updateCommentStatus", params);
+	}
+
+	@Override
+	public int selectTotalCommentCount(PageDTO pageDTO) {
+		return sqlSession.selectOne(NAMESPACE + ".selectTotalCommentCount", pageDTO);
+	}
+
+	@Override
+	public List<CommentVO> selectCommentListWithPaging(PageDTO pageDTO) {
+		return sqlSession.selectList(NAMESPACE + ".selectCommentListWithPaging", pageDTO);
 	}
 
 }

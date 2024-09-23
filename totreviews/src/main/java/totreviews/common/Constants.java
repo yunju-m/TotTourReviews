@@ -40,10 +40,13 @@ public class Constants {
 
 	// 관리자 페이지
 
-	// 관리자 여행 후기 페이지 및 URL
+	// 관리자 후기 게시물 페이지
 	public static final String PAGE_ADMIN_TREVIEW = "adminTReview";
 	public static final String PAGE_ADMIN_EDIT_TREVIEW = "adminTReviewEdit";
 	public static final String PAGE_ADMIN_DETAIL_TREVIEW = "adminTReviewDetail";
+	
+	// 관리자 후기 댓글 페이지
+	public static final String PAGE_ADMIN_TREVIEW_COMMENT = "adminTReviewComment";
 	
 	// 생성자를 private으로 설정하여 인스턴스화 방지
 	private Constants() {

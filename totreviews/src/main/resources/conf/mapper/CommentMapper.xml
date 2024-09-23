@@ -4,18 +4,18 @@
 
     <select id="getCommentsByReviewId" parameterType="int" resultMap="CommentVOMap">
 		SELECT
-            TREVCID AS commentId,
-            TREVID AS postId,
-            TOPPARENTID AS topParentId,
-            PARENTID AS parentId,
-            PARENTNICKNAME AS parentNickname,
-            MEMID AS memId,
-            MEMNICK AS memNick,
-            COMMENTSTATUS AS status,
-            TREVCTEXT AS content,
-            TREVDEPTH AS depth,
-            TREVCREGDATE AS regDate,
-            TREVDUPDATE AS updates
+            TREVCID,
+            TREVID,
+            TOPPARENTID,
+            PARENTID,
+            PARENTNICKNAME,
+            MEMID,
+            MEMNICK,
+            COMMENTSTATUS,
+            TREVCTEXT,
+            TREVDEPTH,
+            TREVCREGDATE,
+            TREVDUPDATE
 		FROM
 		    TREVIEWCOMMENT
 		WHERE
@@ -32,17 +32,17 @@
     
     <select id="getCommentById" parameterType="int" resultType="CommentVO">
 	    SELECT
-	        TREVCID AS commentId,
-	        TREVID AS postId,
-	        TOPPARENTID AS topParentId,
-	        PARENTID AS parentId,
-	        MEMID AS memId,
-	        MEMNICK AS memNick,
-	        COMMENTSTATUS AS status,
-	        TREVCTEXT AS content,
-	        TREVDEPTH AS depth,
-	        TREVCREGDATE AS regDate,
-	        TREVDUPDATE AS updates
+	        TREVCID,
+	        TREVID,
+	        TOPPARENTID,
+	        PARENTID,
+	        MEMID,
+	        MEMNICK,
+	        COMMENTSTATUS,
+	        TREVCTEXT,
+	        TREVDEPTH,
+	        TREVCREGDATE,
+	        TREVDUPDATE
 	    FROM 
 	        TREVIEWCOMMENT
 	    WHERE 
@@ -87,13 +87,13 @@
 	
 	<update id="editComment">
 		UPDATE TREVIEWCOMMENT
-		SET TREVCTEXT = #{content}, TREVDUPDATE = CURRENT_TIMESTAMP
+		SET TREVCTEXT = #{content}, TREVDUPDATE = sysdate
 		WHERE TREVCID = #{commentId}
 	</update>
 	
 	<update id="deleteComment" parameterType="int">
 		UPDATE TREVIEWCOMMENT
-    	SET COMMENTSTATUS = 'CMT002', TREVDUPDATE = CURRENT_TIMESTAMP
+    	SET COMMENTSTATUS = 'CMT002', TREVDUPDATE = sysdate
 		WHERE TREVCID IN (
 		    SELECT TREVCID
 		    FROM (
@@ -139,18 +139,18 @@
 	</select>
 	
 	<resultMap id="CommentVOMap" type="CommentVO">
-        <id property="commentId" column="commentId"/>
-        <result property="postId" column="postId"/>
-        <result property="topParentId" column="topParentId"/>
-        <result property="parentId" column="parentId"/>
-        <result property="parentNickname" column="parentNickname"/>
-        <result property="memId" column="memId"/> 
-        <result property="memNick" column="memNick"/>   
-        <result property="status" column="status"/>          
-        <result property="content" column="content"/> 
-        <result property="depth" column="depth"/>
-        <result property="regDate" column="regDate"/>    
-        <result property="update" column="updates"/>      
+        <id property="commentId" column="TREVCID"/>
+        <result property="postId" column="TREVID"/>
+        <result property="topParentId" column="TOPPARENTID"/>
+        <result property="parentId" column="PARENTID"/>
+        <result property="parentNickname" column="PARENTNICKNAME"/>
+        <result property="memId" column="MEMID"/> 
+        <result property="memNick" column="MEMNICK"/>
+        <result property="content" column="TREVCTEXT"/>
+        <result property="depth" column="TREVDEPTH"/>
+        <result property="status" column="COMMENTSTATUS"/>          
+        <result property="regDate" column="TREVCREGDATE"/>    
+        <result property="update" column="TREVDUPDATE"/>      
     </resultMap>
 
 </mapper>

@@ -1,7 +1,7 @@
 package totreviews.common.enums;
 
 public enum SearchType {
-	ALL("전체"), TITLE("제목"), CONTENT("내용");
+	ALL("전체"), TITLE("제목"), CONTENT("내용"), POST("게시물"), MEMBER("사용자");
 
 	private final String description;
 
