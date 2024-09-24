@@ -1,5 +1,5 @@
 //  URL 선언
-const BASE_TREVIEW_URL = '/totreviews/admin/report'; // 여행 후기 기본 URL
+const BASE_TREVIEW_URL = '/tot/admin/report'; // 여행 후기 기본 URL
 const ALL_ADMIN_ACTIVE_TREVIEW_REPORT_URL = `${BASE_TREVIEW_URL}/1/1`; // 활성화 게시물 조회 URL
 const ALL_ADMIN_DEACTIVE_TREVIEW_REPORT_URL = `${BASE_TREVIEW_URL}/2/1`; // 비활성화 게시물 조회 URL
 

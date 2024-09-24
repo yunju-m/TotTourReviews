@@ -1,7 +1,7 @@
 //  URL 선언
-const IS_MEMBER_LOGIN_URL = '/totreviews/member/checkLogin'; // 사용자 로그인 여부 확인 URL
-const LOGIN_URL = '/totreviews/login'; // 로그인 URL
-const BASE_TREVIEW_URL = '/totreviews/review'; // 여행 후기 기본 URL
+const IS_MEMBER_LOGIN_URL = '/tot/member/checkLogin'; // 사용자 로그인 여부 확인 URL
+const LOGIN_URL = '/tot/login'; // 로그인 URL
+const BASE_TREVIEW_URL = '/tot/review'; // 여행 후기 기본 URL
 const ALL_TREVIEW_URL = `${BASE_TREVIEW_URL}/all/1`; // 전체 후기 조회 URL
 const MY_TREVIEW_URL = `${BASE_TREVIEW_URL}/my/1`; // 나의 후기 조회 URL
 const WRITE_TREVIEW_URL = `${BASE_TREVIEW_URL}/all/add`; // 후기 작성 URL

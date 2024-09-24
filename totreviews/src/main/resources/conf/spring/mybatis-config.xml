@@ -9,24 +9,24 @@
     </settings>  
     
     <typeAliases>
-    	<typeAlias alias="TripVO" type="totreviews.domain.TripVO"/>
-    	<typeAlias alias="TReviewVO" type="totreviews.domain.TReviewVO"/>
-    	<typeAlias alias="TReviewReqDTO" type="totreviews.domain.TReviewReqDTO"/>
-    	<typeAlias alias="TReviewResDTO" type="totreviews.domain.TReviewResDTO"/>
-    	<typeAlias alias="TReviewImageVO" type="totreviews.domain.TReviewImageVO"/>
-    	<typeAlias alias="CommentVO" type="totreviews.domain.CommentVO"/>
-    	<typeAlias alias="CommentReqDTO" type="totreviews.domain.CommentReqDTO"/>
-    	<typeAlias alias="CourseDTO" type="totreviews.domain.CourseDTO"/>
-    	<typeAlias alias="CourseResDTO" type="totreviews.domain.CourseResDTO"/>
-    	<typeAlias alias="TourVO" type="totreviews.domain.TourVO"/>
-    	<typeAlias alias="PageDTO" type="totreviews.common.page.PageDTO"/>
-    	<typeAlias alias="PageReqDTO" type="totreviews.common.page.PageReqDTO"/>
-    	<typeAlias alias="PageResDTO" type="totreviews.common.page.PageResDTO"/>
-    	<typeAlias alias="ReportVO" type="totreviews.domain.ReportVO"/>
-    	<typeAlias alias="ReportDTO" type="totreviews.domain.ReportDTO"/>
-    	<typeAlias alias="ReportCommentDTO" type="totreviews.domain.ReportCommentDTO"/>
-    	<typeAlias alias="ReportTReviewDTO" type="totreviews.domain.ReportTReviewDTO"/>
-    	<typeAlias alias="HistoryVO" type="totreviews.domain.HistoryVO"/>
+    	<typeAlias alias="TripVO" type="tot.domain.TripVO"/>
+    	<typeAlias alias="TReviewVO" type="tot.domain.TReviewVO"/>
+    	<typeAlias alias="TReviewReqDTO" type="tot.domain.TReviewReqDTO"/>
+    	<typeAlias alias="TReviewResDTO" type="tot.domain.TReviewResDTO"/>
+    	<typeAlias alias="TReviewImageVO" type="tot.domain.TReviewImageVO"/>
+    	<typeAlias alias="CommentVO" type="tot.domain.CommentVO"/>
+    	<typeAlias alias="CommentReqDTO" type="tot.domain.CommentReqDTO"/>
+    	<typeAlias alias="CourseDTO" type="tot.domain.CourseDTO"/>
+    	<typeAlias alias="CourseResDTO" type="tot.domain.CourseResDTO"/>
+    	<typeAlias alias="TourVO" type="tot.domain.TourVO"/>
+    	<typeAlias alias="PageDTO" type="tot.common.page.PageDTO"/>
+    	<typeAlias alias="PageReqDTO" type="tot.common.page.PageReqDTO"/>
+    	<typeAlias alias="PageResDTO" type="tot.common.page.PageResDTO"/>
+    	<typeAlias alias="ReportVO" type="tot.domain.ReportVO"/>
+    	<typeAlias alias="ReportDTO" type="tot.domain.ReportDTO"/>
+    	<typeAlias alias="ReportCommentDTO" type="tot.domain.ReportCommentDTO"/>
+    	<typeAlias alias="ReportTReviewDTO" type="tot.domain.ReportTReviewDTO"/>
+    	<typeAlias alias="HistoryVO" type="tot.domain.HistoryVO"/>
     </typeAliases>
     
     <mappers>
