@@ -21,6 +21,11 @@ public class FileUtil {
 	@Value("${file.upload-dir}")
 	private String uploadDir; // 파일 업로드 디렉토리 경로
 
+	// uploadDir의 값을 반환하는 getter 메서드
+	public String getUploadDir() {
+		return uploadDir;
+	}
+
 	/**
 	 * 이미지를 저장하는 메서드.
 	 *
@@ -55,7 +60,7 @@ public class FileUtil {
 	 */
 	private void validateUploadDir() {
 		if (uploadDir == null || uploadDir.isEmpty()) {
-			throw new FileUploadDirectoryNotFoundException(); // 디렉토리 경로가 없을 경우 예외 발생
+			throw new FileUploadDirectoryNotFoundException();
 		}
 
 		File uploadDirFile = new File(uploadDir);
@@ -72,7 +77,7 @@ public class FileUtil {
 	 */
 	private void validateFilename(String originalFilename) {
 		if (originalFilename == null) {
-			throw new FileUploadInvalidFilenameException(); // 파일 이름이 null일 경우 예외 발생
+			throw new FileUploadInvalidFilenameException();
 		}
 	}
 
