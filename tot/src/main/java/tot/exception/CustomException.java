@@ -1,10 +1,10 @@
 package tot.exception;
 
-public class ServerException extends RuntimeException {
+public class CustomException extends RuntimeException {
 
 	private final ErrorCode errorCode;
 
-	public ServerException(ErrorCode errorCode) {
+	public CustomException(ErrorCode errorCode) {
 		super(errorCode.getMessage());
 		this.errorCode = errorCode;
 	}

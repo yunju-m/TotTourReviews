@@ -39,8 +39,8 @@ public class TReviewReqDTO {
 		ValidationUtil.validateLength(trevTitle, 200, ErrorCode.TITLE_TOO_LONG);
 		ValidationUtil.validateLength(trevContent, 1000, ErrorCode.CONTENT_TOO_LONG);
 		ValidationUtil.validateNotEmpty(trevAgree, ErrorCode.NOT_FOUND_TREVAGREE);
-		ValidationUtil.validateCheck(trevAgree, ErrorCode.NOT_CHECK_TREVAGREE);
-		ValidationUtil.validateCheck(trevRating, ErrorCode.NOT_CHECK_TREVRATING);
+		ValidationUtil.validateCheck(trevAgree, "disagree", ErrorCode.NOT_CHECK_TREVAGREE);
+		ValidationUtil.validateCheck(trevRating, "disagree", ErrorCode.NOT_CHECK_TREVRATING);
 	}
 
 	public int getTrevId() {
