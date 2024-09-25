@@ -194,9 +194,7 @@ public class TReviewServiceImpl implements TReviewService {
 	 * @param reportReason        신고 사유
 	 */
 	@Override
-	public void reportTReview(int trevId, String reportedContentType, String reportReason) {
-		MemberVO member = MemberUtil.isAuthenticatedMember();
-
+	public void reportTReview(int trevId, MemberVO member, String reportedContentType, String reportReason) {
 		ReportTReviewDTO reportTReviewDTO = new ReportTReviewDTO(member.getMemId(), trevId, reportedContentType,
 				reportReason);
 		ReportVO reportVO = new ReportVO(reportTReviewDTO);

@@ -19,6 +19,14 @@ public class PageReqDTO {
 		this.activateFlag = Flag.CMT001;
 	}
 
+	public PageReqDTO(int page, String search, SearchType searchType, SortType sortType, Flag activateFlag) {
+		this.page = page;
+		this.search = search;
+		this.searchType = searchType;
+		this.sortType = sortType;
+		this.activateFlag = activateFlag;
+	}
+
 	public int getPage() {
 		return page;
 	}

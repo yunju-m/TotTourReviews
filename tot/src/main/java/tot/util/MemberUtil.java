@@ -12,6 +12,17 @@ import tot.exception.MemberNotFoundException;
 public class MemberUtil {
 
 	/**
+	 * 사용자의 로그인 여부를 확인합니다.
+	 * 
+	 * @return 빈 MemberVO 객체
+	 */
+	public static MemberVO getAuthenticatedMember() {
+		MemberVO member = (MemberVO) getSession().getAttribute("member");
+
+		return (member != null) ? checkAuthenticatedMember(member) : new MemberVO();
+	}
+
+	/**
 	 * 회원이 존재하지 않으면 예외를 던집니다.
 	 * 
 	 * @return 회원 정보
@@ -23,8 +34,8 @@ public class MemberUtil {
 		if (member == null) {
 			throw new MemberNotFoundException();
 		}
-
-		return member;
+		
+		return checkAuthenticatedMember(member);
 	}
 	
 	/**
@@ -33,8 +44,7 @@ public class MemberUtil {
 	 * @return 회원 정보
 	 * @throws InvalidMemberStatusException 정상 회원이 아닐 경우 발생합니다.
 	 */
-	public static MemberVO getAuthenticatedMember() {
-		MemberVO member = isAuthenticatedMember();
+	private static MemberVO checkAuthenticatedMember(MemberVO member) {
 		if (!"M01".equals(member.getMemberStatus())) {
 			throw new InvalidMemberStatusException();
 		}
@@ -48,9 +58,12 @@ public class MemberUtil {
 	 * @return 인증된 회원이 존재하면 true, 그렇지 않으면 false를 반환합니다.
 	 */
 	public static boolean isMemberLoggedIn() {
-		MemberVO member = getAuthenticatedMember();
-
-		return member != null;
+		try {
+			isAuthenticatedMember();
+			return true; 
+		} catch (MemberNotFoundException | InvalidMemberStatusException e) {
+			return false;
+		}
 	}
 
 	/**

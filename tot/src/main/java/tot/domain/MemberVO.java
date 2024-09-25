@@ -39,6 +39,12 @@ public class MemberVO {
 		this.memberStatus = memStatus;
 	}
 
+	public boolean isEmpty() {
+		return memId == null && memNick == null && memEmail == null && memberStatus == null && memberMbti == null
+				&& memberTt == null && memRegDate == null && memUpdate == null && ttImg == null
+				&& memberBanStart == null && memberBanEnd == null;
+	}
+
 	public String getMemId() {
 		return memId;
 	}
