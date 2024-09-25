@@ -6,7 +6,7 @@ import tot.exception.ValidationException;
 public class ValidationUtil {
 
 	/**
-	 * 주어진 값이 비어있지 않은지 검증합니다.
+	 * 문자열로 주어진 값이 비어있지 않은지 검증합니다.
 	 * 
 	 * @param value     검증할 값
 	 * @param errorCode 발생할 오류 코드
@@ -14,6 +14,19 @@ public class ValidationUtil {
 	 */
 	public static void validateNotEmpty(String value, ErrorCode errorCode) {
 		if (value == null || value.trim().isEmpty()) {
+			throw new ValidationException(errorCode);
+		}
+	}
+
+	/**
+	 * 숫자로 주어진 값이 비어있지 않은지 검증합니다.
+	 * 
+	 * @param value     검증할 값
+	 * @param errorCode 발생할 오류 코드
+	 * @throws ValidationException 값이 비어있을 경우 해당 오류 코드로 예외를 발생시킵니다.
+	 */
+	public static void validateNotEmpty(int value, ErrorCode errorCode) {
+		if (value <= 0) {
 			throw new ValidationException(errorCode);
 		}
 	}
@@ -33,13 +46,13 @@ public class ValidationUtil {
 	}
 
 	/**
-     * 특정 값이 주어진 비유효 값과 일치하는지 검증합니다.
-     * 
-     * @param value      검증할 값
-     * @param invalidValue 비유효 값
-     * @param errorCode 발생할 오류 코드
-     * @throws ValidationException 값이 비유효 값과 일치할 경우 해당 오류 코드로 예외를 발생시킵니다.
-     */
+	 * 특정 값이 주어진 비유효 값과 일치하는지 검증합니다.
+	 * 
+	 * @param value        검증할 값
+	 * @param invalidValue 비유효 값
+	 * @param errorCode    발생할 오류 코드
+	 * @throws ValidationException 값이 비유효 값과 일치할 경우 해당 오류 코드로 예외를 발생시킵니다.
+	 */
 	public static void validateCheck(String value, String invalidValue, ErrorCode errorCode) {
 		if (value != null && value.equals(invalidValue)) {
 			throw new ValidationException(errorCode);
