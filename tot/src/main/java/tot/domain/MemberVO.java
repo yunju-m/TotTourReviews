@@ -34,6 +34,11 @@ public class MemberVO {
 		this.memberBanEnd = memberBanEnd;
 	}
 
+	public MemberVO(String memId, String memStatus) {
+		this.memId = memId;
+		this.memberStatus = memStatus;
+	}
+
 	public String getMemId() {
 		return memId;
 	}

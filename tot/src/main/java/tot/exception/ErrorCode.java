@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
 	// 회원 정보 관련 오류
-	NOT_FOUND_MEMBERID(HttpStatus.NOT_FOUND, "M01", "해당 회원 정보를 찾을 수 없습니다."),
-	UNAUTHORIZED_ACCESS(HttpStatus.UNAUTHORIZED, "AUTH01", "사용자가 인증되지 않았습니다."),
-	FORBIDDEN_ACCESS(HttpStatus.FORBIDDEN, "AUTH02", "해당 자원에 대한 접근이 금지되었습니다."),
+	NOT_FOUND_MEMBERID(HttpStatus.NOT_FOUND, "AUTH01", "로그인이 필요합니다."),
+	UNAUTHORIZED_ACCESS(HttpStatus.UNAUTHORIZED, "AUTH02", "사용자가 인증되지 않았습니다."),
+	FORBIDDEN_ACCESS(HttpStatus.FORBIDDEN, "AUTH03", "해당 자원에 대한 접근이 금지되었습니다."),
 
 	// 서버 관련 오류
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "SRV01", "서버 내부에서 오류가 발생했습니다."),

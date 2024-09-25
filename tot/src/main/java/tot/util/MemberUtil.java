@@ -6,31 +6,37 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import tot.domain.MemberVO;
+import tot.exception.InvalidMemberStatusException;
 import tot.exception.MemberNotFoundException;
 
 public class MemberUtil {
 
 	/**
-	 * 인증된 회원 정보를 반환합니다.
+	 * 회원이 존재하지 않으면 예외를 던집니다.
 	 * 
-	 * @return 인증된 회원 정보가 없으면 빈 MemberVO 객체를 반환합니다.
-	 */
-	public static MemberVO getAuthenticatedMember() {
-		MemberVO member = (MemberVO) getSession().getAttribute("member");
-		return (member != null) ? member : new MemberVO(); // 빈 객체 반환
-	}
-
-	/**
-	 * 인증된 회원이 존재하지 않으면 예외를 던집니다.
-	 * 
-	 * @return 인증된 회원 정보
-	 * @throws MemberNotFoundException 인증된 회원이 없을 경우 발생합니다.
+	 * @return 회원 정보
+	 * @throws MemberNotFoundException 회원이 없을 경우 발생합니다.
 	 */
 	public static MemberVO isAuthenticatedMember() {
 		MemberVO member = (MemberVO) getSession().getAttribute("member");
 
 		if (member == null) {
-			throw new MemberNotFoundException(); // 예외 던짐
+			throw new MemberNotFoundException();
+		}
+
+		return member;
+	}
+	
+	/**
+	 * 로그인한 회원이 정상 회원인지 확인합니다.
+	 * 
+	 * @return 회원 정보
+	 * @throws InvalidMemberStatusException 정상 회원이 아닐 경우 발생합니다.
+	 */
+	public static MemberVO getAuthenticatedMember() {
+		MemberVO member = isAuthenticatedMember();
+		if (!"M01".equals(member.getMemberStatus())) {
+			throw new InvalidMemberStatusException();
 		}
 
 		return member;
@@ -42,8 +48,9 @@ public class MemberUtil {
 	 * @return 인증된 회원이 존재하면 true, 그렇지 않으면 false를 반환합니다.
 	 */
 	public static boolean isMemberLoggedIn() {
-		MemberVO member = (MemberVO) getSession().getAttribute("member");
-		return member != null; // 존재 여부 반환
+		MemberVO member = getAuthenticatedMember();
+
+		return member != null;
 	}
 
 	/**
