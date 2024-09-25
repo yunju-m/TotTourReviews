@@ -12,6 +12,8 @@ public class TReviewReqDTOTest {
 
 	/**
 	 * 제목이 비어있을 때 예외 발생 테스트
+	 * 
+	 * @return NOT_FOUND_TREVTITLE
 	 */
 	@Test
 	public void testValidate_TrevTitle_Empty() {
@@ -23,6 +25,8 @@ public class TReviewReqDTOTest {
 
 	/**
 	 * 여행이 비어있을 때 예외 발생 테스트
+	 * 
+	 * @return NOT_FOUND_TRIPID
 	 */
 	@Test
 	public void testValidate_TrevId_Empty() {
@@ -34,6 +38,8 @@ public class TReviewReqDTOTest {
 
 	/**
 	 * 내용이 비어있을 때 예외 발생 테스트
+	 * 
+	 * @return NOT_FOUND_TREVCONTENT
 	 */
 	@Test
 	public void testValidate_TrevContent_Empty() {
@@ -46,6 +52,8 @@ public class TReviewReqDTOTest {
 
 	/**
 	 * 제목이 너무 길 때 예외 발생 테스트
+	 * 
+	 * @return TITLE_TOO_LONG
 	 */
 	@Test
 	public void testValidate_TrevTitle_TooLong() {
@@ -58,6 +66,8 @@ public class TReviewReqDTOTest {
 
 	/**
 	 * 내용이 너무 길 때 예외 발생 테스트
+	 * 
+	 * @return CONTENT_TOO_LONG
 	 */
 	@Test
 	public void testValidate_TrevContent_TooLong() {
@@ -70,6 +80,8 @@ public class TReviewReqDTOTest {
 
 	/**
 	 * 개인정보 동의 여부가 비어있을 때 예외 발생 테스트
+	 * 
+	 * @return NOT_FOUND_TREVAGREE
 	 */
 	@Test
 	public void testValidate_TrevAgree_Empty() {
@@ -81,6 +93,8 @@ public class TReviewReqDTOTest {
 
 	/**
 	 * 개인정보 동의 여부가 'disagree'일 때 예외 발생 테스트
+	 * 
+	 * @return NOT_CHECK_TREVAGREE
 	 */
 	@Test
 	public void testValidate_TrevAgree_Disagree() {
@@ -91,11 +105,13 @@ public class TReviewReqDTOTest {
 	}
 
 	/**
-	 * 평점이 'disagree'일 때 예외 발생 테스트
+	 * 평점이 비어있을 때 예외 발생 테스트
+	 * 
+	 * @return NOT_CHECK_TREVRATING
 	 */
 	@Test
 	public void testValidate_TrevRating_Disagree() {
-		TReviewReqDTO dto = new TReviewReqDTO(1, 1, "mem01", "Some title", "Some course", "Some content", "disagree",
+		TReviewReqDTO dto = new TReviewReqDTO(1, 1, "mem01", "Some title", "Some course", "Some content", null,
 				"/path/to/img", "agree");
 
 		assertThrows(ValidationException.class, dto::validate);
