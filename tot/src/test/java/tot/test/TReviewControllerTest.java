@@ -16,6 +16,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
@@ -68,9 +69,14 @@ public class TReviewControllerTest {
 		HttpServletRequest mockRequest = mock(HttpServletRequest.class);
 		when(mockRequest.getSession()).thenReturn(mockSession);
 
-		// 현재 요청 속성을 설정하여 RequestContextHolder에 등록
+		// RequestContextHolder 설정
 		ServletRequestAttributes attributes = new ServletRequestAttributes(mockRequest);
 		RequestContextHolder.setRequestAttributes(attributes);
+	}
+
+	@AfterEach
+	public void tearDown() {
+		RequestContextHolder.resetRequestAttributes();
 	}
 
 	private void setSessionMember(MemberVO member) {

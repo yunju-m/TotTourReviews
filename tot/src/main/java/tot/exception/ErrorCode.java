@@ -23,7 +23,7 @@ public enum ErrorCode {
 	UNEXPECTED_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "UNK01", "예기치 않은 오류가 발생했습니다. 관리자에게 문의하세요."),
 
 	INVALID_ARGUMENT(HttpStatus.BAD_REQUEST, "ARG01", "유효하지 않은 인수입니다."),
-	
+
 	// 여행 후기 입력 데이터 관련 오류
 	NOT_FOUND_TREVTITLE(HttpStatus.BAD_REQUEST, "PR01", "여행 후기 제목을 입력해주세요."),
 	NOT_FOUND_TRIPID(HttpStatus.BAD_REQUEST, "PR02", "여행을 선택해주세요."),
@@ -33,12 +33,14 @@ public enum ErrorCode {
 	NOT_FOUND_TREVAGREE(HttpStatus.BAD_REQUEST, "PR06", "개인정보 수집 및 이용에 대한 동의를 체크해주세요."),
 	NOT_CHECK_TREVAGREE(HttpStatus.BAD_REQUEST, "PR07", "개인정보 수집 및 이용 동의를 체크해주세요."),
 	NOT_CHECK_TREVRATING(HttpStatus.BAD_REQUEST, "PR08", "여행 후기 평점을 체크해주세요."),
+	NOT_FOUND_REPORTREASON(HttpStatus.BAD_REQUEST, "PR09", "댓글 신고 시 사유를 작성해야 합니다."),
 
 	// 파일 업로드 관련 오류
-    FILE_UPLOAD_DIRECTORY_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "FILE01", "파일 업로드 디렉토리 설정이 필요합니다."),
-    FILE_UPLOAD_INVALID_FILENAME(HttpStatus.BAD_REQUEST, "FILE02", "유효하지 않은 파일 이름입니다."),
-    FILE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "FILE03", "파일 저장 중 오류가 발생했습니다.");
-	
+	FILE_UPLOAD_DIRECTORY_NOT_FOUND(HttpStatus.INTERNAL_SERVER_ERROR, "FILE01", "파일 업로드 디렉토리 설정이 필요합니다."),
+	FILE_UPLOAD_INVALID_FILENAME(HttpStatus.BAD_REQUEST, "FILE02", "유효하지 않은 파일 이름입니다."),
+	FILE_UPLOAD_SIZE_TOO_LONG(HttpStatus.BAD_REQUEST, "FILE03", "파일 크기가 10MB를 초과할 수 없습니다."),
+	FILE_UPLOAD_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "FILE04", "파일 저장 중 오류가 발생했습니다.");
+
 	private final HttpStatus httpStatus;
 	private final String code;
 	private final String message;

@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import tot.domain.CommentReqDTO;
+import tot.exception.ErrorCode;
 import tot.service.CommentService;
+import tot.util.MemberUtil;
 import tot.util.ResponseUtil;
+import tot.util.ValidationUtil;
 
 @Controller
 @RequestMapping("{boardId}/{postId}/comment")
@@ -32,9 +35,10 @@ public class CommentController {
 	@PostMapping("/add")
 	public String addComment(@PathVariable("boardId") String boardId, @PathVariable("postId") int postId,
 			@ModelAttribute CommentReqDTO commentReqDTO, Model model) {
+		MemberUtil.isAuthenticatedMember();
+
 		commentService.insertComment(boardId, postId, commentReqDTO);
 
-		// 원래 페이지로 리다이렉트
 		return "redirect:/review/" + boardId + "/detail/" + postId;
 	}
 
@@ -42,6 +46,8 @@ public class CommentController {
 	@ResponseBody
 	public ResponseEntity<Map<String, String>> editComment(@PathVariable("commentId") int commentId,
 			@RequestParam("content") String content) {
+		MemberUtil.isAuthenticatedMember();
+
 		commentService.editComment(commentId, content);
 		String updatedDate = commentService.getUpdateDate(commentId);
 
@@ -51,6 +57,8 @@ public class CommentController {
 	@GetMapping(value = "/delete/{commentId}", produces = "application/json; charset=UTF-8")
 	@ResponseBody
 	public ResponseEntity<Map<String, String>> deleteComment(@PathVariable("commentId") int commentId) {
+		MemberUtil.isAuthenticatedMember();
+
 		commentService.deleteComment(commentId);
 		String updatedDate = commentService.getUpdateDate(commentId);
 
@@ -62,6 +70,8 @@ public class CommentController {
 	public ResponseEntity<Map<String, String>> reportComment(@PathVariable("commentId") int commentId,
 			@RequestParam("reportedContentType") String reportedContentType,
 			@RequestParam("reportReason") String reportReason) {
+		MemberUtil.isAuthenticatedMember();
+		ValidationUtil.validateNotEmpty(reportReason, ErrorCode.NOT_FOUND_REPORTREASON);
 
 		commentService.reportComment(commentId, reportedContentType, reportReason);
 
