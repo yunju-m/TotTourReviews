@@ -34,13 +34,13 @@ public class TReviewReqDTO {
 	// DTO 검증 메소드
 	public void validate() {
 		ValidationUtil.validateNotEmpty(trevTitle, ErrorCode.NOT_FOUND_TREVTITLE);
-		ValidationUtil.validateNotEmpty(trevId, ErrorCode.NOT_FOUND_TRIPID);
-		ValidationUtil.validateNotEmpty(trevContent, ErrorCode.NOT_FOUND_TREVCONTENT);
 		ValidationUtil.validateLength(trevTitle, 200, ErrorCode.TITLE_TOO_LONG);
+		ValidationUtil.validateNotEmpty(tripId, ErrorCode.NOT_FOUND_TRIPID);
+		ValidationUtil.validateNotEmpty(trevRating, ErrorCode.NOT_CHECK_TREVRATING);
+		ValidationUtil.validateNotEmpty(trevContent, ErrorCode.NOT_FOUND_TREVCONTENT);
 		ValidationUtil.validateLength(trevContent, 1000, ErrorCode.CONTENT_TOO_LONG);
 		ValidationUtil.validateNotEmpty(trevAgree, ErrorCode.NOT_FOUND_TREVAGREE);
 		ValidationUtil.validateCheck(trevAgree, "disagree", ErrorCode.NOT_CHECK_TREVAGREE);
-		ValidationUtil.validateCheck(trevRating, "disagree", ErrorCode.NOT_CHECK_TREVRATING);
 	}
 
 	public int getTrevId() {

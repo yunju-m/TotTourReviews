@@ -2,6 +2,7 @@ package tot.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +19,7 @@ public class GlobalExceptionHandler {
 	 * @return 사용자 알림창 공통 페이지
 	 */
 	@ExceptionHandler(CustomException.class)
-	public ModelAndView handleCustomException(CustomException ex) {
+	public ResponseEntity<ErrorResponse> handleCustomException(CustomException ex) {
 		logError(ex);
 		return createAlertResponse(ex.getErrorCode());
 	}
@@ -61,17 +62,14 @@ public class GlobalExceptionHandler {
 	}
 
 	/**
-	 * 사용자 예외 알림 페이지 생성 메소드
+	 * 사용자 예외 알림 생성 메소드
 	 *
 	 * @param errorCode 오류 코드
-	 * @return 사용자 알림창 공통 페이지
+	 * @return 사용자 알림창 공통 JSON 응답
 	 */
-	private ModelAndView createAlertResponse(ErrorCode errorCode) {
-		ModelAndView modelAndView = new ModelAndView("common");
-		modelAndView.addObject("status", errorCode.getCode());
-		modelAndView.addObject("message", errorCode.getMessage());
-
-		return modelAndView;
+	private ResponseEntity<ErrorResponse> createAlertResponse(ErrorCode errorCode) {
+		ErrorResponse errorResponse = new ErrorResponse(errorCode.getCode(), errorCode.getMessage(), errorCode.getHttpStatus());
+		return new ResponseEntity<>(errorResponse, errorCode.getHttpStatus());
 	}
 
 	/**

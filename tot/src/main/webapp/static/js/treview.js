@@ -16,7 +16,7 @@ const ERROR_MESSAGES = {
     FAIL_LOGIN_CONFIRM: '로그인 상태 확인 중 오류 발생',
     AGREE_REQUIRED: '개인정보 수집 및 이용에 동의하셔야 글을 작성할 수 있습니다.',
     FAIL_TREVIEW_DELETE: '여행 후기글 삭제를 실패했습니다.',
-    FILE_UPLOAD: '파일 업로드 중 오류가 발생했습니다.',
+    FAIL_COMMON_ERROR: '예상치 못한 오류가 발생했습니다. 관리자에게 문의하세요. ',
     FAIL_GET_COURSE: '코스를 가져오는 데 실패했습니다.',
     FAIL_EDIT_COMMENT: '댓글 수정에 실패했습니다.',
     FAIL_DELETE_COMMENT: '댓글 삭제를 실패했습니다.',
@@ -76,7 +76,6 @@ $(document).ready(() => {
     // 여행 후기 등록 버튼 클릭 시 유효성 검사 후 등록
     $('#submitButton').on('click', function (event) {
         event.preventDefault();
-
         const validationResult = validate();
 
         if (validationResult.isValid) {
@@ -406,11 +405,13 @@ const submitReview = () => {
             alert(response.message);
             window.location.href = ALL_TREVIEW_URL;
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log('에러 상태:', textStatus);
-            console.log('에러 내용:', errorThrown);
-            console.log('서버 응답:', jqXHR.responseText);
-            alert(ERROR_MESSAGES.FILE_UPLOAD + " ");
+        error: function (jqXHR) {
+            try {
+                const errorResponse = JSON.parse(jqXHR.responseText);
+                alert(errorResponse.message);
+            } catch (e) {
+                alert(ERROR_MESSAGES.FAIL_COMMON_ERROR);
+            }
         }
     });
 }
@@ -440,11 +441,13 @@ const editReview = () => {
             alert(response.message);
             window.location.href = ALL_TREVIEW_URL;
         },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log('에러 상태:', textStatus);
-            console.log('에러 내용:', errorThrown);
-            console.log('서버 응답:', jqXHR.responseText);
-            alert(ERROR_MESSAGES.FILE_UPLOAD + " ");
+        error: function (jqXHR) {
+            try {
+                const errorResponse = JSON.parse(jqXHR.responseText);
+                alert(errorResponse.message);
+            } catch (e) {
+                alert(ERROR_MESSAGES.FAIL_COMMON_ERROR);
+            }
         }
     });
 }
