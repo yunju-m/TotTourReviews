@@ -2,7 +2,6 @@ package tot.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tot.dao.TripDAO;
@@ -11,8 +10,11 @@ import tot.domain.TripVO;
 @Service
 public class TripServiceImpl implements TripService {
 
-	@Autowired
-	private TripDAO tripDAO;
+	private final TripDAO tripDAO;
+
+	public TripServiceImpl(TripDAO tripDAO) {
+		this.tripDAO = tripDAO;
+	}
 
 	/**
 	 * 주어진 회원 ID에 해당하는 여행 목록을 조회합니다.

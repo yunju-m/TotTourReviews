@@ -3,7 +3,6 @@ package tot.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,8 +23,11 @@ import tot.util.ResponseUtil;
 @RequestMapping("{boardId}/{postId}/comment")
 public class CommentController {
 
-	@Autowired
-	private CommentService commentService;
+	private final CommentService commentService;
+
+	public CommentController(CommentService commentService) {
+		this.commentService = commentService;
+	}
 
 	@PostMapping("/add")
 	public String addComment(@PathVariable("boardId") String boardId, @PathVariable("postId") int postId,

@@ -2,7 +2,6 @@ package tot.admin.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tot.admin.dao.AdminTReviewDAO;
@@ -14,8 +13,11 @@ import tot.domain.TReviewResDTO;
 @Service
 public class AdminTReviewServiceImpl implements AdminTReviewService {
 
-	@Autowired
-	private AdminTReviewDAO adminTReviewDAO;
+	private final AdminTReviewDAO adminTReviewDAO;
+
+	public AdminTReviewServiceImpl(AdminTReviewDAO adminTReviewDAO) {
+		this.adminTReviewDAO = adminTReviewDAO;
+	}
 
 	/**
 	 * 페이지네이션된 여행 후기 목록을 조회합니다.

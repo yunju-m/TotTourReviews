@@ -6,7 +6,6 @@ import static tot.common.Constants.PAGE_ADMIN_TREVIEW;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,17 +34,18 @@ import tot.util.ResponseUtil;
 @RequestMapping("/admin/review/{boardId}")
 public class AdminTReviewController {
 
-	@Autowired
-	private AdminTReviewService adminTreviewService;
+	private final AdminTReviewService adminTreviewService;
+	private final CourseService courseService;
+	private final AdminCommentService adminCommentService;
+	private final HistoryService historyService;
 
-	@Autowired
-	private CourseService courseService;
-
-	@Autowired
-	private AdminCommentService adminCommentService;
-
-	@Autowired
-	private HistoryService historyService;
+	public AdminTReviewController(AdminTReviewService adminTreviewService, CourseService courseService,
+			AdminCommentService adminCommentService, HistoryService historyService) {
+		this.adminTreviewService = adminTreviewService;
+		this.courseService = courseService;
+		this.adminCommentService = adminCommentService;
+		this.historyService = historyService;
+	}
 
 	// 게시물 관리 화면 이동
 	@GetMapping("/{page}")

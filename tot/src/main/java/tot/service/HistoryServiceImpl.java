@@ -2,7 +2,6 @@ package tot.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tot.dao.HistoryDAO;
@@ -11,8 +10,11 @@ import tot.domain.HistoryVO;
 @Service
 public class HistoryServiceImpl implements HistoryService {
 
-	@Autowired
-	HistoryDAO historyDAO;
+	private final HistoryDAO historyDAO;
+
+	public HistoryServiceImpl(HistoryDAO historyDAO) {
+		this.historyDAO = historyDAO;
+	}
 
 	/**
 	 * 여행 후기의 히스토리를 데이터베이스에 추가합니다.

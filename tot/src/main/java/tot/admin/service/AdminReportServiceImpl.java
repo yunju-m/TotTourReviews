@@ -2,7 +2,6 @@ package tot.admin.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tot.admin.dao.AdminReportDAO;
@@ -14,8 +13,11 @@ import tot.domain.ReportDTO;
 @Service
 public class AdminReportServiceImpl implements AdminReportService {
 
-	@Autowired
-	private AdminReportDAO adminReportDAO;
+	private final AdminReportDAO adminReportDAO;
+
+	public AdminReportServiceImpl(AdminReportDAO adminReportDAO) {
+		this.adminReportDAO = adminReportDAO;
+	}
 
 	/**
 	 * 페이지네이션된 신고 목록을 조회합니다.

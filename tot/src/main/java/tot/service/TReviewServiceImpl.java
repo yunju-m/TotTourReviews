@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -32,14 +31,15 @@ import tot.util.MemberUtil;
 @Service
 public class TReviewServiceImpl implements TReviewService {
 
-	@Autowired
-	private TReviewDAO treviewDAO;
+	private final TReviewDAO treviewDAO;
+	private final HistoryService historyService;
+	private final FileUtil fileUtils;
 
-	@Autowired
-	private HistoryService historyService;
-
-	@Autowired
-	private FileUtil fileUtils;
+	public TReviewServiceImpl(TReviewDAO treviewDAO, HistoryService historyService, FileUtil fileUtils) {
+		this.treviewDAO = treviewDAO;
+		this.historyService = historyService;
+		this.fileUtils = fileUtils;
+	}
 
 	@Value("${file.upload-dir}")
 	private String uploadDir;

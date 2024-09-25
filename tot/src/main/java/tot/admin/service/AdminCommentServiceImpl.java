@@ -2,7 +2,6 @@ package tot.admin.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tot.admin.dao.AdminCommentDAO;
@@ -14,8 +13,11 @@ import tot.domain.CommentVO;
 @Service
 public class AdminCommentServiceImpl implements AdminCommentService {
 
-	@Autowired
-	private AdminCommentDAO adminCommentDAO;
+	private final AdminCommentDAO adminCommentDAO;
+
+	public AdminCommentServiceImpl(AdminCommentDAO adminCommentDAO) {
+		this.adminCommentDAO = adminCommentDAO;
+	}
 
 	/**
 	 * 특정 여행 후기 ID에 대한 댓글 목록을 조회합니다.

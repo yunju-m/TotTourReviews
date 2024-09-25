@@ -3,7 +3,6 @@ package tot.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tot.dao.CourseDAO;
@@ -13,8 +12,11 @@ import tot.domain.CourseResDTO;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-	@Autowired
 	private CourseDAO courseDAO;
+
+	public CourseServiceImpl(CourseDAO courseDAO) {
+		this.courseDAO = courseDAO;
+	}
 
 	@Override
 	public CourseDTO getCourseById(String courseId) {

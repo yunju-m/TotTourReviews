@@ -2,7 +2,6 @@ package tot.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import tot.common.enums.ProcessStatus;
@@ -18,11 +17,13 @@ import tot.util.MemberUtil;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-	@Autowired
-	private CommentDAO commentDAO;
+	private final CommentDAO commentDAO;
+	private final HistoryService historyService;
 
-	@Autowired
-	private HistoryService historyService;
+	public CommentServiceImpl(CommentDAO commentDAO, HistoryService historyService) {
+		this.commentDAO = commentDAO;
+		this.historyService = historyService;
+	}
 
 	/**
 	 * 특정 후기 ID에 연관된 댓글 목록을 조회합니다.
