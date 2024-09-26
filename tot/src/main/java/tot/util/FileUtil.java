@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 import tot.exception.FileUploadDirectoryNotFoundException;
@@ -20,6 +21,8 @@ public class FileUtil {
 
 	@Value("${file.upload-dir}")
 	private String uploadDir; // 파일 업로드 디렉토리 경로
+
+	private static final long MAX_UPLOAD_SIZE = 10 * 1024 * 1024;
 
 	// uploadDir의 값을 반환하는 getter 메서드
 	public String getUploadDir() {
@@ -36,20 +39,34 @@ public class FileUtil {
 	 * @throws FileUploadException                  파일 저장 중 오류가 발생한 경우
 	 */
 	public String saveImage(MultipartFile file) {
-		validateUploadDir(); // 업로드 디렉토리 유효성 검증
+		validateUploadDir();
 
 		String originalFilename = file.getOriginalFilename();
-		validateFilename(originalFilename); // 파일 이름 유효성 검증
+		validateFilename(originalFilename);
 
 		String filename = generateUniqueFilename(originalFilename);
 		Path targetPath = Paths.get(uploadDir, filename);
 
 		try {
-			Files.copy(file.getInputStream(), targetPath); // 파일 저장
-			targetPath.toFile().setLastModified(System.currentTimeMillis()); // 수정 시간 설정
-			return "/upload/" + filename; // 저장된 파일의 경로 반환
+			Files.copy(file.getInputStream(), targetPath);
+			targetPath.toFile().setLastModified(System.currentTimeMillis());
+			return "/upload/" + filename;
 		} catch (IOException e) {
-			throw new FileUploadException(); // 파일 저장 오류 발생
+			throw new FileUploadException();
+		}
+	}
+
+	/**
+	 * 파일의 크기를 검증하는 메서드.
+	 *
+	 * @param file 검증할 MultipartFile
+	 * @throws MaxUploadSizeExceededException 파일 크기가 최대 허용 크기를 초과하는 경우
+	 */
+	public static void validateFileSize(MultipartFile[] files) {
+		for (MultipartFile file : files) {
+			if (file.getSize() > MAX_UPLOAD_SIZE) {
+				throw new MaxUploadSizeExceededException(MAX_UPLOAD_SIZE);
+			}
 		}
 	}
 
@@ -65,7 +82,7 @@ public class FileUtil {
 
 		File uploadDirFile = new File(uploadDir);
 		if (!uploadDirFile.exists()) {
-			uploadDirFile.mkdirs(); // 디렉토리가 없으면 생성
+			uploadDirFile.mkdirs();
 		}
 	}
 
@@ -88,7 +105,7 @@ public class FileUtil {
 	 * @return 생성된 고유한 파일 이름
 	 */
 	private String generateUniqueFilename(String originalFilename) {
-		String extension = originalFilename.substring(originalFilename.lastIndexOf(".")); // 파일 확장자 추출
-		return UUID.randomUUID().toString() + extension; // 고유한 파일 이름 생성
+		String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+		return UUID.randomUUID().toString() + extension;
 	}
 }

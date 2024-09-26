@@ -1,5 +1,6 @@
 package tot.test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
@@ -16,8 +17,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
+import tot.exception.ErrorCode;
 import tot.exception.FileUploadDirectoryNotFoundException;
 import tot.exception.FileUploadInvalidFilenameException;
 import tot.util.FileUtil;
@@ -44,7 +47,14 @@ public class FileUtilTest {
 	@Test
 	public void testSaveImage_WithValidFile() throws IOException {
 		String originalFilename = "testImage.png";
-		File tempFile = new File("src/test/resources/" + originalFilename);
+		Path resourcePath = Paths.get("src/test/resources");
+
+		// 리소스 디렉토리가 없으면 생성
+		if (Files.notExists(resourcePath)) {
+			Files.createDirectories(resourcePath);
+		}
+
+		File tempFile = new File(resourcePath.toFile(), originalFilename);
 
 		// 기존 파일이 존재하는 경우 삭제
 		if (tempFile.exists()) {
@@ -57,6 +67,7 @@ public class FileUtilTest {
 		// Mock 설정
 		when(mockFile.getOriginalFilename()).thenReturn(originalFilename);
 		when(mockFile.getInputStream()).thenReturn(Files.newInputStream(tempFile.toPath()));
+		when(mockFile.getSize()).thenReturn(1024L);
 
 		// 테스트 실행
 		String result = fileUtil.saveImage(mockFile);

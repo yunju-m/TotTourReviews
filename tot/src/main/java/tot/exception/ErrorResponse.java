@@ -3,6 +3,7 @@ package tot.exception;
 import org.springframework.http.HttpStatus;
 
 public class ErrorResponse {
+
 	private String code;
 	private String message;
 	private HttpStatus status;
@@ -13,7 +14,6 @@ public class ErrorResponse {
 		this.status = status;
 	}
 
-	// Getters and Setters
 	public String getCode() {
 		return code;
 	}
@@ -37,5 +37,10 @@ public class ErrorResponse {
 	public void setStatus(HttpStatus status) {
 		this.status = status;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "ErrorResponse [code=" + code + ", message=" + message + ", status=" + status + "]";
+	}
+
 }
