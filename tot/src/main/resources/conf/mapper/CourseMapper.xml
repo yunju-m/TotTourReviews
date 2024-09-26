@@ -8,18 +8,22 @@
 
 	<select id="getCourseByTripId" parameterType="int" resultMap="CourseDTOMap">
 		SELECT 
-		    C.COURID, 
-		    C.TRIPID, 
-		    C.AREACODE, 
-		    C.DCOURSE, 
-		    C.COURREGDATE, 
-		    C.COURUPDATE
-		FROM 
-		    COURSE C
-		JOIN 
-		    TRIP T ON C.TRIPID = T.TRIPID
-		WHERE 
-		    T.TRIPID = #{tripId}
+	    C.COURID, 
+	    C.TRIPID, 
+	    C.AREACODE, 
+	    C.DCOURSE, 
+	    C.COURREGDATE, 
+	    C.COURUPDATE,
+	    C1.CODENAME as regionName,
+	    C2.CODENAME as regionImageUrl 
+	FROM
+		COURSE C
+	   LEFT JOIN CODE c1 ON c.AREACODE = c1.CODEID AND c1.PCODEID = 'areacode'
+	   LEFT JOIN CODE c2 ON c2.CODEID = CONCAT('areaImg', c.AREACODE)
+	JOIN 
+	    TRIP T ON C.TRIPID = T.TRIPID
+	WHERE 
+	    T.TRIPID = #{tripId}
 	</select>
 	
 	<select id="getCourseDetailsById" parameterType="map" resultType="CourseResDTO">
@@ -52,6 +56,8 @@
 	    <result property="dCourse" column="DCOURSE" />
 	    <result property="courRegdate" column="COURREGDATE" />
 	    <result property="courUpdate" column="COURUPDATE" />
+	    <result property="regionName" column="REGIONNAME" />
+	    <result property="regionImageUrl" column="REGIONIMAGEURL" />
 	</resultMap>
 
 </mapper>
