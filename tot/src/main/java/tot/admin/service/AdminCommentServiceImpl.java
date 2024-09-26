@@ -62,11 +62,29 @@ public class AdminCommentServiceImpl implements AdminCommentService {
 	@Override
 	public PageResDTO<CommentVO> findCommentListWithPaging(PageReqDTO pageReqDTO, String boardId) {
 		PageDTO pageDTO = new PageDTO(pageReqDTO, boardId);
-		int totalTReviewCount = adminCommentDAO.selectTotalCommentCount(pageDTO);
+		int totalCommentCount = adminCommentDAO.selectTotalCommentCount(pageDTO);
 
 		List<CommentVO> commentList = adminCommentDAO.selectCommentListWithPaging(pageDTO);
 
-		return new PageResDTO<>(totalTReviewCount, pageReqDTO.getPage(), commentList);
+		return new PageResDTO<>(totalCommentCount, pageReqDTO.getPage(), commentList);
+	}
+	
+	/**
+	 * 페이지네이션된 댓글 목록을 조회합니다.
+	 *
+	 * @param pageReqDTO 페이지 요청 데이터 전송 객체
+	 * @param boardId    게시판 ID
+	 * @param postId	 게시물 ID
+	 * @return 페이지네이션된 댓글 응답 객체
+	 */
+	@Override
+	public PageResDTO<CommentVO> findCommentListWithPaging(PageReqDTO pageReqDTO, String boardId, int postId) {
+		PageDTO pageDTO = new PageDTO(pageReqDTO, boardId, postId);
+		int totalCommentCount = adminCommentDAO.selectTotalCommentCountById(pageDTO);
+
+		List<CommentVO> commentList = adminCommentDAO.selectCommentListWithPagingById(pageDTO);
+
+		return new PageResDTO<>(totalCommentCount, pageReqDTO.getPage(), commentList);
 	}
 
 }

@@ -42,10 +42,20 @@ public class AdminCommentDaoImpl implements AdminCommentDao {
 	public int selectTotalCommentCount(PageDTO pageDTO) {
 		return sqlSession.selectOne(NAMESPACE + ".selectTotalCommentCount", pageDTO);
 	}
+	
+	@Override
+	public int selectTotalCommentCountById(PageDTO pageDTO) {
+		return sqlSession.selectOne(NAMESPACE + ".selectTotalCommentCountById", pageDTO);
+	}
 
 	@Override
 	public List<CommentVO> selectCommentListWithPaging(PageDTO pageDTO) {
 		return sqlSession.selectList(NAMESPACE + ".selectCommentListWithPaging", pageDTO);
+	}
+	
+	@Override
+	public List<CommentVO> selectCommentListWithPagingById(PageDTO pageDTO) {
+		return sqlSession.selectList(NAMESPACE + ".selectCommentListWithPagingById", pageDTO);
 	}
 
 }

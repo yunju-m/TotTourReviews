@@ -187,8 +187,8 @@
 		        </thead>
 		        <tbody>
 		            <c:choose>
-		                <c:when test="${not empty comments}">
-		                    <c:forEach var="comment" items="${comments}" varStatus="status">
+		                <c:when test="${not empty comments.postList}">
+		                    <c:forEach var="comment" items="${comments.postList}" varStatus="status">
 		                        <tr style="margin-left: ${comment.depth * 20}px;">
 		                            <td>${status.index + 1}</td>
 		                            <td>
@@ -251,6 +251,52 @@
 		            </c:choose>
 		        </tbody>
 		    </table>
+		    
+		    <!-- 댓글 관리 페이징 버튼 -->
+			<nav class="paginationNav">
+			    <ul class="paginationList">
+			        <!-- 처음 페이지로 이동하는 버튼 -->
+		            <li class="paginationItem">
+		                <a href="${pageContext.request.contextPath}/admin/review/${boardId}/detail/${review.trevId}/${comments.startBlockPage}" class="paginationLink">&laquo;</a>
+		            </li>
+			
+			        <!-- 이전 페이지 버튼 -->
+			        <c:if test="${comments.isPrev}">
+			            <li class="paginationItem">
+			                <a href="${pageContext.request.contextPath}/admin/review/${boardId}/detail/${review.trevId}/${comments.currentPage - 1}" class="paginationLink">이전</a>
+			            </li>
+			        </c:if>
+			
+			        <!-- 페이지 번호 출력 -->
+			        <c:forEach begin="${comments.startBlockPage}" end="${comments.endBlockPage}" var="pageNum">
+			            <c:choose>
+			                <c:when test="${comments.currentPage == pageNum}">
+			                    <li class="paginationItem active">
+			                        <span class="paginationLink">${pageNum}</span>
+			                    </li>
+			                </c:when>
+			                <c:otherwise>
+			                    <li class="paginationItem">
+			                        <a href="${pageContext.request.contextPath}/admin/review/${boardId}/detail/${review.trevId}/${pageNum}" class="paginationLink">${pageNum}</a>
+			                    </li>
+			                </c:otherwise>
+			            </c:choose>
+			        </c:forEach>
+			
+			        <!-- 다음 페이지 버튼 -->
+			        <c:if test="${comments.isNext}">
+			            <li class="paginationItem">
+			                <a href="${pageContext.request.contextPath}/admin/review/${boardId}/detail/${review.trevId}/${comments.currentPage + 1}" class="paginationLink">다음</a>
+			            </li>
+			        </c:if>
+			
+			        <!-- 맨 끝으로 버튼 -->
+		            <li class="paginationItem">
+		                <a href="${pageContext.request.contextPath}/admin/review/${boardId}/detail/${review.trevId}/${comments.endBlockPage}" class="paginationLink">&raquo;</a>
+		            </li>
+			    </ul>
+			</nav>
+			<!-- 댓글 관리 페이징 버튼 끝 -->
 		</div>
 		<!-- 댓글 관리 내역 끝 -->
 		

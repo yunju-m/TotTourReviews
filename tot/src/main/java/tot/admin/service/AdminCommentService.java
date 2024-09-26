@@ -13,5 +13,7 @@ public interface AdminCommentService {
 	void updateCommentStatus(String status, List<Integer> trevcIds);
 
 	PageResDTO<CommentVO> findCommentListWithPaging(PageReqDTO dto, String boardId);
+	
+	PageResDTO<CommentVO> findCommentListWithPaging(PageReqDTO dto, String boardId, int postId);
 
 }

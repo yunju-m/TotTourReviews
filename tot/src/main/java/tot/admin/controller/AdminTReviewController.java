@@ -68,14 +68,14 @@ public class AdminTReviewController {
 	}
 
 	// 게시물 상세 화면 이동
-	@GetMapping("/detail/{trevId}")
-	public String showTourReviewDetail(@PathVariable("boardId") String boardId, @PathVariable("trevId") int trevId,
-			Model model) {
+	@GetMapping("/detail/{trevId}/{page}")
+	public String showTourReviewDetail(@PathVariable("boardId") String boardId, @ModelAttribute PageReqDTO pageReqDTO,
+			@PathVariable("trevId") int trevId, Model model) {
 		MemberVO member = MemberUtil.getAuthenticatedMember();
 
 		TReviewResDTO review = adminTreviewService.getTReviewById(trevId);
 		List<CourseDTO> courses = courseService.getCourseDetailsByTripId(review.getTripId());
-		List<CommentVO> comments = adminCommentService.getCommentsByReviewId(trevId);
+		PageResDTO<CommentVO> comments = adminCommentService.findCommentListWithPaging(pageReqDTO, boardId, trevId);
 		List<HistoryVO> historys = historyService.getTReviewHistorysById(trevId);
 
 		model.addAttribute("boardId", boardId);

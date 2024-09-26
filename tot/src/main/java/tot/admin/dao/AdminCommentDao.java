@@ -14,7 +14,11 @@ public interface AdminCommentDao {
 	void updateCommentStatus(String status, List<Integer> trevcIds);
 
 	int selectTotalCommentCount(PageDTO pageDTO);
+	
+	int selectTotalCommentCountById(PageDTO pageDTO);
 
 	List<CommentVO> selectCommentListWithPaging(PageDTO pageDTO);
+	
+	List<CommentVO> selectCommentListWithPagingById(PageDTO pageDTO);
 
 }
