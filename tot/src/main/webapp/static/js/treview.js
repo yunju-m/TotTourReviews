@@ -21,8 +21,13 @@ const ERROR_MESSAGES = {
     FAIL_EDIT_COMMENT: '댓글 수정에 실패했습니다.',
     FAIL_DELETE_COMMENT: '댓글 삭제를 실패했습니다.',
     FAIL_REPORT_TREVIEW: '여행 후기 신고 접수를 실패했습니다.',
-    FAIL_TOTAL: '신고 중 오류가 발생했습니다. 관리자에게 문의하세요.'
+    FAIL_TOTAL: '신고 중 오류가 발생했습니다. 관리자에게 문의하세요.',
+    MAXIMUM_FILE_SIZE: '업로드할 수 있는 총 파일 크기를 초과했습니다. (100MB 이하로 제한)'
 };
+
+// 파일 크기 선언
+const MAX_TOTAL_SIZE = 104857600; // 총 최대 용량: 100MB
+const MAX_FILE_SIZE = 10485760; // 개별 최대 용량: 10MB
 
 let fileList = [];  // 업로드 파일 리스트 초기화
 
@@ -405,11 +410,17 @@ const submitReview = () => {
             alert(response.message);
             window.location.href = ALL_TREVIEW_URL;
         },
-        error: function (jqXHR) {
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log('Error status:', jqXHR.status);
+            console.log('Response:', jqXHR.responseText);
+            console.log('Text status:', textStatus);
+            console.log('Error thrown:', errorThrown);
+
             try {
                 const errorResponse = JSON.parse(jqXHR.responseText);
                 alert(errorResponse.message);
             } catch (e) {
+                console.log(e);
                 alert(ERROR_MESSAGES.FAIL_COMMON_ERROR);
             }
         }
@@ -467,6 +478,12 @@ const initFileList = () => {
 // 이미지 파일 업로드 처리
 const handleFileSelect = event => {
     const files = Array.from(event.target.files);
+
+    if (!checkFileSize(files)) {
+        $('#reviewImage').val('');
+        return;
+    }
+
     fileList = [...fileList, ...files];
 
     if (files) {
@@ -596,6 +613,29 @@ const checkField = (selector, errorMessage) => {
 const checkRating = (errorMessage) => {
     return $('input[name="trevRating"]:checked').length === 0 ? errorMessage : '';
 };
+
+// 업로드 파일 크기 검사
+const checkFileSize = files => {
+    let totalSize = fileList.reduce((acc, file) => acc + file.size, 0); // 기존 파일 크기 합계
+
+    for (const file of files) {
+        totalSize += file.size;
+
+        // 개별 파일 크기 검사
+        if (file.size > MAX_FILE_SIZE) {
+            alert(`파일 "${file.name}"의 크기가 10MB를 초과합니다.`);
+            return false;
+        }
+    }
+
+    // 총 파일 크기 검사
+    if (totalSize > MAX_TOTAL_SIZE) {
+        alert(ERROR_MESSAGES.MAXIMUM_FILE_SIZE);
+        return false;
+    }
+
+    return true;
+}
 
 const validate = () => {
     const validations = [
