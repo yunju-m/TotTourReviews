@@ -4,7 +4,7 @@ import java.util.List;
 
 import tot.domain.TripVO;
 
-public interface TripDAO {
+public interface TripDao {
 
 	List<TripVO> getTripByMemId(String memId);
 

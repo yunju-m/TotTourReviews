@@ -5,16 +5,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import tot.dao.CourseDAO;
+import tot.dao.CourseDao;
 import tot.domain.CourseDTO;
 import tot.domain.CourseResDTO;
 
 @Service
 public class CourseServiceImpl implements CourseService {
 
-	private CourseDAO courseDAO;
+	private CourseDao courseDAO;
 
-	public CourseServiceImpl(CourseDAO courseDAO) {
+	public CourseServiceImpl(CourseDao courseDAO) {
 		this.courseDAO = courseDAO;
 	}
 

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 import tot.domain.TripVO;
 
 @Repository
-public class TripDAOImpl implements TripDAO {
+public class TripDaoImpl implements TripDao {
 
-	private static final String NAMESPACE = "tot.mapper.TripMapper";
+	private static final String NAMESPACE = "tot.dao.TripDao";
 
 	@Autowired
 	private SqlSession sqlSession;

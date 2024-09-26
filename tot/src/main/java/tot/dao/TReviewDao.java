@@ -8,7 +8,7 @@ import tot.domain.TReviewImageVO;
 import tot.domain.TReviewResDTO;
 import tot.domain.TReviewVO;
 
-public interface TReviewDAO {
+public interface TReviewDao {
 
 	void insertTReview(TReviewVO treviewVO);
 

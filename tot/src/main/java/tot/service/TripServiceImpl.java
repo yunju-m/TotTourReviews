@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import tot.dao.TripDAO;
+import tot.dao.TripDao;
 import tot.domain.TripVO;
 
 @Service
 public class TripServiceImpl implements TripService {
 
-	private final TripDAO tripDAO;
+	private final TripDao tripDAO;
 
-	public TripServiceImpl(TripDAO tripDAO) {
+	public TripServiceImpl(TripDao tripDAO) {
 		this.tripDAO = tripDAO;
 	}
 

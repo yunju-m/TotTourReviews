@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 import tot.domain.TourVO;
 
 @Repository
-public class TourDAOImpl implements TourDAO {
+public class TourDaoImpl implements TourDao {
 
 	@Autowired
 	private SqlSession sqlSession;
 
-	private static final String NAMESPACE = "tot.mapper.TourMapper";
+	private static final String NAMESPACE = "tot.dao.TourDao";
 
 	@Override
 	public TourVO getTourById(String tourId) {

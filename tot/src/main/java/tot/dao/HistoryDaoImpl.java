@@ -9,12 +9,12 @@ import org.springframework.stereotype.Repository;
 import tot.domain.HistoryVO;
 
 @Repository
-public class HistoryDAOImpl implements HistoryDAO {
+public class HistoryDaoImpl implements HistoryDao {
 
 	@Autowired
 	private SqlSession sqlSession;
 
-	private static final String NAMESPACE = "tot.mapper.HistoryMapper";
+	private static final String NAMESPACE = "tot.dao.HistoryDao";
 
 	@Override
 	public void insertTReviewHistory(HistoryVO historyVO) {

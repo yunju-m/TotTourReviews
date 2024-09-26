@@ -13,9 +13,9 @@ import tot.domain.TReviewResDTO;
 import tot.domain.TReviewVO;
 
 @Repository
-public class TReviewDAOImpl implements TReviewDAO {
+public class TReviewDaoImpl implements TReviewDao {
 
-	private static final String NAMESPACE = "tot.mapper.TReviewMapper";
+	private static final String NAMESPACE = "tot.dao.TReviewDao";
 
 	@Autowired
 	private SqlSession sqlSession;

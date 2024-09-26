@@ -5,7 +5,7 @@ import java.util.List;
 import tot.domain.CommentVO;
 import tot.domain.ReportVO;
 
-public interface CommentDAO {
+public interface CommentDao {
 
 	List<CommentVO> getCommentsByReviewId(int trevId);
 

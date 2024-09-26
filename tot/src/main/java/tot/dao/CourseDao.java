@@ -5,7 +5,7 @@ import java.util.List;
 import tot.domain.CourseDTO;
 import tot.domain.CourseResDTO;
 
-public interface CourseDAO {
+public interface CourseDao {
 
 	CourseDTO getCourseById(String courseId);
 

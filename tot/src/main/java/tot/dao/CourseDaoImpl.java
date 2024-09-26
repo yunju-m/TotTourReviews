@@ -12,12 +12,12 @@ import tot.domain.CourseDTO;
 import tot.domain.CourseResDTO;
 
 @Repository
-public class CourseDAOImpl implements CourseDAO {
+public class CourseDaoImpl implements CourseDao {
 
 	@Autowired
 	private SqlSession sqlSession;
 
-	private static final String NAMESPACE = "tot.mapper.CourseMapper";
+	private static final String NAMESPACE = "tot.dao.CourseDao";
 
 	@Override
 	public CourseDTO getCourseById(String courseId) {

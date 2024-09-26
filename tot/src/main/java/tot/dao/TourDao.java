@@ -2,7 +2,7 @@ package tot.dao;
 
 import tot.domain.TourVO;
 
-public interface TourDAO {
+public interface TourDao {
 
 	TourVO getTourById(String tourId);
 

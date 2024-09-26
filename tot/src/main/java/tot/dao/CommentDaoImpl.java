@@ -12,12 +12,12 @@ import tot.domain.CommentVO;
 import tot.domain.ReportVO;
 
 @Repository
-public class CommentDAOImpl implements CommentDAO {
+public class CommentDaoImpl implements CommentDao {
 
 	@Autowired
 	private SqlSession sqlSession;
 
-	private static final String NAMESPACE = "tot.mapper.CommentMapper";
+	private static final String NAMESPACE = "tot.dao.CommentDao";
 
 	@Override
 	public List<CommentVO> getCommentsByReviewId(int trevId) {

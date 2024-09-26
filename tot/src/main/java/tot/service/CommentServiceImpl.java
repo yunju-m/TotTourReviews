@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import tot.common.enums.ProcessStatus;
-import tot.dao.CommentDAO;
+import tot.dao.CommentDao;
 import tot.domain.CommentReqDTO;
 import tot.domain.CommentVO;
 import tot.domain.HistoryVO;
@@ -17,10 +17,10 @@ import tot.util.MemberUtil;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-	private final CommentDAO commentDAO;
+	private final CommentDao commentDAO;
 	private final HistoryService historyService;
 
-	public CommentServiceImpl(CommentDAO commentDAO, HistoryService historyService) {
+	public CommentServiceImpl(CommentDao commentDAO, HistoryService historyService) {
 		this.commentDAO = commentDAO;
 		this.historyService = historyService;
 	}

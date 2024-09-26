@@ -4,7 +4,7 @@ import java.util.List;
 
 import tot.domain.HistoryVO;
 
-public interface HistoryDAO {
+public interface HistoryDao {
 
 	void insertTReviewHistory(HistoryVO historyVO);
 

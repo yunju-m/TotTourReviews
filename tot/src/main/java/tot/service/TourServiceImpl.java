@@ -2,15 +2,15 @@ package tot.service;
 
 import org.springframework.stereotype.Service;
 
-import tot.dao.TourDAO;
+import tot.dao.TourDao;
 import tot.domain.TourVO;
 
 @Service
 public class TourServiceImpl implements TourService {
 
-	private final TourDAO tourDAO;
+	private final TourDao tourDAO;
 
-	public TourServiceImpl(TourDAO tourDAO) {
+	public TourServiceImpl(TourDao tourDAO) {
 		this.tourDAO = tourDAO;
 	}
 

@@ -15,7 +15,7 @@ import tot.common.enums.ProcessStatus;
 import tot.common.page.PageDTO;
 import tot.common.page.PageReqDTO;
 import tot.common.page.PageResDTO;
-import tot.dao.TReviewDAO;
+import tot.dao.TReviewDao;
 import tot.domain.DelegatingMultipartFile;
 import tot.domain.HistoryVO;
 import tot.domain.MemberVO;
@@ -31,11 +31,11 @@ import tot.util.MemberUtil;
 @Service
 public class TReviewServiceImpl implements TReviewService {
 
-	private final TReviewDAO treviewDAO;
+	private final TReviewDao treviewDAO;
 	private final HistoryService historyService;
 	private final FileUtil fileUtils;
 
-	public TReviewServiceImpl(TReviewDAO treviewDAO, HistoryService historyService, FileUtil fileUtils) {
+	public TReviewServiceImpl(TReviewDao treviewDAO, HistoryService historyService, FileUtil fileUtils) {
 		this.treviewDAO = treviewDAO;
 		this.historyService = historyService;
 		this.fileUtils = fileUtils;

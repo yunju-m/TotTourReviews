@@ -4,15 +4,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import tot.dao.HistoryDAO;
+import tot.dao.HistoryDao;
 import tot.domain.HistoryVO;
 
 @Service
 public class HistoryServiceImpl implements HistoryService {
 
-	private final HistoryDAO historyDAO;
+	private final HistoryDao historyDAO;
 
-	public HistoryServiceImpl(HistoryDAO historyDAO) {
+	public HistoryServiceImpl(HistoryDao historyDAO) {
 		this.historyDAO = historyDAO;
 	}
 
