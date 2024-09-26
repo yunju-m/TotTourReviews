@@ -81,7 +81,16 @@
 					    <tr onclick="location.href='${pageContext.request.contextPath}/admin/review/${boardId}/detail/${review.trevId}/1'">
 					    	<td><input type="checkbox" name="reviewSelect" value="${review.trevId}" onclick="event.stopPropagation();"></td>
 					        <td>${status.index + 1}</td>
-					        <td>${review.trevTitle}</td>
+					        <td>
+						        <c:choose>
+							        <c:when test="${fn:length(review.trevTitle) > 10}">
+							            ${fn:substring(review.trevTitle, 0, 10)}...
+							        </c:when>
+							        <c:otherwise>
+							            ${review.trevTitle}
+							        </c:otherwise>
+							    </c:choose>
+						    </td>
 					        <td>${review.memId}</td>
 					        <td>${review.trevRegdate}</td>
 					        <td>${review.trevUpdate}</td>

@@ -303,28 +303,30 @@
 		<!-- 5. 게시물 이력 내역 -->
 		<div class="section">
 		    <h3>이력 내역</h3>
-		    <table class="history-table">
-		        <thead>
-		            <tr>
-		                <th>번호</th>
-		                <th>작성자</th>
-		                <th>내용</th>
-		                <th>일시</th>
-		                <th>활동</th>
-		            </tr>
-		        </thead>
-		        <tbody>
-		            <c:forEach var="history" items="${historys}" varStatus="status">
-		                <tr>
-		                    <td>${historyCount - status.index}</td>
-		                    <td>${history.memNick}</td>
-		                    <td>${history.content}</td>
-		                    <td>${history.actionDate}</td>
-		                    <td>${history.action}</td>
-		                </tr>
-		            </c:forEach>
-		        </tbody>
-		    </table>
+		    <div class="history-table-container">
+			    <table class="history-table">
+			        <thead>
+			            <tr>
+			                <th>번호</th>
+			                <th>작성자</th>
+			                <th>내용</th>
+			                <th>일시</th>
+			                <th>활동</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+			            <c:forEach var="history" items="${historys}" varStatus="status">
+			                <tr>
+			                    <td>${historyCount - status.index}</td>
+			                    <td>${history.memNick}</td>
+			                    <td>${history.content}</td>
+			                    <td>${history.actionDate}</td>
+			                    <td>${history.action}</td>
+			                </tr>
+			            </c:forEach>
+			        </tbody>
+			    </table>
+		    </div>
 		</div>
 		<!-- 게시물 이력 내역 끝 -->
     </div>

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/review.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/adminReview.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/static/js/adminTReviewReport.js"></script>
+    <script src="${pageContext.request.contextPath}/static/js/adminTReview.js"></script>
     <title>신고 내역 관리</title>
 </head>
 <body>
@@ -83,7 +83,7 @@
 					        <td>
 					        	<c:choose>
 						        	<c:when test="${report.reportedContentType == 'Treview'}">
-							        	<a href="${pageContext.request.contextPath}/admin/review/${boardId}/detail/${report.reportedTrevId}">
+							        	<a href="${pageContext.request.contextPath}/admin/review/${boardId}/detail/${report.reportedTrevId}/1">
 								        	${report.postTitle}
 								        </a>
 						        	</c:when>

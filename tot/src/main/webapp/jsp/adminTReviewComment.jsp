@@ -80,7 +80,7 @@
 					    	<td><input type="checkbox" name="commentSelect" value="${comment.commentId}"></td>
 					        <td>${status.index+1}</td>
 					        <td>
-						        <a href="${pageContext.request.contextPath}/admin/review/${boardId}/detail/${comment.postId}">
+						        <a href="${pageContext.request.contextPath}/admin/review/${boardId}/detail/${comment.postId}/1">
 						        	${comment.postId}
 						        </a>
 					        </td>
