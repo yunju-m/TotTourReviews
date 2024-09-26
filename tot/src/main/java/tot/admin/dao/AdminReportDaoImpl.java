@@ -12,9 +12,9 @@ import tot.common.page.PageDTO;
 import tot.domain.ReportDTO;
 
 @Repository
-public class AdminReportDAOImpl implements AdminReportDAO {
+public class AdminReportDaoImpl implements AdminReportDao {
 
-	private static final String NAMESPACE = "tot.mapper.AdminReportMapper";
+	private static final String NAMESPACE = "tot.dao.AdminReportDao";
 
 	@Autowired
 	private SqlSession sqlSession;

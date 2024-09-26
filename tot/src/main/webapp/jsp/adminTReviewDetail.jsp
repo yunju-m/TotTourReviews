@@ -94,7 +94,7 @@
             <div class="reviewCourseDiv">
                 <!-- 여행 코스 이미지 -->
                 <div class="reviewCourseImg">
-                    <img src="https://via.placeholder.com/300x200" alt="Review Course Image">
+                    <img src="${courses[0].regionImageUrl}" style="width: 300px; height: 200px; object-fit: cover; alt="Review Course Image">
                     <div class="initButton2">경로 상세보기</div>
                 </div>
 

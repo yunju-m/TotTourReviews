@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import tot.admin.dao.AdminTReviewDAO;
+import tot.admin.dao.AdminTReviewDao;
 import tot.common.page.PageDTO;
 import tot.common.page.PageReqDTO;
 import tot.common.page.PageResDTO;
@@ -13,9 +13,9 @@ import tot.domain.TReviewResDTO;
 @Service
 public class AdminTReviewServiceImpl implements AdminTReviewService {
 
-	private final AdminTReviewDAO adminTReviewDAO;
+	private final AdminTReviewDao adminTReviewDAO;
 
-	public AdminTReviewServiceImpl(AdminTReviewDAO adminTReviewDAO) {
+	public AdminTReviewServiceImpl(AdminTReviewDao adminTReviewDAO) {
 		this.adminTReviewDAO = adminTReviewDAO;
 	}
 

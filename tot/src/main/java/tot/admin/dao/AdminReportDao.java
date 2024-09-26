@@ -5,7 +5,7 @@ import java.util.List;
 import tot.common.page.PageDTO;
 import tot.domain.ReportDTO;
 
-public interface AdminReportDAO {
+public interface AdminReportDao {
 
 	int selectTotalReportCount(PageDTO pageDTO);
 

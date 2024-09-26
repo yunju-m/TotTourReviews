@@ -5,7 +5,7 @@ import java.util.List;
 import tot.common.page.PageDTO;
 import tot.domain.TReviewResDTO;
 
-public interface AdminTReviewDAO {
+public interface AdminTReviewDao {
 
 	int selectTotalTReviewCount(PageDTO pageDTO);
 

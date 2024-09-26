@@ -12,9 +12,9 @@ import tot.common.page.PageDTO;
 import tot.domain.TReviewResDTO;
 
 @Repository
-public class AdminTReviewDAOImpl implements AdminTReviewDAO {
+public class AdminTReviewDaoImpl implements AdminTReviewDao {
 
-	private static final String NAMESPACE = "tot.mapper.AdminTReviewMapper";
+	private static final String NAMESPACE = "tot.dao.AdminTReviewDao";
 
 	@Autowired
 	private SqlSession sqlSession;

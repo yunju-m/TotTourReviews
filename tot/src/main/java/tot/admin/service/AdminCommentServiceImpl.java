@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import tot.admin.dao.AdminCommentDAO;
+import tot.admin.dao.AdminCommentDao;
 import tot.common.page.PageDTO;
 import tot.common.page.PageReqDTO;
 import tot.common.page.PageResDTO;
@@ -13,9 +13,9 @@ import tot.domain.CommentVO;
 @Service
 public class AdminCommentServiceImpl implements AdminCommentService {
 
-	private final AdminCommentDAO adminCommentDAO;
+	private final AdminCommentDao adminCommentDAO;
 
-	public AdminCommentServiceImpl(AdminCommentDAO adminCommentDAO) {
+	public AdminCommentServiceImpl(AdminCommentDao adminCommentDAO) {
 		this.adminCommentDAO = adminCommentDAO;
 	}
 

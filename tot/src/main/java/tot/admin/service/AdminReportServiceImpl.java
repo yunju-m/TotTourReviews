@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import tot.admin.dao.AdminReportDAO;
+import tot.admin.dao.AdminReportDao;
 import tot.common.page.PageDTO;
 import tot.common.page.PageReqDTO;
 import tot.common.page.PageResDTO;
@@ -13,9 +13,9 @@ import tot.domain.ReportDTO;
 @Service
 public class AdminReportServiceImpl implements AdminReportService {
 
-	private final AdminReportDAO adminReportDAO;
+	private final AdminReportDao adminReportDAO;
 
-	public AdminReportServiceImpl(AdminReportDAO adminReportDAO) {
+	public AdminReportServiceImpl(AdminReportDao adminReportDAO) {
 		this.adminReportDAO = adminReportDAO;
 	}
 

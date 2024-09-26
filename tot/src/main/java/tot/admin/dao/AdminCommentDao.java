@@ -5,7 +5,7 @@ import java.util.List;
 import tot.common.page.PageDTO;
 import tot.domain.CommentVO;
 
-public interface AdminCommentDAO {
+public interface AdminCommentDao {
 
 	List<CommentVO> getCommentsByReviewId(int trevid);
 

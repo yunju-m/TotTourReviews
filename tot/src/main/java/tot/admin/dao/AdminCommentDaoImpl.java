@@ -12,9 +12,9 @@ import tot.common.page.PageDTO;
 import tot.domain.CommentVO;
 
 @Repository
-public class AdminCommentDAOImpl implements AdminCommentDAO {
+public class AdminCommentDaoImpl implements AdminCommentDao {
 
-	private static final String NAMESPACE = "tot.mapper.AdminCommentMapper";
+	private static final String NAMESPACE = "tot.dao.AdminCommentDao";
 
 	@Autowired
 	private SqlSession sqlSession;
